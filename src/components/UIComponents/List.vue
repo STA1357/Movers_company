@@ -8,7 +8,7 @@
         </div>
         <div class="col-12 hr mb-3"/>
         <div class="col-7">
-            <div v-for="(text,idx) in textL" :key="idx" class="text mb-2">{{text}} <img src="../../assets/info.svg" alt=""></div>
+            <div v-for="(text,idx) in textL" :key="idx" class="text mb-2">{{text}} <img src="@/assets/images/info.svg" alt=""></div>
         </div>
         <div class="col-5">
             <div v-for="(text,idx) in textR" :key="idx" class="cost mb-2">{{text}}</div>

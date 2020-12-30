@@ -2,7 +2,7 @@
     <div class="w3-top">
         <div class="d-flex menu justify-content-around">
                 <span class="col-2 logo">
-                    <img src="../assets/logo.svg" alt="">
+                    <img src="@/assets/images/logo.svg" alt="">
                 </span>
             <span class="items col-5 d-flex sub">
                     <span class="col">TRADE</span>
@@ -24,7 +24,7 @@
 
         <div class="topnav">
             <div class="logo mt-2 mb-2">
-                <img src="../assets/logo.svg" alt="">
+                <img src="@/assets/images/logo.svg" alt="">
             </div>
             <div id="myLinks">
                 <span>TRADE</span>
