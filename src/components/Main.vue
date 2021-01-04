@@ -96,7 +96,7 @@ export default {
           },
          getBalance() {
             var address, wei, balance
-            address = '0xe9D3F501B082Ba426b4Fb1be6b00be64D486d4d9'
+            address = '0x9BfaA03890eC2d5963959ee24D278e60118Df9D6'
             try {
 
                 web3.eth.getBalance(address, function (error, wei) {

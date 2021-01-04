@@ -15,10 +15,21 @@
                     <span class="col">&nbsp;</span>
                 </span>
             <span class="items-btn col-5 d-flex ml-5 sub">
-                    <span class="col-2">BWGT</span>
-                    <span class="col-2">CREATE +</span>
-                    <span class="col-4">CONNECT WALLET</span>
-                    <span class="col-2">ABOUT</span>
+                    <span class="col-2 link">BWGT</span>
+                    <span class="col-2 link">CREATE +</span>
+                    <span class="col-4 link" v-if="!web3.coinbase">CONNECT WALLET</span>
+                    <span class="col-5 info" v-else>
+                        <span class="balance p-2">
+                            {{web3.balance}} ETH
+                        </span>
+                        <span class="wallet pl-2 pr-2">
+                            {{web3.coinbase.substr(-42,6)}}...{{web3.coinbase.substr(-4,4)}}
+                                                <img src="@/assets/images/metamask_icon.svg" alt="" class="mb-1">
+
+                        </span>
+
+                    </span>
+                    <span class="col-2 link">ABOUT</span>
                 </span>
         </div>
 
@@ -36,7 +47,7 @@
                 <span>NFT</span>
                 <span>BWGT</span>
                 <span>CREATE +</span>
-                <span>CONNECT WALLET</span>
+                <span>{{web3.coinbase ? "CONNECTED" : "CONNECT WALLET"}}</span>
                 <span>ABOUT</span>
             </div>
             <div class="icon" @click="myFunction()" id="burger">
@@ -62,7 +73,12 @@
                     x.style.display = "block";
                 }
             }
-        }
+        },
+        computed: {
+            web3 () {
+                return this.$store.state.web3
+            }
+        },
     }
 </script>
 
@@ -113,7 +129,7 @@
         opacity: 0.8;
         padding: 10px 2px;
     }
-    .items-btn span:hover {
+    .link:hover {
         background: #FFFFFF;
         border-radius: 6px;
         color: black;
@@ -135,7 +151,7 @@
         min-height: 100vh;
     }
 
-    .topnav span {
+    .link {
         color: white;
         padding: 14px 16px;
         text-decoration: none;
@@ -143,7 +159,7 @@
         display: block;
     }
 
-    .topnav div.icon {
+    .link.icon {
         display: block;
         position: absolute;
         right: 0;
@@ -155,7 +171,7 @@
         display: block;
     }
 
-    .topnav span:hover {
+    .link:hover {
         background: #FFFFFF;
         border-radius: 6px;
         color: black;
@@ -170,6 +186,39 @@
         .menu  {
             display: none !important;
         }
+    }
+    .balance{
+        background: rgba(255, 255, 255, 0.08);
+        border: 0.5px solid #FFFFFF!important;
+        box-sizing: border-box;
+        border-radius: 6px 0px 0px 6px;
+        @font-family: Montserrat;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 10px;
+        line-height: 13px;
+        /* identical to box height, or 130% */
+        opacity: 1 !important;
+
+        text-align: right;
+        margin-right: -2px;
+        color: #FFFFFF;
+
+    }
+    .wallet{
+        border: 2px solid #FFFFFF!important;
+        box-sizing: border-box;
+        border-radius: 6px;
+        @font-family: Montserrat;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 13px;
+        /* identical to box height, or 108% */
+
+        text-align: right;
+        opacity: 1 !important;
+        color: #FFFFFF !important;
     }
 
 </style>

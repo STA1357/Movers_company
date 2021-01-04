@@ -57,7 +57,10 @@ let getWeb3 = new Promise(function (resolve, reject) {
 
         return new Promise(function (resolve, reject) {
             // Retrieve balance for coinbase
-            result.web3().eth.getBalance('0xe9D3F501B082Ba426b4Fb1be6b00be64D486d4d9', (err, balance) => {
+            console.log(result.web3().eth,1)
+            console.log(result,2)
+
+            result.web3().eth.getBalance('0x5e1B7f60DFBDF0c3F95c38a22A347b50f379BeAA', (err, balance) => {
 
                 if (err) {
 
@@ -66,11 +69,19 @@ let getWeb3 = new Promise(function (resolve, reject) {
 
                     result = Object.assign({}, result, { balance })
                     resolve(result)
+                    console.log(balance)
+
                 }
             })
         })
     })
-
+function sendTokens(targetAddress, amount) {
+    try {
+        const value = amount*1e18;
+        const transaction = myContract.methods.transfer(targetAddress.checkAddress(), value);
+        return transaction.send({from: myAddress});
+    } catch (err) { alert(err.message) }
+}
 
 
 export default getWeb3

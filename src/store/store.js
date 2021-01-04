@@ -12,6 +12,7 @@ const store = new Vuex.Store({
             networkId: null,
             coinbase: null,
             balance: null,
+            list: null,
             error: null
         },
         contractInstance: null
