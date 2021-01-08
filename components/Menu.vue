@@ -36,10 +36,9 @@
         </span>
         <span class="col-2 link">ABOUT</span>
       </span>
-      <!-- <div v-if="isConnected">
+      <div v-if="isConnected">
         <menu-info v-if="account.address" />
-          <connect-metamask v-else/>
-      </div> -->
+      </div>
     </div>
 
     <div class="topnav">

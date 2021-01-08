@@ -7,8 +7,8 @@
         <div class="">
           <img src="@/assets/images/metamask_icon.svg" alt="" />
           <span class="account ml-1"
-            >{{ web3.coinbase.substr(-42, 6) }}...{{
-              web3.coinbase.substr(-4, 4)
+            >{{ account.address.substr(-42, 6) }}...{{
+             account.address.substr(-4, 4)
             }}</span
           >
         </div>
@@ -27,9 +27,9 @@
 export default {
   name: "MenuInfo",
   computed: {
-    web3() {
-      return this.$store.state.web3;
-    }
+      account() {
+          return this.$store.getters['web3/account'];
+      },
   }
 };
 </script>
