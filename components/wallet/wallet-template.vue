@@ -1,6 +1,6 @@
 <template>
   <div class="wallet-layout" @click="$emit('click')">
-    <div class="wallet-layout__title txt">{{options.title}}</div>
+    <div class="wallet-layout__title txt">{{!isLoading ? options.title : 'Initializing...'}}</div>
     <div class="wallet-layout__image-wrapper">
       <img class="wallet-layout__image" :src="options.image" :alt="`${options.title}-image`">
     </div>
@@ -8,9 +8,12 @@
 </template>
 
 <script>
+//  @params options(Object), options.title(String), options.image(require(String)), options(Boolean)
+
 export default {
   props: {
-    options: Object
+    options: Object,
+    isLoading: Boolean
   }
 }
 </script>

@@ -19,17 +19,17 @@
         <span class="col-2 link">CREATE +</span>
         <span
           class="col-4 link "
-          v-if="!web3.coinbase"
+          v-if="!account.address"
           @click="openWalletModal()"
           >CONNECT WALLET</span
         >
         <span class="col-5 info" v-else @click="isConnected = !isConnected">
           <span class="balance p-2">
-            {{ web3.balance / 1000000000000000000 }} ETH
+            {{ account.balance }} ETH
           </span>
           <span class="wallet pl-2 pr-2">
-            {{ web3.coinbase.substr(-42, 6) }}...{{
-              web3.coinbase.substr(-4, 4)
+            {{ account.address.substr(-42, 6) }}...{{
+              account.address.substr(-4, 4)
             }}
             <img src="@/assets/images/metamask_icon.svg" alt="" class="mb-1" />
           </span>
@@ -37,7 +37,7 @@
         <span class="col-2 link">ABOUT</span>
       </span>
       <!-- <div v-if="isConnected">
-        <menu-info v-if="web3.coinbase" />
+        <menu-info v-if="account.address" />
           <connect-metamask v-else/>
       </div> -->
     </div>
@@ -56,7 +56,7 @@
         <span>NFT</span>
         <span>BWGT</span>
         <span>CREATE +</span>
-        <span>{{ web3.coinbase ? "CONNECTED" : "CONNECT WALLET" }}</span>
+        <span>{{ account.address ? "CONNECTED" : "CONNECT WALLET" }}</span>
         <span>ABOUT</span>
       </div>
       <div class="icon" @click="myFunction()" id="burger">
@@ -107,8 +107,8 @@ export default {
     }
   },
   computed: {
-    web3() {
-      return this.$store.state.web3;
+    account() {
+      return this.$store.getters['web3/account'];
     }
   }
 };

@@ -1,5 +1,5 @@
 <template>
-  <wallet :options="options" @click="connectMetamask()">
+  <wallet :options="options" :isLoading="isLoading" @click="connectMetamask()">
 
   </wallet>
 </template>
@@ -16,12 +16,18 @@ export default {
       options: {
         title: "Metamask",
         image: require('@/assets/images/provider-logotypes/metamask-logo.png')
-      }
+      },
+      isLoading: false
     }
   },
   methods: {
-    connectMetamask() {
-      
+    async connectMetamask() {
+      this.isLoading = true
+
+      await this.$store.dispatch('web3/connectToProvider')
+
+      this.isLoading = false
+      this.$modal.hideAll()
     }
   }
 }

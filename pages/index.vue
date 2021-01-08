@@ -2,7 +2,7 @@
   <div class="hello">
     <div class="card">
       <div class="block mb-2">
-        <t-block text="You give:" :text2="web3.balance / 1000000000000000000" />
+        <t-block text="You give:" :text2="account.balance" />
         <div class="d-flex justify-content-around mt-2">
           <span class="col-3 txt">
             <input v-model="eth" type="text" class="inputs" placeholder="0.0">
@@ -119,8 +119,8 @@ export default {
     }
   },
   computed: {
-    web3 () {
-      return this.$store.state.web3
+    account() {
+      return this.$store.getters['web3/account'];
     },
     measurementValueDisplay: {
       get () {
@@ -133,37 +133,12 @@ export default {
     }
   },
   mounted () {
-    window.addEventListener('load', () => {
-      if (typeof web3 !== 'undefined') {
-        web3 = new Web3(web3.currentProvider)
-      } else {
-        console.log('No web3? You should consider trying MetaMask!')
-        web3 = new Web3(
-          new Web3.providers.HttpProvider('http://localhost:8545')
-        )
-      }
-    })
-    console.log('registerWeb3 Action dispatched from casino-dapp.vue')
-    this.$store.dispatch('registerWeb3')
+    this.$store.dispatch('web3/getAccount')
   },
   methods: {
     shotList () {
       this.show = !this.show
       console.log(this.show)
-    },
-    getBalance () {
-      let address, wei, balance
-      address = '0x9BfaA03890eC2d5963959ee24D278e60118Df9D6'
-      try {
-        web3.eth.getBalance(address, function (error, wei) {
-          if (!error) {
-            const balance = web3.fromWei(wei, 'ether')
-            document.getElementById('output').innerHTML = balance + ' ETH'
-          }
-        })
-      } catch (err) {
-        document.getElementById('output').innerHTML = err
-      }
     }
   }
 }
