@@ -1,0 +1,21 @@
+@mixin svg-color($default-color, $hover-color: $default-color) {
+  >svg {
+    fill: $default-color;
+    transition: all 0.3s ease;
+  }
+
+  &:hover>svg {
+    fill: $hover-color;
+  }
+}
+
+@mixin default-box($width, $height: $width) {
+  width: $width;
+  height: $height;
+
+  background: $surface3;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  box-shadow: 4px 8px 18px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 19px;
+}

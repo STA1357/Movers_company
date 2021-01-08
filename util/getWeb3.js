@@ -81,17 +81,17 @@ const getWeb3 = new Promise(function (resolve, reject) {
         )
     })
   })
-function sendTokens (targetAddress, amount) {
-  try {
-    const value = amount * 1e18
-    const transaction = myContract.methods.transfer(
-      targetAddress.checkAddress(),
-      value
-    )
-    return transaction.send({ from: myAddress })
-  } catch (err) {
-    alert(err.message)
-  }
-}
+// function sendTokens (targetAddress, amount) {
+//   try {
+//     const value = amount * 1e18
+//     const transaction = myContract.methods.transfer(
+//       targetAddress.checkAddress(),
+//       value
+//     )
+//     return transaction.send({ from: myAddress })
+//   } catch (err) {
+//     alert(err.message)
+//   }
+// }
 
 export default getWeb3

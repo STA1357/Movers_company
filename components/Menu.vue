@@ -2,7 +2,7 @@
   <div class="w3-top">
     <div class="d-flex menu justify-content-around">
       <span class="col-2 logo">
-        <img src="@/assets/images/logo.svg" alt="">
+        <img src="@/assets/images/logo.svg" alt="" />
       </span>
       <span class="items col-5 d-flex sub">
         <span class="col">TRADE</span>
@@ -17,8 +17,13 @@
       <span class="items-btn col-5 d-flex ml-5 sub">
         <span class="col-2 link">BWGT</span>
         <span class="col-2 link">CREATE +</span>
-        <span v-if="!web3.coinbase" class="col-4 link">CONNECT WALLET</span>
-        <span v-else class="col-5 info">
+        <span
+          class="col-4 link "
+          v-if="!web3.coinbase"
+          @click="openWalletModal()"
+          >CONNECT WALLET</span
+        >
+        <span class="col-5 info" v-else @click="isConnected = !isConnected">
           <span class="balance p-2">
             {{ web3.balance / 1000000000000000000 }} ETH
           </span>
@@ -26,16 +31,20 @@
             {{ web3.coinbase.substr(-42, 6) }}...{{
               web3.coinbase.substr(-4, 4)
             }}
-            <img src="@/assets/images/metamask_icon.svg" alt="" class="mb-1">
+            <img src="@/assets/images/metamask_icon.svg" alt="" class="mb-1" />
           </span>
         </span>
         <span class="col-2 link">ABOUT</span>
       </span>
+      <!-- <div v-if="isConnected">
+        <menu-info v-if="web3.coinbase" />
+          <connect-metamask v-else/>
+      </div> -->
     </div>
 
     <div class="topnav">
       <div class="logo mt-2 mb-2">
-        <img src="@/assets/images/logo.svg" alt="">
+        <img src="@/assets/images/logo.svg" alt="" />
       </div>
       <div id="myLinks">
         <span>TRADE</span>
@@ -50,36 +59,59 @@
         <span>{{ web3.coinbase ? "CONNECTED" : "CONNECT WALLET" }}</span>
         <span>ABOUT</span>
       </div>
-      <div id="burger" class="icon" @click="myFunction()">
-        <div class="bar1" />
-        <div class="bar2" />
-        <div class="bar3" />
+      <div class="icon" @click="myFunction()" id="burger">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import MenuInfo from "./MenuInfo";
+import WalletModal from "@/components/modal/templates/WalletModal"
+
 export default {
-  name: 'Menu',
-  computed: {
-    web3 () {
-      return this.$store.state.web3
-    }
+  name: "Menu",
+  data() {
+    return {
+      isConnected: false
+    };
+  },
+  components: {
+    MenuInfo
   },
   methods: {
-    myFunction () {
-      const x = document.getElementById('myLinks')
-      const icons = document.getElementById('burger')
-      icons.classList.toggle('change')
-      if (x.style.display === 'block') {
-        x.style.display = 'none'
+    openWalletModal () {
+      this.$modal.show(
+        WalletModal,
+        {
+          details: {
+          }
+        },
+        {
+          width: 314
+        }
+      )
+    },
+    myFunction() {
+      var x = document.getElementById("myLinks");
+      var icons = document.getElementById("burger");
+      icons.classList.toggle("change");
+      if (x.style.display === "block") {
+        x.style.display = "none";
       } else {
-        x.style.display = 'block'
+        x.style.display = "block";
       }
     }
+  },
+  computed: {
+    web3() {
+      return this.$store.state.web3;
+    }
   }
-}
+};
 </script>
 
 <style scoped>
