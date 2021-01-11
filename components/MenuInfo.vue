@@ -12,9 +12,9 @@
             }}</span
           >
         </div>
-        <div class="btn col-2 p-1 mt-1">Change</div>
+        <div class="btn col-3 p-1 mt-1">Disconnect</div>
       </div>
-      <div class="btn-group d-flex mt-2 ml-4">
+      <div class="btn-group d-flex mt-2">
         <div class="">Copy address</div>
         <div class="">View on etherscan</div>
       </div>
@@ -36,7 +36,7 @@ export default {
 
 <style scoped>
 .main {
-  width: 428px;
+  width: 314px;
   height: 210px;
   position: absolute;
   top: 100px;
@@ -49,7 +49,7 @@ export default {
   padding: 12px 16px;
 }
 .body {
-  width: 398px;
+  width: 286px;
   height: 112px;
   background: #ffffff;
   border: 1px solid #eaeaea;
@@ -93,9 +93,8 @@ img {
   color: #0f2f31;
 }
 .btn {
-  width: 64px;
+  width: 74px;
   height: 18px;
-
   border: 0.5px solid #fc4040;
   box-sizing: border-box;
   border-radius: 12px;
@@ -104,7 +103,7 @@ img {
   font-style: normal;
   font-weight: 300;
   font-size: 10px;
-  line-height: 10px;
+  line-height: 9px;
   color: #f70404;
 }
 .btn-group div {
