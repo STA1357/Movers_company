@@ -11,12 +11,12 @@
 // TODO need refactoring NAMES
 
 export default {
-  name: 'TitleBlock',
+  name: "TitleBlock",
   props: {
     text: String,
     text2: [Number, String]
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

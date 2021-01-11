@@ -8,7 +8,7 @@
           <img src="@/assets/images/metamask_icon.svg" alt="" />
           <span class="account ml-1"
             >{{ account.address.substr(-42, 6) }}...{{
-             account.address.substr(-4, 4)
+              account.address.substr(-4, 4)
             }}</span
           >
         </div>
@@ -27,9 +27,9 @@
 export default {
   name: "MenuInfo",
   computed: {
-      account() {
-          return this.$store.getters['web3/account'];
-      },
+    account() {
+      return this.$store.getters["web3/account"];
+    }
   }
 };
 </script>

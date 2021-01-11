@@ -11,17 +11,15 @@
 </template>
 
 <script>
-import modalTemplate from '../modal-template.vue'
+import modalTemplate from "../modal-template.vue";
 
-import Metamask from '@/components/wallet/templates/Metamask.vue'
+import Metamask from "@/components/wallet/templates/Metamask.vue";
 
 export default {
   components: {
-    'modal': modalTemplate
-  },
-}
+    modal: modalTemplate
+  }
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

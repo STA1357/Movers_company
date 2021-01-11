@@ -8,11 +8,11 @@
 //  @params text(String)
 
 export default {
-  name: 'Mark',
+  name: "Mark",
   props: {
     text: String
   }
-}
+};
 </script>
 
 <style scoped>

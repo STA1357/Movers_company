@@ -1,5 +1,7 @@
 <template>
   <div class="hello">
+    <nav-cards :text="['BASE POOL','LIQUID POOL','TRADE POOL']"/>
+    <nav-cards :text="['TAKE LIQUIDITY','RETURN LIQUIDITY']"/>
     <div class="card">
       <div class="block mb-2">
         <t-block text="You give:" :text2="account.balance" />
@@ -99,10 +101,11 @@ import TBlock from "@/components/UIComponents/TitleBlock";
 import Button from "@/components/UIComponents/Button";
 import Mark from "@/components/UIComponents/Mark";
 import List from "@/components/UIComponents/List";
-
+import NavCards from "@/components/UIComponents/NavCards";
 export default {
   name: "Main",
   components: {
+    NavCards,
     Button,
     Mark,
     TBlock,

@@ -17,7 +17,7 @@
     <div class="col-12 hr mb-3" />
     <div class="col-7">
       <div v-for="(text, idx) in textL" :key="idx" class="text mb-2">
-        {{ text }} <img src="@/assets/images/info.svg" alt="">
+        {{ text }} <img src="@/assets/images/info.svg" alt="" />
       </div>
     </div>
     <div class="col-5">
@@ -33,13 +33,13 @@
 // TODO need refactoring NAMES
 
 export default {
-  name: 'List',
+  name: "List",
   props: {
     textR: Array,
     textL: Array,
     show: false
   }
-}
+};
 </script>
 
 <style scoped>

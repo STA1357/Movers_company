@@ -24,9 +24,7 @@
           >CONNECT WALLET</span
         >
         <span class="col-5 info" v-else @click="isConnected = !isConnected">
-          <span class="balance p-2">
-            {{ account.balance }} ETH
-          </span>
+          <span class="balance p-2"> {{ account.balance }} ETH </span>
           <span class="wallet pl-2 pr-2">
             {{ account.address.substr(-42, 6) }}...{{
               account.address.substr(-4, 4)
@@ -69,7 +67,7 @@
 
 <script>
 import MenuInfo from "./MenuInfo";
-import WalletModal from "@/components/modal/templates/WalletModal"
+import WalletModal from "@/components/modal/templates/WalletModal";
 
 export default {
   name: "Menu",
@@ -82,17 +80,16 @@ export default {
     MenuInfo
   },
   methods: {
-    openWalletModal () {
+    openWalletModal() {
       this.$modal.show(
         WalletModal,
         {
-          details: {
-          }
+          details: {}
         },
         {
           width: 314
         }
-      )
+      );
     },
     myFunction() {
       var x = document.getElementById("myLinks");
@@ -107,7 +104,7 @@ export default {
   },
   computed: {
     account() {
-      return this.$store.getters['web3/account'];
+      return this.$store.getters["web3/account"];
     }
   }
 };

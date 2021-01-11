@@ -7,11 +7,11 @@
 <script>
 //  @params text(String)
 export default {
-  name: 'Button',
+  name: "Button",
   props: {
     text: String
   }
-}
+};
 </script>
 
 <style scoped>
