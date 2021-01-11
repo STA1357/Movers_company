@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
-    <nav-cards :text="[{ title: 'BASE POOL', path: 'basic' },{ title: 'LIQUID POOL', path: 'Veridian Dynamics' },{ title: 'TRADE POOL', path: 'Veridian Dynamics' }]"/>
-    <nav-cards :text="[{ title: 'TAKE LIQUIDITY', path: 'Veridian Dynamics' },{ title: 'RETURN LIQUIDITY', path: 'Veridian Dynamics' }]"/>
+    <!-- <nav-cards :text="[{ title: 'BASE POOL', path: 'basic' },{ title: 'LIQUID POOL', path: 'Veridian Dynamics' },{ title: 'TRADE POOL', path: 'Veridian Dynamics' }]"/>
+    <nav-cards :text="[{ title: 'TAKE LIQUIDITY', path: 'Veridian Dynamics' },{ title: 'RETURN LIQUIDITY', path: 'Veridian Dynamics' }]"/> -->
   </div>
 </template>
 
@@ -12,6 +12,7 @@ import Mark from "@/components/UIComponents/Mark";
 import List from "@/components/UIComponents/List";
 import NavCards from "@/components/UIComponents/NavCards";
 export default {
+  layout: 'earn',
   name: "Main",
   components: {
     NavCards,

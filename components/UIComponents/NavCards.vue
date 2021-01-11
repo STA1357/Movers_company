@@ -1,11 +1,11 @@
 <template>
   <div class="nav mb-3">
-    <router-link
+    <nuxt-link
       :to="info.path"
       class="col links"
       v-for="(info, idx) in text"
       :key="idx"
-      >{{ info.title }}</router-link
+      >{{ info.title }}</nuxt-link
     >
   </div>
 </template>

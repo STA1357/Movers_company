@@ -100,6 +100,7 @@ import Button from "@/components/UIComponents/Button";
 import Mark from "@/components/UIComponents/Mark";
 import List from "@/components/UIComponents/List";
 export default {
+  layout: 'earn',
   name: "basic",
   components: {
     Button,
