@@ -1,21 +1,43 @@
 <template>
   <div>
-    {{account}}
+    <!-- {{$store.getters['contracts/black/balance']}}
+    {{$store.getters['contracts/black/decimals']}}
+    {{$store.getters['contracts/black/name']}}
+    {{$store.getters['contracts/black/symbol']}}
+    {{$store.getters['contracts/black/totalSupply']}} -->
+    <div v-if="loaded">
+      {{$store.getters['contracts/black/contract']}}
+    </div>
+    <div v-if="loaded">
+      {{$store.getters['contracts/white/contract']}}
+    </div>
+
   </div>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+// import {mapGetters} from 'vuex'
 
 export default {
-  mounted() {
-    this.$store.dispatch('web3/getAccount')
-  },
-  computed: {
-    account() {
-      return this.$store.getters['web3/account']
+  data() {
+    return {
+      loaded: false
     }
-  }
+  },
+  async beforeCreate() {
+    // this.$store.dispatch('web3/getAccount')
+    await this.$store.dispatch("web3/getAccount");
+
+    await this.$store.dispatch('contracts/black/initContract');
+    await this.$store.dispatch('contracts/white/initContract');
+    this.loaded = true
+    
+  },
+  // computed: {
+  //   account() {
+  //     return this.$store.getters['web3/account']
+  //   }
+  // }
 }
 </script>
 

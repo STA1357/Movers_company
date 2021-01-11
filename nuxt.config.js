@@ -18,7 +18,12 @@ export default {
   },
 
   env: {
-
+    contractAddresses: {
+      black: '0xCb7432528B8eCa40ff06e029318DaeE4d6A919A7',
+      white: '0xFB067Fe96d281580b8808e635a3FA49091aE48EF',
+      primary: '0xE64a2f645261FfB7C113B0Bd16DD6ecf53fBa2C9',
+      collateralization: '0xd7dFf05E8c60643CBbbddBcFB45567F8DE83F59E'
+    }
   },
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [

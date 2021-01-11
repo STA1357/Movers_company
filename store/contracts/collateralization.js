@@ -1,7 +1,7 @@
 export default {
   state() {
     return {
-      
+
     }
   },
   actions: {
@@ -11,6 +11,6 @@ export default {
 
   },
   getters: {
-
+    
   }
 }

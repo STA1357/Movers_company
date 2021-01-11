@@ -44,7 +44,6 @@ export function getAddress() {
 export function checkAndInstantiateWeb3() {
   try {
     if (window.web3 !== 'undefined') {
-      console.log("Using Metamask's web3 provider");
       return new Web3(window.web3.currentProvider);
     } else {
       console.warn('No web3 detected. Falling back to http://localhost:3000.');

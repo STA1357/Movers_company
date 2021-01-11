@@ -4,8 +4,8 @@ export default {
   state() {
     return {
       account: {
-        address: null,
-        balance: null
+        address: '',
+        balance: 0
       }
     }
   },
