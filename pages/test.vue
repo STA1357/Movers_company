@@ -11,7 +11,12 @@
     <div v-if="loaded">
       {{$store.getters['contracts/white/contract']}}
     </div>
-
+    <div v-if="loaded">
+      {{$store.getters['contracts/primary/contract']}}
+    </div>
+    <div v-if="loaded">
+      {{$store.getters['contracts/collateralization/contract']}}
+    </div>
   </div>
 </template>
 
@@ -28,8 +33,12 @@ export default {
     // this.$store.dispatch('web3/getAccount')
     await this.$store.dispatch("web3/getAccount");
 
-    await this.$store.dispatch('contracts/black/initContract');
-    await this.$store.dispatch('contracts/white/initContract');
+    if (this.$store.getters['web3/account'].address) {
+      await this.$store.dispatch('contracts/black/initContract');
+      await this.$store.dispatch('contracts/white/initContract');
+      await this.$store.dispatch('contracts/primary/initContract');
+      await this.$store.dispatch('contracts/collateralization/initContract');
+    }
     this.loaded = true
     
   },
