@@ -1,29 +1,50 @@
-<template>
-  <div>
-    <nav-cards
-            :text="[
-          { title: 'TAKE LIQUIDITY', path: '/earn/basic/take' },
-          { title: 'RETURN LIQUIDITY', path: '/earn/basic/return' }
+<template
+  ><div>
+  <nav-cards
+          :text="[
+          { title: 'ADD LIQUIDITY', path: '/earn/liquid/take' },
+          { title: 'REMOVE LIQUIDITY', path: '/earn/liquid/return' }
         ]"
-    />
+  />
     <div class="card">
       <div class="block mb-2">
-        <t-block text="You give:" :text2="account.balance" />
+        <t-block text="You add:" :text2="white.balance" />
         <div class="d-flex justify-content-between mt-2">
           <span class="col-3 txt">
             <input
-              v-model="eth"
+              v-model="whiteC"
+              type="text"
+              class="inputs"
+              @input="shotList"
+              placeholder="0.0"
+            />
+          </span>
+          <span class="col-7 pr-0">
+            <Mark :text="msg" @click.native="whiteC = white.balance" />
+            <span class="ml-2 txt">
+              <img src="@/assets/images/white.svg" alt="" />
+              <span class="count">{{ white.symbol }}</span>
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="block mb-2">
+        <t-block text="Add" :text2="black.balance" />
+        <div class="d-flex justify-content-between mt-2">
+          <span class="col-3 txt">
+            <input
+              v-model="blackC"
               type="text"
               class="inputs"
               placeholder="0.0"
               @input="shotList"
             />
           </span>
-          <span class="col-6 pr-0">
-            <Mark :text="msg" @click.native="eth = account.balance" />
-            <span class="ml-3 txt">
-              <img src="@/assets/images/eth.svg" alt="" />
-              <span class="count">ETH</span>
+          <span class="col-7 pr-0">
+            <Mark :text="msg" @click.native="blackC = black.balance" />
+            <span class="ml-2 txt">
+              <img src="@/assets/images/black.svg" alt="" />
+              <span class="count">{{ black.symbol }}</span>
             </span>
           </span>
         </div>
@@ -32,7 +53,7 @@
         <img src="@/assets/images/to.svg" alt="" style="float: left" />
       </div>
       <div class="block mb-2">
-        <t-block text="You give:" :text2="white.balance" />
+        <t-block text="You give:" :text2="account.balance" />
         <div class="d-flex justify-content-between mt-2">
           <span class="col-3 txt">
             <input
@@ -44,29 +65,9 @@
             />
           </span>
           <span class="col-6 pr-0">
-            <span class="ml-3 txt">
-              <img src="@/assets/images/white.svg" alt="" />
-              <span class="count">{{ white.symbol }}</span>
-            </span>
-          </span>
-        </div>
-      </div>
-      <div class="block mb-2">
-        <t-block text="You give:" :text2="black.balance" />
-        <div class="d-flex justify-content-between mt-2">
-          <span class="col-3 txt">
-            <input
-              v-model="measurementValueDisplay"
-              disabled
-              type="text"
-              class="inputs"
-              placeholder="0.0"
-            />
-          </span>
-          <span class="col-6 pr-0">
-            <span class="ml-3 txt">
-              <img src="@/assets/images/black.svg" alt="" />
-              <span class="count">{{ black.symbol }}</span>
+            <span class="ml-2 txt">
+              <img src="@/assets/images/eth.svg" alt="" />
+              <span class="count">ETH</span>
             </span>
           </span>
         </div>
@@ -78,9 +79,7 @@
         >
       </div>
 
-      <Button v-if="!account.address" text="CONNECT WALLET" @click.native="openWalletModal()" />
-
-      <Button v-else text="RETURN BLACK & WHITE" @click.native="shotList" />
+      <Button text="ADD BLACK & WHITE" />
     </div>
     <list
       :text-l="[
@@ -111,30 +110,31 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import WalletModal from "@/components/modal/templates/WalletModal";
-
 import TBlock from "@/components/UIComponents/TitleBlock";
 import Button from "@/components/UIComponents/Button";
 import Mark from "@/components/UIComponents/Mark";
-import List from "@/components/UIComponents/List";
+import { mapGetters } from "vuex";
 import NavCards from "@/components/UIComponents/NavCards";
 
+
+import List from "@/components/UIComponents/List";
 export default {
   layout: "earn",
-  name: "basic",
+  name: "liquid",
   components: {
+      NavCards,
     Button,
     Mark,
     TBlock,
-    List,
-      NavCards
+    List
   },
   data() {
     return {
       msg: "MAX",
       show: false,
       eth: "",
+      blackC: "",
+      whiteC: "",
       whiteBlack: ""
     };
   },
@@ -152,11 +152,14 @@ export default {
     },
     measurementValueDisplay: {
       get() {
-        this.whiteBlack = (this.eth * this.BWtokensPerOneETC).toFixed(2);
-        return this.whiteBlack;
+        this.whiteBlack = this.blackC + this.whiteC;
+
+        this.eth = (this.whiteBlack / this.BWtokensPerOneETC).toFixed(2);
+        return this.eth;
       },
       set(newValue) {
-        return this.eth;
+        this.whiteBlack = this.blackC + this.whiteC;
+        return this.whiteBlack;
       }
     }
   },
@@ -167,20 +170,8 @@ export default {
     shotList() {
       this.show = true;
       console.log(this.show);
-    },
-    openWalletModal() {
-      this.$modal.show(
-        WalletModal,
-        {
-          details: {}
-        },
-        {
-          width: 314
-        }
-      );
-    },
-  },
-
+    }
+  }
 };
 </script>
 

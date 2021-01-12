@@ -3,8 +3,13 @@
     <Menu />
 
     <div class="hello">
-      <nav-cards :text="[{ title: 'BASE POOL', path: '/earn/basic' },{ title: 'LIQUID POOL', path: 'Veridian Dynamics' },{ title: 'TRADE POOL', path: 'Veridian Dynamics' }]"/>
-      <nav-cards :text="[{ title: 'TAKE LIQUIDITY', path: 'Veridian Dynamics' },{ title: 'RETURN LIQUIDITY', path: 'Veridian Dynamics' }]"/>
+      <nav-cards
+        :text="[
+          { title: 'BASE POOL', path: '/earn/basic' },
+          { title: 'LIQUID POOL', path: '/earn/liquid' },
+          { title: 'TRADE POOL', path: '/earn/trade' }
+        ]"
+      />
     </div>
 
     <div v-if="loaded">
@@ -26,33 +31,31 @@ export default {
   data() {
     return {
       loaded: false
-    }
+    };
   },
   async beforeCreate() {
     // this.$store.dispatch('web3/getAccount')
     await this.$store.dispatch("web3/getAccount");
 
-    if (this.$store.getters['web3/account'].address) {
-      await this.$store.dispatch('contracts/black/initContract');
-      await this.$store.dispatch('contracts/white/initContract');
-      await this.$store.dispatch('contracts/primary/initContract');
-      await this.$store.dispatch('contracts/collateralization/initContract');
+    if (this.$store.getters["web3/account"].address) {
+      await this.$store.dispatch("contracts/black/initContract");
+      await this.$store.dispatch("contracts/white/initContract");
+      await this.$store.dispatch("contracts/primary/initContract");
+      await this.$store.dispatch("contracts/collateralization/initContract");
     }
-    this.loaded = true
-    
-  },
-}
+    this.loaded = true;
+  }
+};
 </script>
 
 <style lang="scss">
-  #earn {
-    background: $surface5;
-    min-height: 100vh;
-    overflow: hidden;
-    text-align: center;
-  }
-  .hello {
-    margin-top: 64px;
-  }
-
+#earn {
+  background: $surface5;
+  min-height: 100vh;
+  overflow: hidden;
+  text-align: center;
+}
+.hello {
+  margin-top: 64px;
+}
 </style>

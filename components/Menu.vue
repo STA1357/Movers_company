@@ -6,7 +6,7 @@
       </span>
       <span class="items col-5 d-flex sub">
         <span class="col">TRADE</span>
-        <span class="col"><router-link to="/earn/basic">EARN</router-link></span>
+        <span class="col"><router-link to="/earn">EARN</router-link></span>
         <span class="col">EVENTS</span>
         <span class="col">LIVE</span>
         <span class="col">VOTE</span>
@@ -110,7 +110,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .bar1,
 .bar2,
 .bar3 {
@@ -138,36 +138,38 @@ export default {
   background: rgba(15, 47, 49, 0.95);
   height: 64px;
   padding: 16px 0;
+
+  .nuxt-link-active {
+    font-weight: 900 !important;
+  }
 }
 .items span,
 a {
-  @font-family: Montserrat;
+  font-family: Montserrat;
   font-style: normal;
   font-size: 14px;
   line-height: 12px;
   padding: 10px 12px;
   font-weight: normal;
-  color: #ffffff;
+  color: $white;
   mix-blend-mode: normal;
   opacity: 0.8;
   text-decoration: none;
 }
-.router-link-active {
-  font-weight: 900;
-}
+
 .items-btn span {
   @font-family: Montserrat;
   font-style: normal;
   font-size: 14px;
   line-height: 12px;
   font-weight: normal;
-  color: #ffffff;
+  color: $white;
   mix-blend-mode: normal;
   opacity: 0.8;
   padding: 10px 2px;
 }
 .link:hover {
-  background: #ffffff;
+  background: $white;
   border-radius: 6px;
   color: black;
   font-weight: 600;
@@ -207,7 +209,7 @@ a {
 }
 
 .link:hover {
-  background: #ffffff;
+  background: $white;
   border-radius: 6px;
   color: black;
   font-weight: 600;
@@ -224,7 +226,7 @@ a {
 }
 .balance {
   background: rgba(255, 255, 255, 0.08);
-  border: 0.5px solid #ffffff !important;
+  border: 0.5px solid $white !important;
   box-sizing: border-box;
   border-radius: 6px 0px 0px 6px;
   @font-family: Montserrat;
@@ -237,10 +239,10 @@ a {
 
   text-align: right;
   margin-right: -2px;
-  color: #ffffff;
+  color: $white;
 }
 .wallet {
-  border: 2px solid #ffffff !important;
+  border: 2px solid $white !important;
   box-sizing: border-box;
   border-radius: 6px;
   @font-family: Montserrat;
@@ -252,6 +254,6 @@ a {
 
   text-align: right;
   opacity: 1 !important;
-  color: #ffffff !important;
+  color: $white !important;
 }
 </style>

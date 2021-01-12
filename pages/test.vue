@@ -6,16 +6,16 @@
     {{$store.getters['contracts/black/symbol']}}
     {{$store.getters['contracts/black/totalSupply']}} -->
     <div v-if="loaded">
-      {{$store.getters['contracts/black/contract']}}
+      {{ $store.getters["contracts/black/contract"] }}
     </div>
     <div v-if="loaded">
-      {{$store.getters['contracts/white/contract']}}
+      {{ $store.getters["contracts/white/contract"] }}
     </div>
     <div v-if="loaded">
-      {{$store.getters['contracts/primary/contract']}}
+      {{ $store.getters["contracts/primary/contract"] }}
     </div>
     <div v-if="loaded">
-      {{$store.getters['contracts/collateralization/contract']}}
+      {{ $store.getters["contracts/collateralization/contract"] }}
     </div>
   </div>
 </template>
@@ -27,29 +27,26 @@ export default {
   data() {
     return {
       loaded: false
-    }
+    };
   },
   async beforeCreate() {
     // this.$store.dispatch('web3/getAccount')
     await this.$store.dispatch("web3/getAccount");
 
-    if (this.$store.getters['web3/account'].address) {
-      await this.$store.dispatch('contracts/black/initContract');
-      await this.$store.dispatch('contracts/white/initContract');
-      await this.$store.dispatch('contracts/primary/initContract');
-      await this.$store.dispatch('contracts/collateralization/initContract');
+    if (this.$store.getters["web3/account"].address) {
+      await this.$store.dispatch("contracts/black/initContract");
+      await this.$store.dispatch("contracts/white/initContract");
+      await this.$store.dispatch("contracts/primary/initContract");
+      await this.$store.dispatch("contracts/collateralization/initContract");
     }
-    this.loaded = true
-    
-  },
+    this.loaded = true;
+  }
   // computed: {
   //   account() {
   //     return this.$store.getters['web3/account']
   //   }
   // }
-}
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

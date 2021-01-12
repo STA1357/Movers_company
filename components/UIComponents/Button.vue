@@ -14,9 +14,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 span {
-  background: #0f2f31;
+  background: $brand;
   border-radius: 11px;
   width: 286px;
   height: 52px;
@@ -30,7 +30,7 @@ span {
 
   text-align: center;
   text-transform: uppercase;
-  color: #ffffff;
+  color: $white;
   padding: 15px 6px;
 }
 </style>

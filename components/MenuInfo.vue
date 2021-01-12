@@ -34,14 +34,14 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .main {
   width: 314px;
   height: 210px;
   position: absolute;
   top: 100px;
   left: 70%;
-  background: #f9f9f9;
+  background: $surface3;
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
   box-shadow: 4px 8px 18px 2px rgba(0, 0, 0, 0.15);
@@ -51,7 +51,7 @@ export default {
 .body {
   width: 286px;
   height: 112px;
-  background: #ffffff;
+  background: $white;
   border: 1px solid #eaeaea;
   box-sizing: border-box;
   border-radius: 11px;
@@ -66,7 +66,7 @@ export default {
   line-height: 17px;
   /* identical to box height */
   letter-spacing: 0.015em;
-  color: #0f2f31;
+  color: $brand;
   display: flex;
 }
 .sub-title {
@@ -76,7 +76,7 @@ export default {
   font-size: 10px;
   line-height: 12px;
   display: flex;
-  color: #0f2f31;
+  color: $brand;
 }
 img {
   width: 32px;
@@ -90,7 +90,7 @@ img {
   line-height: 22px;
   letter-spacing: 0.015em;
 
-  color: #0f2f31;
+  color: $brand;
 }
 .btn {
   width: 74px;
@@ -120,7 +120,7 @@ img {
   border: 0.5px solid rgba(61, 61, 61, 0.08);
   box-sizing: border-box;
   border-radius: 4px;
-  color: #3d3d3d;
+  color: $text2;
 }
 .footer {
   @font-family: Montserrat;
@@ -130,6 +130,6 @@ img {
   line-height: 12px;
   text-decoration-line: underline;
   display: flex;
-  color: #0f2f31;
+  color: $brand;
 }
 </style>
