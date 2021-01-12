@@ -80,7 +80,7 @@
 
       <Button v-if="!account.address" text="CONNECT WALLET" @click.native="openWalletModal()" />
 
-      <Button v-else text="RETURN BLACK & WHITE" @click.native="shotList" />
+      <Button v-else text="RETURN BLACK & WHITE"/>
     </div>
     <list
       :text-l="[
