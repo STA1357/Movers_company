@@ -3,7 +3,7 @@
     <Menu />
 
     <div class="hello">
-      <nav-cards :text="[{ title: 'BASE POOL', path: '/earn/basic' },{ title: 'LIQUID POOL', path: 'Veridian Dynamics' },{ title: 'TRADE POOL', path: 'Veridian Dynamics' }]"/>
+      <nav-cards :text="[{ title: 'BASE POOL', path: '/earn/basic' },{ title: 'LIQUID POOL', path: '/earn/liquid' },{ title: 'TRADE POOL', path: '/earn/trade' }]"/>
       <nav-cards :text="[{ title: 'TAKE LIQUIDITY', path: 'Veridian Dynamics' },{ title: 'RETURN LIQUIDITY', path: 'Veridian Dynamics' }]"/>
     </div>
 
@@ -39,7 +39,7 @@ export default {
       await this.$store.dispatch('contracts/collateralization/initContract');
     }
     this.loaded = true
-    
+
   },
 }
 </script>
@@ -54,5 +54,16 @@ export default {
   .hello {
     margin-top: 64px;
   }
+  a.nuxt-link-active {
+    background: $brand !important;
+    font-style: normal;
+    font-weight: bold !important;
+    font-size: 12px;
+    line-height: 15px;
+    /* identical to box height */
 
+    text-align: center;
+
+    color: $white !important;
+  }
 </style>

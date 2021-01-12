@@ -42,7 +42,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .text {
   @font-family: Montserrat;
   font-style: normal;
@@ -52,7 +52,7 @@ export default {
   /* identical to box height */
 
   text-align: left;
-  color: #7b7b7b;
+  color: $text1;
 }
 .cost {
   @font-family: Montserrat;
@@ -64,7 +64,7 @@ export default {
 
   text-align: right;
 
-  color: #7b7b7b;
+  color: $text1;
 }
 .list-block {
   width: 296px;
@@ -91,7 +91,7 @@ export default {
   font-size: 10px;
   line-height: 12px;
 
-  color: #000000;
+  color: $black;
 }
 .title-cost {
   @font-family: Montserrat;
@@ -101,6 +101,6 @@ export default {
   line-height: 12px;
   text-align: right;
 
-  color: #000000;
+  color: $black;
 }
 </style>

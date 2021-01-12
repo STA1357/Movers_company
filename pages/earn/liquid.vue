@@ -1,17 +1,44 @@
-<template>
-  <div>
+<template
+  ><div>
     <div class="card">
       <div class="block mb-2">
-        <t-block text="You give:" :text2="account.balance" />
+        <t-block text="You add:" :text2="white.balance" />
         <div class="d-flex justify-content-between mt-2">
           <span class="col-3 txt">
-            <input v-model="eth" type="text" class="inputs" placeholder="0.0" @input="shotList"/>
+            <input
+              v-model="whiteC"
+              type="text"
+              class="inputs"
+              @input="shotList"
+              placeholder="0.0"
+            />
           </span>
-          <span class="col-6 pr-0">
-            <Mark :text="msg" @click.native="eth = account.balance" />
-            <span class="ml-3 txt">
-              <img src="@/assets/images/eth.svg" alt="" />
-              <span class="count">ETH</span>
+          <span class="col-7 pr-0">
+            <Mark :text="msg" @click.native="whiteC = white.balance" />
+            <span class="ml-2 txt">
+              <img src="@/assets/images/white.svg" alt="" />
+              <span class="count">{{ white.symbol }}</span>
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="block mb-2">
+        <t-block text="Add" :text2="black.balance" />
+        <div class="d-flex justify-content-between mt-2">
+          <span class="col-3 txt">
+            <input
+              v-model="blackC"
+              type="text"
+              class="inputs"
+              placeholder="0.0"
+              @input="shotList"
+            />
+          </span>
+          <span class="col-7 pr-0">
+            <Mark :text="msg" @click.native="blackC = black.balance" />
+            <span class="ml-2 txt">
+              <img src="@/assets/images/black.svg" alt="" />
+              <span class="count">{{ black.symbol }}</span>
             </span>
           </span>
         </div>
@@ -20,7 +47,7 @@
         <img src="@/assets/images/to.svg" alt="" style="float: left" />
       </div>
       <div class="block mb-2">
-        <t-block text="You give:" :text2="white.balance" />
+        <t-block text="You give:" :text2="account.balance" />
         <div class="d-flex justify-content-between mt-2">
           <span class="col-3 txt">
             <input
@@ -29,33 +56,13 @@
               class="inputs"
               placeholder="0.0"
               disabled
-            />
-          </span>
-          <span class="col-6 pr-0">
-            <span class="ml-3 txt">
-              <img src="@/assets/images/white.svg" alt="" />
-              <span class="count">{{ white.symbol }}</span>
-            </span>
-          </span>
-        </div>
-      </div>
-      <div class="block mb-2">
-        <t-block text="You give:" :text2="black.balance" />
-        <div class="d-flex justify-content-between mt-2">
-          <span class="col-3 txt">
-            <input
-              v-model="measurementValueDisplay"
-              disabled
-              type="text"
-              class="inputs"
-              placeholder="0.0"
 
             />
           </span>
           <span class="col-6 pr-0">
-            <span class="ml-3 txt">
-              <img src="@/assets/images/black.svg" alt="" />
-              <span class="count">{{ black.symbol }}</span>
+            <span class="ml-2 txt">
+              <img src="@/assets/images/eth.svg" alt="" />
+              <span class="count">ETH</span>
             </span>
           </span>
         </div>
@@ -66,7 +73,8 @@
           >{{ BWtokensPerOneETC.toFixed(2) }} B&W per 1 ETH</span
         >
       </div>
-      <Button text="RETURN BLACK & WHITE" />
+
+      <Button text="ADD BLACK & WHITE"/>
     </div>
     <list
       :text-l="[
@@ -97,15 +105,15 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 import TBlock from "@/components/UIComponents/TitleBlock";
 import Button from "@/components/UIComponents/Button";
 import Mark from "@/components/UIComponents/Mark";
+import { mapGetters } from "vuex";
+
 import List from "@/components/UIComponents/List";
 export default {
   layout: "earn",
-  name: "basic",
+  name: "liquid",
   components: {
     Button,
     Mark,
@@ -117,6 +125,8 @@ export default {
       msg: "MAX",
       show: false,
       eth: "",
+      blackC: "",
+      whiteC: "",
       whiteBlack: ""
     };
   },
@@ -134,11 +144,14 @@ export default {
     },
     measurementValueDisplay: {
       get() {
-        this.whiteBlack = (this.eth * this.BWtokensPerOneETC).toFixed(2);
-        return this.whiteBlack;
+        this.whiteBlack = this.blackC + this.whiteC;
+
+        this.eth = (this.whiteBlack / this.BWtokensPerOneETC).toFixed(2);
+        return this.eth;
       },
       set(newValue) {
-        return this.eth;
+        this.whiteBlack = this.blackC + this.whiteC;
+        return this.whiteBlack;
       }
     }
   },

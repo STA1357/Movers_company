@@ -15,11 +15,11 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .mark {
   width: 32px;
   height: 15px;
-  background: #f2f2f2;
+  background: $surface4;
   border-radius: 4px;
   padding: 2px 5px;
   text-transform: uppercase;
@@ -32,6 +32,6 @@ export default {
 
   position: relative;
   top: -2px;
-  color: #0f2f31;
+  color: $brand;
 }
 </style>

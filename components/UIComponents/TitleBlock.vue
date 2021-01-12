@@ -27,6 +27,6 @@ div span {
   font-size: 10px;
   line-height: 12px;
 
-  color: #0f2f31;
+  color: $brand;
 }
 </style>
