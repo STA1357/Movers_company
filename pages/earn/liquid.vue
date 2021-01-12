@@ -1,5 +1,11 @@
 <template
   ><div>
+  <nav-cards
+          :text="[
+          { title: 'ADD LIQUIDITY', path: '/earn/liquid/take' },
+          { title: 'REMOVE LIQUIDITY', path: '/earn/liquid/return' }
+        ]"
+  />
     <div class="card">
       <div class="block mb-2">
         <t-block text="You add:" :text2="white.balance" />
@@ -108,12 +114,15 @@ import TBlock from "@/components/UIComponents/TitleBlock";
 import Button from "@/components/UIComponents/Button";
 import Mark from "@/components/UIComponents/Mark";
 import { mapGetters } from "vuex";
+import NavCards from "@/components/UIComponents/NavCards";
+
 
 import List from "@/components/UIComponents/List";
 export default {
   layout: "earn",
   name: "liquid",
   components: {
+      NavCards,
     Button,
     Mark,
     TBlock,

@@ -1,5 +1,11 @@
 <template>
   <div>
+    <nav-cards
+            :text="[
+          { title: 'TAKE LIQUIDITY', path: '/earn/basic/take' },
+          { title: 'RETURN LIQUIDITY', path: '/earn/basic/return' }
+        ]"
+    />
     <div class="card">
       <div class="block mb-2">
         <t-block text="You give:" :text2="account.balance" />
@@ -108,6 +114,8 @@ import TBlock from "@/components/UIComponents/TitleBlock";
 import Button from "@/components/UIComponents/Button";
 import Mark from "@/components/UIComponents/Mark";
 import List from "@/components/UIComponents/List";
+import NavCards from "@/components/UIComponents/NavCards";
+
 export default {
   layout: "earn",
   name: "basic",
@@ -115,7 +123,8 @@ export default {
     Button,
     Mark,
     TBlock,
-    List
+    List,
+      NavCards
   },
   data() {
     return {

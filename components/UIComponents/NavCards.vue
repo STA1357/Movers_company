@@ -29,7 +29,18 @@ export default {
   width: 314px;
   height: 29px;
   margin: 0 auto;
+  a.nuxt-link-active {
+    background: $brand !important;
+    font-style: normal;
+    font-weight: bold !important;
+    font-size: 12px;
+    line-height: 15px;
+    /* identical to box height */
 
+    text-align: center;
+
+    color: $white !important;
+  }
   .links {
     background: $surface3;
     text-transform: uppercase;
