@@ -15,11 +15,11 @@ export default {
   },
   actions: {
     async initContract({ dispatch }) {
-      await dispatch('getBalance')
-      await dispatch('getDecimals')
-      await dispatch('getName')
-      await dispatch('getSymbol')
-      await dispatch('getTotalSupply')
+        await dispatch('getBalance')
+        await dispatch('getDecimals')
+        await dispatch('getName')
+        await dispatch('getSymbol')
+        await dispatch('getTotalSupply')  
     },
 
     async getBalance({ rootState, commit }) {

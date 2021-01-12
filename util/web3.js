@@ -36,7 +36,11 @@ export async function getAccount() {
 }
 
 export function getAddress() {
-  return window.ethereum.selectedAddress ? window.ethereum.selectedAddress : null
+  try {
+    return window.ethereum.selectedAddress ? window.ethereum.selectedAddress : null
+  } catch (error) {
+    return null
+  }
 }
 
 // Web3 - класс, который мы импортировали с библиотекой web3
@@ -46,11 +50,10 @@ export function checkAndInstantiateWeb3() {
     if (window.web3 !== 'undefined') {
       return new Web3(window.web3.currentProvider);
     } else {
-      console.warn('No web3 detected. Falling back to http://localhost:3000.');
       return new Web3(new this.Web3.providers.HttpProvider('http://localhost:3000'));
     }
   } catch(e) {
-    console.error("Sorry, can't find any web3 provider:", e.message)
+    return null
   }
 }
 

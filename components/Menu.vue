@@ -6,7 +6,7 @@
       </span>
       <span class="items col-5 d-flex sub">
         <span class="col">TRADE</span>
-        <span class="col"><router-link to="/earn">EARN</router-link></span>
+        <span class="col"><router-link to="/earn/basic">EARN</router-link></span>
         <span class="col">EVENTS</span>
         <span class="col">LIVE</span>
         <span class="col">VOTE</span>

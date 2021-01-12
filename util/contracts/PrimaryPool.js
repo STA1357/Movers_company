@@ -7,7 +7,7 @@ class PrimaryPool {
     this.address = process.env.contractAddresses.primary
 
     this.web3Instance = checkAndInstantiateWeb3()
-    this.contractInstance = new this.web3Instance.eth.Contract(ABI, this.address); 
+    this.contractInstance = this.web3Instance ? new this.web3Instance.eth.Contract(ABI, this.address) : null; 
   }
 
   async minBlackAndWhiteBuy() {

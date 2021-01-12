@@ -1,5 +1,5 @@
-<template
-  ><div>
+<template>
+  <div>
     <div class="card">
       <div class="block mb-2">
         <t-block text="You give:" :text2="account.balance" />
@@ -20,7 +20,7 @@
         <img src="@/assets/images/to.svg" alt="" style="float: left" />
       </div>
       <div class="block mb-2">
-        <t-block text="You give:" text2="0  " />
+        <t-block text="You give:" :text2="white.balance" />
         <div class="d-flex justify-content-between mt-2">
           <span class="col-3 txt">
             <input
@@ -34,13 +34,13 @@
           <span class="col-6 pr-0">
             <span class="ml-3 txt">
               <img src="@/assets/images/white.svg" alt="" />
-              <span class="count">WHITE</span>
+              <span class="count">{{white.symbol}}</span>
             </span>
           </span>
         </div>
       </div>
       <div class="block mb-2">
-        <t-block text="You give:" text2="0" />
+        <t-block text="You give:" :text2="black.balance" />
         <div class="d-flex justify-content-between mt-2">
           <span class="col-3 txt">
             <input
@@ -54,14 +54,14 @@
           <span class="col-6 pr-0">
             <span class="ml-3 txt">
               <img src="@/assets/images/black.svg" alt="" />
-              <span class="count">BLACK</span>
+              <span class="count">{{black.symbol}}</span>
             </span>
           </span>
         </div>
       </div>
       <div class="d-flex check-price justify-content-between">
         <span class="col-5">Aggregate price:</span>
-        <span class="col-6">651.66 B&W per 1 ETH</span>
+        <span class="col-6">{{ BWtokensPerOneETC.toFixed(2) }} B&W per 1 ETH</span>
       </div>
 
       <Button text="RETURN BLACK & WHITE" @click.native="shotList" />
@@ -95,6 +95,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import TBlock from "@/components/UIComponents/TitleBlock";
 import Button from "@/components/UIComponents/Button";
 import Mark from "@/components/UIComponents/Mark";
@@ -117,12 +119,20 @@ export default {
     };
   },
   computed: {
-    account() {
-      return this.$store.getters["web3/account"];
+    ...mapGetters({
+      account: 'web3/account',
+      black: 'contracts/black/contract',
+      white: 'contracts/white/contract',
+      primary: 'contracts/primary/contract',
+      collateralization: 'contracts/collateralization/contract',
+    }),
+
+    BWtokensPerOneETC() {
+      return ((1e18 / this.primary.BWprice) / Math.pow(10, this.black.decimals))
     },
     measurementValueDisplay: {
       get() {
-        this.whiteBlack = this.eth * 651.66;
+        this.whiteBlack = (this.eth * this.BWtokensPerOneETC).toFixed(2);
         return this.whiteBlack;
       },
       set(newValue) {

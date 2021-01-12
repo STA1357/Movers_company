@@ -1,5 +1,5 @@
 <template>
-  <div id="default">
+  <div id="earn">
     <Menu />
 
     <div class="hello">
@@ -7,7 +7,12 @@
       <nav-cards :text="[{ title: 'TAKE LIQUIDITY', path: 'Veridian Dynamics' },{ title: 'RETURN LIQUIDITY', path: 'Veridian Dynamics' }]"/>
     </div>
 
-    <Nuxt />
+    <div v-if="loaded">
+      <Nuxt />
+    </div>
+    <div v-else>
+      Loading...
+    </div>
   </div>
 </template>
 
@@ -18,11 +23,29 @@ export default {
   components: {
     NavCards
   },
+  data() {
+    return {
+      loaded: false
+    }
+  },
+  async beforeCreate() {
+    // this.$store.dispatch('web3/getAccount')
+    await this.$store.dispatch("web3/getAccount");
+
+    if (this.$store.getters['web3/account'].address) {
+      await this.$store.dispatch('contracts/black/initContract');
+      await this.$store.dispatch('contracts/white/initContract');
+      await this.$store.dispatch('contracts/primary/initContract');
+      await this.$store.dispatch('contracts/collateralization/initContract');
+    }
+    this.loaded = true
+    
+  },
 }
 </script>
 
 <style lang="scss">
-  #default {
+  #earn {
     background: $surface5;
     min-height: 100vh;
     overflow: hidden;
