@@ -64,7 +64,9 @@
         <span class="col-6">{{ BWtokensPerOneETC.toFixed(2) }} B&W per 1 ETH</span>
       </div>
 
-      <Button text="RETURN BLACK & WHITE" @click.native="shotList" />
+      <Button v-if="!account.address" text="CONNECT WALLET" @click.native="openWalletModal()" />
+
+      <Button v-else text="RETURN BLACK & WHITE" @click.native="shotList" />
     </div>
     <list
       :text-l="[
@@ -96,6 +98,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import WalletModal from "@/components/modal/templates/WalletModal";
 
 import TBlock from "@/components/UIComponents/TitleBlock";
 import Button from "@/components/UIComponents/Button";
@@ -147,8 +150,20 @@ export default {
     shotList() {
       this.show = !this.show;
       console.log(this.show);
-    }
-  }
+    },
+    openWalletModal() {
+      this.$modal.show(
+        WalletModal,
+        {
+          details: {}
+        },
+        {
+          width: 314
+        }
+      );
+    },
+  },
+
 };
 </script>
 
