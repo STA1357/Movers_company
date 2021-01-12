@@ -6,7 +6,7 @@
       </span>
       <span class="items col-5 d-flex sub">
         <span class="col">TRADE</span>
-        <span class="col"><router-link to="/earn/basic">EARN</router-link></span>
+        <span class="col"><router-link to="/earn">EARN</router-link></span>
         <span class="col">EVENTS</span>
         <span class="col">LIVE</span>
         <span class="col">VOTE</span>
@@ -138,10 +138,14 @@ export default {
   background: rgba(15, 47, 49, 0.95);
   height: 64px;
   padding: 16px 0;
+
+  .nuxt-link-active {
+    font-weight: 900 !important;
+  }
 }
 .items span,
 a {
-  @font-family: Montserrat;
+  font-family: Montserrat;
   font-style: normal;
   font-size: 14px;
   line-height: 12px;
@@ -152,9 +156,7 @@ a {
   opacity: 0.8;
   text-decoration: none;
 }
-.router-link-active {
-  font-weight: 900;
-}
+
 .items-btn span {
   @font-family: Montserrat;
   font-style: normal;

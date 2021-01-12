@@ -1,6 +1,6 @@
-@import './fonts.scss';
-@import './variables.scss';
-@import './mixins.scss';
+@import "./fonts.scss";
+@import "./variables.scss";
+@import "./mixins.scss";
 
 .card {
   margin: 0 auto;
@@ -23,7 +23,7 @@
 }
 
 .txt {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
@@ -52,7 +52,7 @@
 }
 
 .inputs::placeholder {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;

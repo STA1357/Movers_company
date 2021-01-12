@@ -5,7 +5,13 @@
         <t-block text="You give:" :text2="account.balance" />
         <div class="d-flex justify-content-between mt-2">
           <span class="col-3 txt">
-            <input v-model="eth" type="text" class="inputs" placeholder="0.0" @input="shotList"/>
+            <input
+              v-model="eth"
+              type="text"
+              class="inputs"
+              placeholder="0.0"
+              @input="shotList"
+            />
           </span>
           <span class="col-6 pr-0">
             <Mark :text="msg" @click.native="eth = account.balance" />
@@ -49,7 +55,6 @@
               type="text"
               class="inputs"
               placeholder="0.0"
-
             />
           </span>
           <span class="col-6 pr-0">

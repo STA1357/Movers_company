@@ -56,7 +56,6 @@
               class="inputs"
               placeholder="0.0"
               disabled
-
             />
           </span>
           <span class="col-6 pr-0">
@@ -74,7 +73,7 @@
         >
       </div>
 
-      <Button text="ADD BLACK & WHITE"/>
+      <Button text="ADD BLACK & WHITE" />
     </div>
     <list
       :text-l="[
