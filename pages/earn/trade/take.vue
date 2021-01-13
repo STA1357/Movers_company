@@ -1,73 +1,60 @@
 <template
   ><div>
-  <nav-cards
-          :text="[
-          { title: 'ADD LIQUIDITY', path: '/earn/liquid/take' },
-          { title: 'REMOVE LIQUIDITY', path: '/earn/liquid/return' }
-        ]"
-  />
+    <nav-cards
+      :text="[
+        { title: 'ADD LIQUIDITY', path: '/earn/trade/return' },
+        { title: 'REMOVE LIQUIDITY', path: '/earn/trade/take' }
+      ]"
+    />
     <div class="card">
-      <div class="block mb-2">
-        <t-block text="You add:" :text2="white.balance" />
-        <div class="d-flex justify-content-between mt-2">
-          <span class="col-3 txt">
-            <input
-              v-model="whiteC"
-              type="text"
-              class="inputs"
-              @input="shotList"
-              placeholder="0.0"
-            />
-          </span>
-          <span class="col-7 pr-0">
-            <Mark :text="msg" @click.native="whiteC = white.balance; shotList()" />
-            <span class="ml-2 txt">
-              <img src="@/assets/images/white.svg" alt="" />
-              <span class="count">{{ white.symbol }}</span>
-            </span>
-          </span>
+      <div class="mb-2 d-flex row">
+        <div class="col-6 desciption">
+          Your Pool Tokens: <img src="@/assets/images/info.svg" alt="" />
         </div>
-      </div>
-      <div class="block mb-2">
-        <t-block text="Add" :text2="black.balance" />
-        <div class="d-flex justify-content-between mt-2">
-          <span class="col-3 txt">
-            <input
-              v-model="blackC"
-              type="text"
-              class="inputs"
-              placeholder="0.0"
-              @input="shotList"
-            />
-          </span>
-          <span class="col-7 pr-0">
-            <Mark :text="msg" @click.native="blackC = black.balance; shotList()" />
-            <span class="ml-2 txt">
-              <img src="@/assets/images/black.svg" alt="" />
-              <span class="count">{{ black.symbol }}</span>
-            </span>
-          </span>
+        <div class="col-6 price">
+          3.166 LPBW
         </div>
-      </div>
-      <div class="p-2 ml-3">
-        <img src="@/assets/images/to.svg" alt="" style="float: left" />
+        <div class="col-6 desciption">
+          Pooled WHITE: <img src="@/assets/images/info.svg" alt="" />
+        </div>
+        <div class="col-6 price">
+          912.333
+        </div>
+        <div class="col-6 desciption">
+          Pooled BLACK: <img src="@/assets/images/info.svg" alt="" />
+        </div>
+        <div class="col-6 price">
+          912.333
+        </div>
+        <div class="col-6 desciption">
+          Pooled ETH: <img src="@/assets/images/info.svg" alt="" />
+        </div>
+        <div class="col-6 price">
+          1.400053
+        </div>
+        <div class="col-6 desciption">
+          Your Share of Pool: <img src="@/assets/images/info.svg" alt="" />
+        </div>
+        <div class="col-6 price">
+          0.34%
+        </div>
       </div>
       <div class="block mb-2">
         <t-block text="You give:" :text2="account.balance" />
         <div class="d-flex justify-content-between mt-2">
           <span class="col-3 txt">
             <input
-              v-model="measurementValueDisplay"
+              v-model="eth"
               type="text"
               class="inputs"
               placeholder="0.0"
-              disabled
+              @input="shotList"
             />
           </span>
           <span class="col-6 pr-0">
+            <Mark :text="msg" @click.native="eth = account.balance; shotList()" />
             <span class="ml-2 txt">
-              <img src="@/assets/images/eth.svg" alt="" />
-              <span class="count">ETH</span>
+              <span class="count">LPBW</span>
             </span>
           </span>
         </div>
@@ -79,7 +66,7 @@
         >
       </div>
 
-      <Button text="ADD BLACK & WHITE" />
+      <Button text="ADD LIQUIDITY" />
     </div>
     <list
       :text-l="[
@@ -113,16 +100,15 @@
 import TBlock from "@/components/UIComponents/TitleBlock";
 import Button from "@/components/UIComponents/Button";
 import Mark from "@/components/UIComponents/Mark";
+import List from "@/components/UIComponents/List";
 import { mapGetters } from "vuex";
 import NavCards from "@/components/UIComponents/NavCards";
 
-
-import List from "@/components/UIComponents/List";
 export default {
   layout: "earn",
-  name: "liquid",
+  name: "trade",
   components: {
-      NavCards,
+    NavCards,
     Button,
     Mark,
     TBlock,
@@ -152,14 +138,11 @@ export default {
     },
     measurementValueDisplay: {
       get() {
-        this.whiteBlack = this.blackC + this.whiteC;
-
-        this.eth = (this.whiteBlack / this.BWtokensPerOneETC).toFixed(2);
-        return this.eth;
+        this.whiteBlack = (this.eth * this.BWtokensPerOneETC).toFixed(2);
+        return this.whiteBlack;
       },
       set(newValue) {
-        this.whiteBlack = this.blackC + this.whiteC;
-        return this.whiteBlack;
+        return this.eth;
       }
     }
   },
@@ -175,4 +158,25 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.desciption {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 10px;
+  line-height: 12px;
+  margin-bottom: 9px;
+  color: $brand;
+  text-align: left;
+}
+.price {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 12px;
+  text-align: right;
+  margin-bottom: 9px;
+  color: $brand;
+}
+</style>

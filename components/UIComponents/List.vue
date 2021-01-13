@@ -1,16 +1,16 @@
 <template>
   <div v-if="show" class="d-flex list-block row">
-    <div class="col-12 title-block row">
-      <div class="title col-6 mb-1 pl-0">
+    <div class="title-block d-flex row">
+      <div class="title col-4 mb-1 ml-2">
         You received
       </div>
-      <div class="title-cost col-6 mb-1 pr-0">
+      <div class="title-cost col-7 mb-1 ml-1">
         456.166 BLACK
       </div>
-      <div class="title col-6 pl-0">
+      <div class="title col-4 mb-1 ml-2">
         You received
       </div>
-      <div class="title-cost col-6 pr-0">
+      <div class="title-cost col-7 mb-1 ml-1">
         456.166 BLACK
       </div>
     </div>

@@ -20,7 +20,7 @@
             />
           </span>
           <span class="col-6 pr-0">
-            <Mark :text="msg" @click.native="eth = account.balance" />
+            <Mark :text="msg" @click.native="eth = account.balance; shotList()" />
             <span class="ml-3 txt">
               <img src="@/assets/images/eth.svg" alt="" />
               <span class="count">ETH</span>

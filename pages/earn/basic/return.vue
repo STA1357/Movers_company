@@ -20,7 +20,7 @@
             />
           </span>
                     <span class="col-7 pr-0">
-            <Mark :text="msg" @click.native="whiteC = white.balance" />
+            <Mark :text="msg" @click.native="whiteC = white.balance; shotList()" />
             <span class="ml-2 txt">
               <img src="@/assets/images/white.svg" alt="" />
               <span class="count">{{ white.symbol }}</span>
@@ -41,7 +41,7 @@
             />
           </span>
                     <span class="col-7 pr-0">
-            <Mark :text="msg" @click.native="blackC = black.balance" />
+            <Mark :text="msg" @click.native="blackC = black.balance; shotList()" />
             <span class="ml-2 txt">
               <img src="@/assets/images/black.svg" alt="" />
               <span class="count">{{ black.symbol }}</span>

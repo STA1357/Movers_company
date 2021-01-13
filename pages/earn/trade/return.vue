@@ -2,8 +2,8 @@
   ><div>
   <nav-cards
           :text="[
-          { title: 'ADD LIQUIDITY', path: '/earn/trade' },
-          { title: 'REMOVE LIQUIDITY', path: '/earn/trade' }
+          { title: 'ADD LIQUIDITY', path: '/earn/trade/return' },
+          { title: 'REMOVE LIQUIDITY', path: '/earn/trade/take' }
         ]"
   />
     <div class="card">
@@ -20,7 +20,7 @@
             />
           </span>
           <span class="col-7 pr-0">
-            <Mark :text="msg" @click.native="whiteC = white.balance" />
+            <Mark :text="msg" @click.native="whiteC = white.balance; shotList()" />
             <span class="ml-2 txt">
               <img src="@/assets/images/white.svg" alt="" />
               <span class="count">{{ white.symbol }}</span>
@@ -44,7 +44,7 @@
             />
           </span>
           <span class="col-7 pr-0">
-            <Mark :text="msg" @click.native="blackC = black.balance" />
+            <Mark :text="msg" @click.native="blackC = black.balance; shotList()" />
             <span class="ml-2 txt">
               <img src="@/assets/images/black.svg" alt="" />
               <span class="count">{{ black.symbol }}</span>
@@ -68,7 +68,7 @@
             />
           </span>
           <span class="col-6 pr-0">
-            <Mark :text="msg" @click.native="eth = account.balance" />
+            <Mark :text="msg" @click.native="eth = account.balance; shotList()" />
             <span class="ml-2 txt">
               <img src="@/assets/images/eth.svg" alt="" />
               <span class="count">ETH</span>
