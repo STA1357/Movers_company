@@ -1,10 +1,10 @@
 <template>
   <div>
     <nav-cards
-            :text="[
-          { title: 'TAKE LIQUIDITY', path: '/earn/basic/take' },
-          { title: 'RETURN LIQUIDITY', path: '/earn/basic/return' }
-        ]"
+      :text="[
+        { title: 'TAKE LIQUIDITY', path: '/earn/basic/take' },
+        { title: 'RETURN LIQUIDITY', path: '/earn/basic/return' }
+      ]"
     />
     <div class="card">
       <div class="block mb-2">
@@ -20,7 +20,13 @@
             />
           </span>
           <span class="col-6 pr-0">
-            <Mark :text="msg" @click.native="eth = account.balance; shotList()" />
+            <Mark
+              :text="msg"
+              @click.native="
+                eth = account.balance;
+                shotList();
+              "
+            />
             <span class="ml-3 txt">
               <img src="@/assets/images/eth.svg" alt="" />
               <span class="count">ETH</span>
@@ -28,7 +34,7 @@
           </span>
         </div>
       </div>
-      <div class="p-2 ml-3">
+      <div class="p-2 ml-3" @click="$router.push('/earn/basic/return')">
         <img src="@/assets/images/to.svg" alt="" style="float: left" />
       </div>
       <div class="block mb-2">
@@ -78,9 +84,13 @@
         >
       </div>
 
-      <Button v-if="!account.address" text="CONNECT WALLET" @click.native="openWalletModal()" />
+      <Button
+        v-if="!account.address"
+        text="CONNECT WALLET"
+        @click.native="openWalletModal()"
+      />
 
-      <Button v-else text="RETURN BLACK & WHITE"/>
+      <Button v-else text="RETURN BLACK & WHITE" />
     </div>
     <list
       :text-l="[
@@ -105,13 +115,15 @@
         '0,00306908 ETH',
         '0.1/0.5/1.7 %'
       ]"
+      :title-r="['Min received', `from ${measurementValueDisplay} B&W`]"
+      :title-l="[`${eth} ETH`]"
       :show="this.show"
     />
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 import WalletModal from "@/components/modal/templates/WalletModal";
 
 import TBlock from "@/components/UIComponents/TitleBlock";
@@ -128,7 +140,7 @@ export default {
     Mark,
     TBlock,
     List,
-      NavCards
+    NavCards
   },
   data() {
     return {
@@ -178,9 +190,8 @@ export default {
           width: 314
         }
       );
-    },
-  },
-
+    }
+  }
 };
 </script>
 

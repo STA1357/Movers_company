@@ -52,7 +52,13 @@
             />
           </span>
           <span class="col-6 pr-0">
-            <Mark :text="msg" @click.native="eth = account.balance; shotList()" />
+            <Mark
+              :text="msg"
+              @click.native="
+                eth = account.balance;
+                shotList();
+              "
+            />
             <span class="ml-2 txt">
               <span class="count">LPBW</span>
             </span>
@@ -91,6 +97,8 @@
         '0,00306908 ETH',
         '0.1/0.5/1.7 %'
       ]"
+      :title-r="['Min received']"
+      :title-l="['800  WHITE', '912  BLACK', '0.76 ETH']"
       :show="this.show"
     />
   </div>

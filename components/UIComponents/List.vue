@@ -1,19 +1,16 @@
 <template>
   <div v-if="show" class="d-flex list-block row">
-    <div class="title-block d-flex row">
-      <div class="title col-4 mb-1 ml-2">
-        You received
-      </div>
-      <div class="title-cost col-7 mb-1 ml-1">
-        456.166 BLACK
-      </div>
-      <div class="title col-4 mb-1 ml-2">
-        You received
-      </div>
-      <div class="title-cost col-7 mb-1 ml-1">
-        456.166 BLACK
+    <div class="col-7">
+      <div v-for="(text, idx) in titleR" :key="idx" class="title mb-2">
+        {{ text }}
       </div>
     </div>
+    <div class="col-5">
+      <div v-for="(text, idx) in titleL" :key="idx" class="title-cost mb-2">
+        {{ text }}
+      </div>
+    </div>
+
     <div class="col-12 hr mb-3" />
     <div class="col-7">
       <div v-for="(text, idx) in textL" :key="idx" class="text mb-2">
@@ -37,7 +34,9 @@ export default {
   props: {
     textR: Array,
     textL: Array,
-    show: false
+    show: false,
+    titleR: Array,
+    titleL: Array
   }
 };
 </script>
@@ -78,7 +77,7 @@ export default {
 .hr {
   width: 296.5px;
   height: 0px;
-
+  margin-top: 9px;
   border: 1px solid #e6e6e6;
 }
 .title-block {
@@ -90,7 +89,8 @@ export default {
   font-weight: 300;
   font-size: 10px;
   line-height: 12px;
-
+  text-align: left;
+  margin-top: 9px;
   color: $black;
 }
 .title-cost {
@@ -100,7 +100,7 @@ export default {
   font-size: 10px;
   line-height: 12px;
   text-align: right;
-
+  margin-top: 9px;
   color: $black;
 }
 </style>

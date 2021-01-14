@@ -1,11 +1,11 @@
 <template
   ><div>
-  <nav-cards
-          :text="[
-          { title: 'ADD LIQUIDITY', path: '/earn/trade/return' },
-          { title: 'REMOVE LIQUIDITY', path: '/earn/trade/take' }
-        ]"
-  />
+    <nav-cards
+      :text="[
+        { title: 'ADD LIQUIDITY', path: '/earn/trade/return' },
+        { title: 'REMOVE LIQUIDITY', path: '/earn/trade/take' }
+      ]"
+    />
     <div class="card">
       <div class="block mb-2">
         <t-block text="You add:" :text2="white.balance" />
@@ -20,7 +20,13 @@
             />
           </span>
           <span class="col-7 pr-0">
-            <Mark :text="msg" @click.native="whiteC = white.balance; shotList()" />
+            <Mark
+              :text="msg"
+              @click.native="
+                whiteC = white.balance;
+                shotList();
+              "
+            />
             <span class="ml-2 txt">
               <img src="@/assets/images/white.svg" alt="" />
               <span class="count">{{ white.symbol }}</span>
@@ -44,7 +50,13 @@
             />
           </span>
           <span class="col-7 pr-0">
-            <Mark :text="msg" @click.native="blackC = black.balance; shotList()" />
+            <Mark
+              :text="msg"
+              @click.native="
+                blackC = black.balance;
+                shotList();
+              "
+            />
             <span class="ml-2 txt">
               <img src="@/assets/images/black.svg" alt="" />
               <span class="count">{{ black.symbol }}</span>
@@ -68,7 +80,13 @@
             />
           </span>
           <span class="col-6 pr-0">
-            <Mark :text="msg" @click.native="eth = account.balance; shotList()" />
+            <Mark
+              :text="msg"
+              @click.native="
+                eth = account.balance;
+                shotList();
+              "
+            />
             <span class="ml-2 txt">
               <img src="@/assets/images/eth.svg" alt="" />
               <span class="count">ETH</span>
@@ -108,6 +126,8 @@
         '0,00306908 ETH',
         '0.1/0.5/1.7 %'
       ]"
+      :title-r="['Min received', 'Share of Pool']"
+      :title-l="['456.166 LPBW', '0.34%']"
       :show="this.show"
     />
   </div>
@@ -125,7 +145,7 @@ export default {
   layout: "earn",
   name: "trade",
   components: {
-      NavCards,
+    NavCards,
     Button,
     Mark,
     TBlock,
