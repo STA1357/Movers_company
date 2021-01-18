@@ -5,7 +5,7 @@
         <img src="@/assets/images/logo.svg" alt="" />
       </span>
       <span class="items col-5 d-flex sub">
-        <span class="col">TRADE</span>
+        <span class="col"><router-link to="/trade/return">TRADE</router-link></span>
         <span class="col"><router-link to="/earn">EARN</router-link></span>
         <span class="col">EVENTS</span>
         <span class="col">LIVE</span>

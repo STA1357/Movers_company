@@ -12,7 +12,7 @@
         <div class="d-flex justify-content-between mt-2">
           <span class="col-3 txt">
             <input
-              v-model="whiteC"
+              v-model="whiteBlack"
               type="text"
               class="inputs"
               @input="shotList"
@@ -23,7 +23,7 @@
             <Mark
               :text="msg"
               @click.native="
-                whiteC = white.balance;
+                whiteBlack = white.balance;
                 shotList();
               "
             />
@@ -39,7 +39,7 @@
         <div class="d-flex justify-content-between mt-2">
           <span class="col-3 txt">
             <input
-              v-model="blackC"
+              v-model="whiteBlack"
               type="text"
               class="inputs"
               placeholder="0.0"
@@ -50,7 +50,7 @@
             <Mark
               :text="msg"
               @click.native="
-                blackC = black.balance;
+                whiteBlack = black.balance;
                 shotList();
               "
             />
@@ -90,7 +90,8 @@
         >
       </div>
 
-      <Button text="ADD BLACK & WHITE" />
+      <Button text="ADD BLACK & WHITE"
+              type="big"/>
     </div>
     <list
       :text-l="[
@@ -164,13 +165,10 @@ export default {
     },
     measurementValueDisplay: {
       get() {
-        this.whiteBlack = this.blackC + this.whiteC;
-
         this.eth = (this.whiteBlack / this.BWtokensPerOneETC).toFixed(2);
         return this.eth;
       },
       set(newValue) {
-        this.whiteBlack = this.blackC + this.whiteC;
         return this.whiteBlack;
       }
     }

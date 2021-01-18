@@ -1,7 +1,8 @@
 <template>
   <div id="default">
     <Menu />
-    <Nuxt />
+    <Nuxt style="  margin-top: 64px;
+"/>
   </div>
 </template>
 

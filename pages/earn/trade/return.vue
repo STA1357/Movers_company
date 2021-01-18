@@ -101,7 +101,8 @@
         >
       </div>
 
-      <Button text="ADD LIQUIDITY" />
+      <Button text="ADD LIQUIDITY"
+              type="big"/>
     </div>
     <list
       :text-l="[

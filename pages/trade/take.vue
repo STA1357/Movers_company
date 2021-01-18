@@ -2,88 +2,72 @@
   <div>
     <nav-cards
       :text="[
-        { title: 'ADD LIQUIDITY', path: '/earn/liquid/take' },
-        { title: 'REMOVE LIQUIDITY', path: '/earn/liquid/return' }
+        { title: 'LIQUID POOL', path: '/trade/take' },
+        { title: 'TRADE POOL', path: '/trade/return' }
       ]"
     />
     <div class="card">
       <div class="block mb-2">
-        <t-block text="You give:" :text2="account.balance" />
+        <t-block text="From:" :text2="account.balance" />
         <div class="d-flex justify-content-between mt-2">
           <span class="col-3 txt">
             <input
-              v-model="eth"
+              v-model="measurementValueDisplay"
+              type="text"
+              class="inputs"
+              placeholder="0.0"
+              disabled
+            />
+          </span>
+          <span class="col-6 pr-0">
+            <span class="ml-2 txt">
+              <img src="@/assets/images/eth.svg" alt="" />
+              <span class="count">ETH</span>
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="p-2 ml-3" @click="$router.push('/trade/return')">
+        <img src="@/assets/images/to.svg" alt="" style="float: left" />
+      </div>
+      <div class="block mb-2">
+          <t-block text="To:" :text2="black.balance" />
+        <div class="d-flex justify-content-between mt-2">
+          <span class="col-3 txt">
+            <input
+              v-model="whiteBlack"
               type="text"
               class="inputs"
               placeholder="0.0"
               @input="shotList"
+              @keydown="onKeydown"
             />
           </span>
-          <span class="col-6 pr-0">
+          <span class="col-7 pr-0">
             <Mark
               :text="msg"
               @click.native="
-                eth = account.balance;
+                blackCoin = black.balance;
                 shotList();
               "
             />
-            <span class="ml-3 txt">
-              <span class="count">LPBW</span>
-            </span>
-          </span>
-        </div>
-      </div>
-      <div class="p-2 ml-3" @click="$router.push('/earn/liquid/return')">
-        <img src="@/assets/images/to.svg" alt="" style="float: left" />
-      </div>
-      <div class="block mb-2">
-        <t-block text="You give:" :text2="white.balance" />
-        <div class="d-flex justify-content-between mt-2">
-          <span class="col-3 txt">
-            <input
-              v-model="measurementValueDisplay"
-              type="text"
-              class="inputs"
-              placeholder="0.0"
-              disabled
-            />
-          </span>
-          <span class="col-6 pr-0">
-            <span class="ml-3 txt">
-              <img src="@/assets/images/white.svg" alt="" />
-              <span class="count">{{ white.symbol }}</span>
-            </span>
-          </span>
-        </div>
-      </div>
-      <div class="block mb-2">
-        <t-block text="You give:" :text2="black.balance" />
-        <div class="d-flex justify-content-between mt-2">
-          <span class="col-3 txt">
-            <input
-              v-model="measurementValueDisplay"
-              disabled
-              type="text"
-              class="inputs"
-              placeholder="0.0"
-            />
-          </span>
-          <span class="col-6 pr-0">
-            <span class="ml-3 txt">
+            <span class="ml-2 txt">
               <img src="@/assets/images/black.svg" alt="" />
               <span class="count">{{ black.symbol }}</span>
             </span>
           </span>
         </div>
       </div>
+
       <div class="d-flex check-price justify-content-between">
         <span class="col-5">Aggregate price:</span>
         <span class="col-7"
-          >{{ BWtokensPerOneETC.toFixed(2) }} B&W per 1 LPBW</span
+          >{{ BWtokensPerOneETC.toFixed(2) }} B&W per 1 ETH</span
         >
       </div>
-      <Button text="RETURN BLACK & WHITE"
-              type="big"/>
+
+      <Button text="SWAP" type="big" />
     </div>
     <list
       :text-l="[
@@ -108,8 +92,8 @@
         '0,00306908 ETH',
         '0.1/0.5/1.7 %'
       ]"
-      :title-r="['Min received', 'Share of Pool']"
-      :title-l="['456.166 B&W', '0.31%']"
+      :title-r="['Min received', `from ${measurementValueDisplay} ETH`]"
+      :title-l="[`${whiteBlack} BLACK`, `${whiteBlack} WHITE`]"
       :show="this.show"
     />
   </div>
@@ -117,16 +101,14 @@
 
 <script>
 import { mapGetters } from "vuex";
-
+import NavCards from "@/components/UIComponents/NavCards";
 import TBlock from "@/components/UIComponents/TitleBlock";
 import Button from "@/components/UIComponents/Button";
 import Mark from "@/components/UIComponents/Mark";
 import List from "@/components/UIComponents/List";
-import NavCards from "@/components/UIComponents/NavCards";
-
 export default {
-  layout: "earn",
-  name: "returnLiquid",
+  layout: "default",
+  name: "takeTrade",
   components: {
     Button,
     Mark,
@@ -139,7 +121,9 @@ export default {
       msg: "MAX",
       show: false,
       eth: "",
-      whiteBlack: ""
+      whiteBlack: "",
+      whiteCoin: "",
+      blackCoin: ""
     };
   },
   computed: {
@@ -156,11 +140,12 @@ export default {
     },
     measurementValueDisplay: {
       get() {
-        this.whiteBlack = (this.eth * this.BWtokensPerOneETC).toFixed(2);
-        return this.whiteBlack;
+        // this.whiteBlack = parseInt(this.whiteCoin) + parseInt(this.blackCoin);
+        this.eth = (this.whiteBlack / this.BWtokensPerOneETC).toFixed(2);
+        return this.eth;
       },
       set(newValue) {
-        return this.eth;
+        return this.whiteBlack;
       }
     }
   },
@@ -170,7 +155,22 @@ export default {
   methods: {
     shotList() {
       this.show = true;
-      console.log(this.show);
+    },
+    onKeydown(evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46 &&
+        charCode !== 9 &&
+        charCode !== 190
+      ) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
     }
   }
 };

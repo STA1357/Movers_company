@@ -1,21 +1,23 @@
 <template>
-  <span>
+  <span :class="type">
     {{ text }}
   </span>
 </template>
 
 <script>
 //  @params text(String)
+//  @params type(String -> class)
 export default {
   name: "Button",
   props: {
-    text: String
+    text: String,
+    type: String
   }
 };
 </script>
 
 <style scoped lang="scss">
-span {
+.big {
   background: $brand;
   border-radius: 11px;
   width: 286px;
@@ -32,5 +34,22 @@ span {
   text-transform: uppercase;
   color: $white;
   padding: 15px 6px;
+}
+.small {
+  background: $brand;
+  border-radius: 11px;
+
+  @font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  /* identical to box height */
+
+  text-align: center;
+  padding: 5px 14px;
+  color: $white;
+  width: 84px;
+  height: 25.58px;
 }
 </style>

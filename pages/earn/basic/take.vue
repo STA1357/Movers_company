@@ -92,7 +92,8 @@
         @click.native="openWalletModal"
       />
 
-      <Button v-else text="RETURN BLACK & WHITE" />
+      <Button v-else text="RETURN"
+              type="big"/>
     </div>
     <list
       :text-l="[

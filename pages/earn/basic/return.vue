@@ -12,7 +12,7 @@
         <div class="d-flex justify-content-between mt-2">
           <span class="col-3 txt">
             <input
-              v-model="whiteCoin"
+              v-model="whiteBlack"
               type="text"
               class="inputs"
               @input="shotList"
@@ -40,7 +40,7 @@
         <div class="d-flex justify-content-between mt-2">
           <span class="col-3 txt">
             <input
-              v-model="blackCoin"
+              v-model="whiteBlack"
               type="text"
               class="inputs"
               placeholder="0.0"
@@ -93,7 +93,8 @@
         >
       </div>
 
-      <Button text="ADD BLACK & WHITE" />
+      <Button text="ADD BLACK & WHITE"
+              type="big"/>
     </div>
     <list
       :text-l="[
@@ -119,7 +120,7 @@
         '0.1/0.5/1.7 %'
       ]"
       :title-r="['Min received', `from ${measurementValueDisplay} ETH`]"
-      :title-l="[`${blackCoin} BLACK`, `${whiteCoin} WHITE`]"
+      :title-l="[`${whiteBlack} BLACK`, `${whiteBlack} WHITE`]"
       :show="this.show"
     />
   </div>
@@ -166,7 +167,7 @@ export default {
     },
     measurementValueDisplay: {
       get() {
-        this.whiteBlack = parseInt(this.whiteCoin) + parseInt(this.blackCoin);
+       // this.whiteBlack = parseInt(this.whiteCoin) + parseInt(this.blackCoin);
         this.eth = (this.whiteBlack / this.BWtokensPerOneETC).toFixed(2);
         return this.eth;
       },
