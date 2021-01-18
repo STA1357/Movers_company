@@ -17,6 +17,8 @@
               class="inputs"
               placeholder="0.0"
               @input="shotList"
+              @keydown="onKeydown"
+
             />
           </span>
           <span class="col-6 pr-0">
@@ -87,7 +89,7 @@
       <Button
         v-if="!account.address"
         text="CONNECT WALLET"
-        @click.native="openWalletModal()"
+        @click.native="openWalletModal"
       />
 
       <Button v-else text="RETURN BLACK & WHITE" />
@@ -178,7 +180,6 @@ export default {
   methods: {
     shotList() {
       this.show = true;
-      console.log(this.show);
     },
     openWalletModal() {
       this.$modal.show(
@@ -190,7 +191,16 @@ export default {
           width: 314
         }
       );
-    }
+    },
+      onKeydown(evt) {
+          evt = (evt) ? evt : window.event;
+          var charCode = (evt.which) ? evt.which : evt.keyCode;
+          if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+              evt.preventDefault();;
+          } else {
+              return true;
+          }
+      }
   }
 };
 </script>

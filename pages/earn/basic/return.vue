@@ -17,6 +17,7 @@
               class="inputs"
               @input="shotList"
               placeholder="0.0"
+              @keydown="onKeydown"
             />
           </span>
           <span class="col-7 pr-0">
@@ -44,6 +45,7 @@
               class="inputs"
               placeholder="0.0"
               @input="shotList"
+              @keydown="onKeydown"
             />
           </span>
           <span class="col-7 pr-0">
@@ -146,7 +148,7 @@ export default {
       show: false,
       eth: "",
       whiteBlack: "",
-      whiteCoin: "",
+      whiteCoin: '',
       blackCoin: ""
     };
   },
@@ -164,7 +166,7 @@ export default {
     },
     measurementValueDisplay: {
       get() {
-        this.whiteBlack = this.whiteCoin + this.blackCoin;
+        this.whiteBlack = parseInt(this.whiteCoin) + parseInt(this.blackCoin);
         this.eth = (this.whiteBlack / this.BWtokensPerOneETC).toFixed(2);
         return this.eth;
       },
@@ -179,7 +181,16 @@ export default {
   methods: {
     shotList() {
       this.show = true;
-      console.log(this.show);
+    },
+    onKeydown(evt) {
+      evt = (evt) ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+
+        if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46 && charCode !== 9 && charCode !== 190 ){
+            evt.preventDefault();;
+        } else {
+            return true;
+        }
     }
   }
 };
