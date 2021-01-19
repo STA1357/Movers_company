@@ -1,5 +1,6 @@
 <template>
   <div>
+    <match-card/>
     <nav-cards
       :text="[
         { title: 'LIQUID POOL', path: '/trade/take' },
@@ -32,7 +33,7 @@
         <img src="@/assets/images/to.svg" alt="" style="float: left" />
       </div>
       <div class="block mb-2">
-          <t-block text="To:" :text2="black.balance" />
+        <t-block text="To:" :text2="black.balance" />
         <div class="d-flex justify-content-between mt-2">
           <span class="col-3 txt">
             <input
@@ -106,11 +107,13 @@ import TBlock from "@/components/UIComponents/TitleBlock";
 import Button from "@/components/UIComponents/Button";
 import Mark from "@/components/UIComponents/Mark";
 import List from "@/components/UIComponents/List";
+import MatchCard from "@/components/match/MatchCard";
 export default {
   layout: "default",
   name: "takeTrade",
   components: {
     Button,
+    MatchCard,
     Mark,
     TBlock,
     List,
