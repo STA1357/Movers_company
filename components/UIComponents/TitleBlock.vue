@@ -2,7 +2,7 @@
   <div class="d-flex mt-3 justify-content-between">
     <span class="col-4" style="text-align: left">{{ text }}</span>
     <span class="col" />
-    <span class="col-5" style="text-align: right">Balance: {{ text2 }}</span>
+    <span class="col-6" style="text-align: right">Balance: {{ text2 }}</span>
   </div>
 </template>
 
