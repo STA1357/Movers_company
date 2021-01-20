@@ -212,12 +212,50 @@ export default {
         try {
           this.isLoading = true
 
-          if (!this.eth || this.measurementValueDisplay < this.primary.minBuy) {
+          if (!this.eth || this.measurementValueDisplay < this.primary.minBuy || this.eth > this.account.balance) {
             throw new Error('incorrect value')
           }
           console.log(this.measurementValueDisplay < this.primary.minBuy)
 
           let resp = await this.$store.dispatch('contracts/primary/buyTokens', this.eth);
+
+          await this.$store.dispatch("web3/getAccount");
+
+          if (this.$store.getters["web3/account"].address) {
+            await this.$store.dispatch("contracts/black/initContract");
+            await this.$store.dispatch("contracts/white/initContract");
+            await this.$store.dispatch("contracts/primary/initContract");
+            await this.$store.dispatch("contracts/collateralization/initContract");
+          }
+
+          this.$notify.success({
+            title: 'Success',
+            message: 'Successfull transaction',
+            maxWidth: 400,
+          })
+
+        } catch (error) {
+            this.$notify.error({
+              title: 'Error',
+              message: error.message,
+              maxWidth: 400,
+            })
+        } finally {
+          this.isLoading = false
+        }
+    },
+          async buyBackTokens() {
+        try {
+          this.isLoading = true
+
+          if (this.measurementValueDisplay ||
+              this.measurementValueDisplay < this.primary.minBuy ||
+              this.measurementValueDisplay > this.white.balance ||
+              this.measurementValueDisplay > this.black.balance) {
+            throw new Error('incorrect value')
+          }
+
+          let resp = await this.$store.dispatch('contracts/primary/buyBackTokens', this.measurementValueDisplay);
 
           await this.$store.dispatch("web3/getAccount");
 

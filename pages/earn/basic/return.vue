@@ -163,7 +163,7 @@ export default {
     }),
 
     BWtokensPerOneETC() {
-      return this.$store.getters['contracts/primary/BWtokensPerOneETC'];
+      return 1e18 / this.primary.BWprice / Math.pow(10, this.black.decimals);
     },
     measurementValueDisplay: {
       get() {
@@ -184,14 +184,14 @@ export default {
       this.show = true;
     },
     onKeydown(evt) {
-      // evt = (evt) ? evt : window.event;
-      // var charCode = evt.which ? evt.which : evt.keyCode;
+      evt = (evt) ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
 
-      //   if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46 && charCode !== 9 && charCode !== 190 ){
-      //       evt.preventDefault();;
-      //   } else {
-      //       return true;
-      //   }
+        if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46 && charCode !== 9 && charCode !== 190 ){
+            evt.preventDefault();;
+        } else {
+            return true;
+        }
     }
   }
 };
