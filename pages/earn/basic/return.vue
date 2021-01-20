@@ -163,7 +163,7 @@ export default {
     }),
 
     BWtokensPerOneETC() {
-      return 1e18 / this.primary.BWprice / Math.pow(10, this.black.decimals);
+      return this.$store.getters['contracts/primary/BWtokensPerOneETC'];
     },
     measurementValueDisplay: {
       get() {

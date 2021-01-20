@@ -47,7 +47,7 @@ export default {
       return state.decimals
     },
     BWtokensPerOneETC(state, getters, rootState) {
-      return (1e18 / state.BWprice / Math.pow(10, rootState.contracts.black.decimals)).toFixed(0);
+      return (1e18 / state.BWprice / Math.pow(10, rootState.contracts.black.decimals)).toFixed(0) / 2;
     }
   }
 }
