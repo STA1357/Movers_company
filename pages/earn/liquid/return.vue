@@ -61,8 +61,13 @@
           </span>
         </div>
       </div>
-      <div class="p-2 ml-3" @click="$router.push('/earn/liquid/take')">
-        <img src="@/assets/images/to.svg" alt="" style="float: left" />
+      <div class="p-2 ml-3">
+        <img
+          src="@/assets/images/to.svg"
+          alt=""
+          style="float: left; cursor: pointer"
+          @click="$router.push('/earn/liquid/take')"
+        />
       </div>
       <div class="block mb-2">
         <t-block text="You give:" :text2="account.balance" />
@@ -90,8 +95,7 @@
         >
       </div>
 
-      <Button text="ADD BLACK & WHITE"
-              type="big"/>
+      <Button text="ADD BLACK & WHITE" type="big" />
     </div>
     <list
       :text-l="[
@@ -178,8 +182,11 @@ export default {
   },
   methods: {
     shotList() {
-      this.show = true;
-      console.log(this.show);
+      if (this.whiteBlack.length !== 0) {
+        this.show = true;
+      } else {
+        this.show = false;
+      }
     }
   }
 };

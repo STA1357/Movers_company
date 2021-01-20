@@ -101,8 +101,7 @@
         >
       </div>
 
-      <Button text="ADD LIQUIDITY"
-              type="big"/>
+      <Button text="ADD LIQUIDITY" type="big" />
     </div>
     <list
       :text-l="[
@@ -189,8 +188,11 @@ export default {
   },
   methods: {
     shotList() {
-      this.show = true;
-      console.log(this.show);
+      if (this.eth.length !== 0 && this.blackC.length !== 0 && this.whiteC.length !== 0) {
+        this.show = true;
+      } else {
+        this.show = false;
+      }
     }
   }
 };
