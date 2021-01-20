@@ -91,9 +91,9 @@
         text="CONNECT WALLET"
         @click.native="openWalletModal"
       />
-  
-      <Button 
-        v-else 
+
+      <Button
+        v-else
         :text="!isLoading ? 'TAKE BLACK & WHITE' : 'Processing...'"
         type="big"
         @click="!isLoading ? buyTokens() : ''"
@@ -186,7 +186,11 @@ export default {
   },
   methods: {
     shotList() {
-      this.show = true;
+        if (this.eth.length !== 0) {
+            this.show = true;
+        } else {
+            this.show = false;
+        }
     },
     openWalletModal() {
       this.$modal.show(
