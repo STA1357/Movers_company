@@ -7,78 +7,40 @@
       ]"
     />
     <div class="card">
-      <div class="block mb-2">
-        <t-block text="You give:" :text2="account.balance" />
-        <div class="d-flex justify-content-between mt-2">
-          <span class="col-3 txt">
-            <input
-              v-model="eth"
-              type="text"
-              class="inputs"
-              placeholder="0.0"
-              @input="shotList"
-              @keydown="onKeydown"
-
-            />
-          </span>
-          <span class="col-6 pr-0">
-            <Mark
-              :text="msg"
-              @click.native="
-                eth = account.balance;
-                shotList();
-              "
-            />
-            <span class="ml-3 txt">
-              <img src="@/assets/images/eth.svg" alt="" />
-              <span class="count">ETH</span>
-            </span>
-          </span>
-        </div>
-      </div>
+      <Token 
+        :options="{
+          title: 'You give:',
+          balance: account.balance,
+          isDisabled: false,
+          symbol: 'ETH',
+          icon: require('@/assets/images/tokens/eth.svg')
+        }"
+        v-model="eth"
+        @input="shotList"
+      ></Token>
       <div class="p-2 ml-3" @click="$router.push('/earn/basic/return')">
         <img src="@/assets/images/to.svg" alt="" style="float: left" />
       </div>
-      <div class="block mb-2">
-        <t-block text="You give:" :text2="white.balance" />
-        <div class="d-flex justify-content-between mt-2">
-          <span class="col-3 txt">
-            <input
-              v-model="measurementValueDisplay"
-              type="text"
-              class="inputs"
-              placeholder="0.0"
-              disabled
-            />
-          </span>
-          <span class="col-6 pr-0">
-            <span class="ml-3 txt">
-              <img src="@/assets/images/white.svg" alt="" />
-              <span class="count">{{ white.symbol }}</span>
-            </span>
-          </span>
-        </div>
-      </div>
-      <div class="block mb-2">
-        <t-block text="You give:" :text2="black.balance" />
-        <div class="d-flex justify-content-between mt-2">
-          <span class="col-3 txt">
-            <input
-              v-model="measurementValueDisplay"
-              disabled
-              type="text"
-              class="inputs"
-              placeholder="0.0"
-            />
-          </span>
-          <span class="col-6 pr-0">
-            <span class="ml-3 txt">
-              <img src="@/assets/images/black.svg" alt="" />
-              <span class="count">{{ black.symbol }}</span>
-            </span>
-          </span>
-        </div>
-      </div>
+      <Token 
+        :options="{
+          title: 'You take:',
+          balance: white.balance,
+          isDisabled: true,
+          symbol: white.symbol,
+          icon: require('@/assets/images/tokens/white.svg')
+        }"
+        v-model="measurementValueDisplay"
+      ></Token>
+      <Token 
+        :options="{
+          title: 'And',
+          balance: black.balance,
+          isDisabled: true,
+          symbol: black.symbol,
+          icon: require('@/assets/images/tokens/black.svg')
+        }"
+        v-model="measurementValueDisplay"
+      ></Token>
       <div class="d-flex check-price justify-content-between">
         <span class="col-5">Aggregate price:</span>
         <span class="col-7"
@@ -133,11 +95,13 @@
 import { mapGetters } from "vuex";
 import WalletModal from "@/components/modal/templates/WalletModal";
 
-import TBlock from "@/components/UIComponents/TitleBlock";
+// import TBlock from "@/components/UIComponents/TitleBlock";
 import Button from "@/components/UIComponents/Button";
 import Mark from "@/components/UIComponents/Mark";
 import List from "@/components/UIComponents/List";
 import NavCards from "@/components/UIComponents/NavCards";
+
+import Token from '@/components/tokens/template'
 
 export default {
   layout: "earn",
@@ -145,9 +109,10 @@ export default {
   components: {
     Button,
     Mark,
-    TBlock,
+    // TBlock,
     List,
-    NavCards
+    NavCards,
+    Token
   },
   data() {
     return {

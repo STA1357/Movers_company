@@ -19,3 +19,50 @@
   box-shadow: 4px 8px 18px 2px rgba(0, 0, 0, 0.15);
   border-radius: 19px;
 }
+
+@mixin flex-box($width) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: $width;
+  height: $width;
+
+  @content;
+}
+
+@mixin image-before($url, $width) {
+  padding-left: 22px;
+  position: relative;
+
+  &::before {
+    content: '';
+    @include flex-box($width);
+    background-image: $url;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+@mixin image-after($url, $width) {
+  position: relative;
+  padding-right: 22px;
+
+  &::after {
+    content: '';
+    @include flex-box($width);
+    background-image: $url;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
