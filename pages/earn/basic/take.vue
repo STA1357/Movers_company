@@ -91,12 +91,12 @@
         text="CONNECT WALLET"
         @click.native="openWalletModal"
       />
-
+  
       <Button 
         v-else 
-        text="TAKE BLACK & WHITE"
+        :text="!isLoading ? 'TAKE BLACK & WHITE' : 'Processing...'"
         type="big"
-        @click="buyTokens()"
+        @click="!isLoading ? buyTokens() : ''"
       />
     </div>
     <list
@@ -154,7 +154,9 @@ export default {
       msg: "MAX",
       show: false,
       eth: '',
-      whiteBlack: ""
+      whiteBlack: "",
+
+      isLoading: false
     };
   },
   computed: {
@@ -206,10 +208,41 @@ export default {
         //     return true;
         // }
     },
-    buyTokens() {
-      if (this.eth && this.measurementValueDisplay >= this.primary.minBuy) {
-        this.$store.dispatch('contracts/primary/buyTokens', this.eth)
-      }
+    async buyTokens() {
+        try {
+          this.isLoading = true
+
+          if (!this.eth || this.measurementValueDisplay < this.primary.minBuy) {
+            throw new Error('incorrect value')
+          }
+          console.log(this.measurementValueDisplay < this.primary.minBuy)
+
+          let resp = await this.$store.dispatch('contracts/primary/buyTokens', this.eth);
+
+          await this.$store.dispatch("web3/getAccount");
+
+          if (this.$store.getters["web3/account"].address) {
+            await this.$store.dispatch("contracts/black/initContract");
+            await this.$store.dispatch("contracts/white/initContract");
+            await this.$store.dispatch("contracts/primary/initContract");
+            await this.$store.dispatch("contracts/collateralization/initContract");
+          }
+
+          this.$notify.success({
+            title: 'Success',
+            message: 'Successfull transaction',
+            maxWidth: 400,
+          })
+
+        } catch (error) {
+            this.$notify.error({
+              title: 'Error',
+              message: error.message,
+              maxWidth: 400,
+            })
+        } finally {
+          this.isLoading = false
+        }
     }
   },
 

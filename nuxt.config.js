@@ -52,7 +52,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
-    // https://go.nuxtjs.dev/axios
+    'nuxt-izitoast',
     '@nuxtjs/axios',
     "@nuxtjs/style-resources",
 
