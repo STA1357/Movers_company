@@ -22,6 +22,10 @@ export default {
     async getBWprice({ commit }) {
       let BWprice = await Contract.BWPrice()
       commit('setBWprice', BWprice)
+    },
+
+    async buyTokens(ctx, ethAmount) {
+      await Contract.buyTokens(ethAmount)
     }
   },
   mutations: {
@@ -41,6 +45,9 @@ export default {
     },
     BWprice(state) {
       return state.decimals
+    },
+    BWtokensPerOneETC(state, getters, rootState) {
+      return (1e18 / state.BWprice / Math.pow(10, rootState.contracts.black.decimals)).toFixed(0);
     }
   }
 }

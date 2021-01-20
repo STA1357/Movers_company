@@ -17,6 +17,12 @@ class PrimaryPool {
   async BWPrice() {
     return this.contractInstance.methods.getBWprice().call()
   }
+
+  async buyTokens(ethAmount) {
+    let from = await this.web3Instance.eth.getCoinbase()
+    let value = (ethAmount*1e18).toString()
+    return this.contractInstance.methods.buy().send({from, value})
+  }
 }
 
 export default new PrimaryPool()

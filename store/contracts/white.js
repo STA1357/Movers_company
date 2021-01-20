@@ -15,8 +15,8 @@ export default {
   },
   actions: {
     async initContract({ dispatch }) {
+      await dispatch('getDecimals') //should be upper then balance
       await dispatch('getBalance')
-      await dispatch('getDecimals')
       await dispatch('getName')
       await dispatch('getSymbol')
       await dispatch('getTotalSupply')
@@ -45,7 +45,7 @@ export default {
   },
   mutations: {
     setBalance(state, payload) {
-      state.balance = payload
+      state.balance = (payload / Math.pow(10, state.decimals)).toFixed(2)
     },
     setDecimals(state, payload) {
       state.decimals = payload

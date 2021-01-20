@@ -29,6 +29,11 @@ class Black {
   async totalSupply() {
     return this.contractInstance.methods.totalSupply().call()
   }
+
+  async approve() {
+    console.log("123123123123123123")
+    // return this.contractInstance.methods.totalSupply().call()
+  }
 }
 
 export default new Black()

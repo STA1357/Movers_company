@@ -1,5 +1,5 @@
 <template>
-  <span :class="type">
+  <span :class="type" @click="$emit('click')">
     {{ text }}
   </span>
 </template>
@@ -19,6 +19,7 @@ export default {
 <style scoped lang="scss">
 .big {
   background: $brand;
+  border: 1px solid $brand;
   border-radius: 11px;
   width: 286px;
   height: 52px;
@@ -34,6 +35,12 @@ export default {
   text-transform: uppercase;
   color: $white;
   padding: 15px 6px;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    background: rgba($brand, 0.9);
+  }
 }
 .small {
   background: $brand;

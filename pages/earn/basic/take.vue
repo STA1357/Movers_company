@@ -82,7 +82,7 @@
       <div class="d-flex check-price justify-content-between">
         <span class="col-5">Aggregate price:</span>
         <span class="col-7"
-          >{{ BWtokensPerOneETC.toFixed(2) }} B&W per 1 ETH</span
+          >{{ $store.getters['contracts/primary/BWtokensPerOneETC'] }} B&W per 1 ETH</span
         >
       </div>
 
@@ -92,8 +92,12 @@
         @click.native="openWalletModal"
       />
 
-      <Button v-else text="RETURN"
-              type="big"/>
+      <Button 
+        v-else 
+        text="TAKE BLACK & WHITE"
+        type="big"
+        @click="buyTokens()"
+      />
     </div>
     <list
       :text-l="[
@@ -149,7 +153,7 @@ export default {
     return {
       msg: "MAX",
       show: false,
-      eth: "",
+      eth: '',
       whiteBlack: ""
     };
   },
@@ -162,12 +166,12 @@ export default {
       collateralization: "contracts/collateralization/contract"
     }),
 
-    BWtokensPerOneETC() {
-      return 1e18 / this.primary.BWprice / Math.pow(10, this.black.decimals);
-    },
+    // BWtokensPerOneETC() {
+    //   return 1e18 / this.primary.BWprice / Math.pow(10, this.black.decimals);
+    // },
     measurementValueDisplay: {
       get() {
-        this.whiteBlack = (this.eth * this.BWtokensPerOneETC).toFixed(2);
+        this.whiteBlack = (this.eth * this.$store.getters['contracts/primary/BWtokensPerOneETC']).toFixed(2);
         return this.whiteBlack;
       },
       set(newValue) {
@@ -193,16 +197,23 @@ export default {
         }
       );
     },
-      onKeydown(evt) {
-          evt = (evt) ? evt : window.event;
-          var charCode = (evt.which) ? evt.which : evt.keyCode;
-          if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
-              evt.preventDefault();;
-          } else {
-              return true;
-          }
+    onKeydown(evt) {
+        // evt = (evt) ? evt : window.event;
+        // var charCode = (evt.which) ? evt.which : evt.keyCode;
+        // if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+        //     evt.preventDefault();;
+        // } else {
+        //     return true;
+        // }
+    },
+    buyTokens() {
+      if (this.eth && this.measurementValueDisplay >= this.primary.minBuy) {
+        this.$store.dispatch('contracts/primary/buyTokens', this.eth)
       }
-  }
+    }
+  },
+
+
 };
 </script>
 
