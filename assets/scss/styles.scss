@@ -63,19 +63,25 @@
   color: $text4;
 }
 
-// .inputs::placeholder:focus,
-// .inputs::placeholder:disabled {
-//   @font-family: Montserrat;
-//   font-style: normal;
-//   font-weight: normal;
-//   font-size: 18px;
-//   line-height: 22px;
-//   /* identical to box height */
+//.inputs::placeholder:focus,
+// input:disabled {
+//  @font-family: Montserrat;
+//  font-style: normal;
+//  font-weight: normal;
+//  font-size: 18px;
+//  line-height: 22px;
+//  /* identical to box height */
+//
+//  letter-spacing: 0.015em;
+//   background: red!important;
+//  color: #0f2f31;
+//}
 
-//   letter-spacing: 0.015em;
-
-//   color: #0f2f31;
-// }
+input:disabled {
+  color: $brand;
+  cursor: default;
+  background: $white;
+}
 .count {
   @font-family: Montserrat;
   font-style: normal;

@@ -154,7 +154,11 @@ export default {
   },
   methods: {
     shotList() {
-      this.show = true;
+      if (this.whiteBlack.length !== 0) {
+        this.show = true;
+      } else {
+        this.show = false;
+      }
     },
     onKeydown(evt) {
       evt = evt ? evt : window.event;

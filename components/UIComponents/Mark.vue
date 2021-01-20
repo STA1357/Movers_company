@@ -29,6 +29,7 @@ export default {
   font-size: 9px;
   line-height: 11px;
   /* identical to box height */
+  cursor: pointer;
 
   position: relative;
   top: -2px;

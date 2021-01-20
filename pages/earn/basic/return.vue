@@ -63,8 +63,13 @@
           </span>
         </div>
       </div>
-      <div class="p-2 ml-3" @click="$router.push('/earn/basic/take')">
-        <img src="@/assets/images/to.svg" alt="" style="float: left" />
+      <div class="p-2 ml-3">
+        <img
+          src="@/assets/images/to.svg"
+          alt=""
+          style="float: left; cursor: pointer"
+          @click="$router.push('/earn/basic/take')"
+        />
       </div>
       <div class="block mb-2">
         <t-block text="You give:" :text2="account.balance" />
@@ -93,8 +98,7 @@
         >
       </div>
 
-      <Button text="ADD BLACK & WHITE"
-              type="big"/>
+      <Button text="ADD BLACK & WHITE" type="big" />
     </div>
     <list
       :text-l="[
@@ -149,7 +153,7 @@ export default {
       show: false,
       eth: "",
       whiteBlack: "",
-      whiteCoin: '',
+      whiteCoin: "",
       blackCoin: ""
     };
   },
@@ -167,7 +171,7 @@ export default {
     },
     measurementValueDisplay: {
       get() {
-       // this.whiteBlack = parseInt(this.whiteCoin) + parseInt(this.blackCoin);
+        // this.whiteBlack = parseInt(this.whiteCoin) + parseInt(this.blackCoin);
         this.eth = (this.whiteBlack / this.BWtokensPerOneETC).toFixed(2);
         return this.eth;
       },
@@ -181,12 +185,15 @@ export default {
   },
   methods: {
     shotList() {
-      this.show = true;
+      if (this.whiteBlack.length !== 0) {
+        this.show = true;
+      } else {
+        this.show = false;
+      }
     },
     onKeydown(evt) {
       // evt = (evt) ? evt : window.event;
       // var charCode = evt.which ? evt.which : evt.keyCode;
-
       //   if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46 && charCode !== 9 && charCode !== 190 ){
       //       evt.preventDefault();;
       //   } else {

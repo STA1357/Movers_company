@@ -33,8 +33,13 @@
           </span>
         </div>
       </div>
-      <div class="p-2 ml-3" @click="$router.push('/earn/liquid/return')">
-        <img src="@/assets/images/to.svg" alt="" style="float: left" />
+      <div class="p-2 ml-3">
+        <img
+          src="@/assets/images/to.svg"
+          alt=""
+          style="float: left; cursor: pointer"
+          @click="$router.push('/earn/liquid/return')"
+        />
       </div>
       <div class="block mb-2">
         <t-block text="You give:" :text2="white.balance" />
@@ -82,8 +87,7 @@
           >{{ BWtokensPerOneETC.toFixed(2) }} B&W per 1 LPBW</span
         >
       </div>
-      <Button text="RETURN BLACK & WHITE"
-              type="big"/>
+      <Button text="RETURN BLACK & WHITE" type="big" />
     </div>
     <list
       :text-l="[
@@ -169,8 +173,11 @@ export default {
   },
   methods: {
     shotList() {
-      this.show = true;
-      console.log(this.show);
+      if (this.eth.length !== 0) {
+        this.show = true;
+      } else {
+        this.show = false;
+      }
     }
   }
 };
