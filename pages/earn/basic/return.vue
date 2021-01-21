@@ -52,7 +52,7 @@
       <div class="d-flex check-price justify-content-between">
         <span class="col-5">Aggregate price:</span>
         <span class="col-7"
-          >{{ BWtokensPerOneETC.toFixed(2) }} B&W per 1 ETH</span
+          >{{ BWtokensPerOneETC }} B&W per 1 ETH</span
         >
       </div>
 

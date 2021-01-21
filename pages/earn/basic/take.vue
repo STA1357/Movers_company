@@ -10,7 +10,7 @@
       <Token 
         :options="{
           title: 'You give:',
-          balance: account.balance,
+          balance: account.balance ,
           isDisabled: false,
           symbol: 'ETH',
           icon: require('@/assets/images/tokens/eth.svg')
@@ -24,7 +24,7 @@
       <Token 
         :options="{
           title: 'You take:',
-          balance: white.balance,
+          balance: white.balance ,
           isDisabled: true,
           symbol: white.symbol,
           icon: require('@/assets/images/tokens/white.svg')
@@ -34,7 +34,7 @@
       <Token 
         :options="{
           title: 'And',
-          balance: black.balance,
+          balance: black.balance ,
           isDisabled: true,
           symbol: black.symbol,
           icon: require('@/assets/images/tokens/black.svg')
@@ -44,7 +44,7 @@
       <div class="d-flex check-price justify-content-between">
         <span class="col-5">Aggregate price:</span>
         <span class="col-7"
-          >{{ BWtokensPerOneETC }} B&W per 1 ETH</span
+          >{{ BWtokensPerOneETC  | truncated}} B&W per 1 ETH</span
         >
       </div>
 
@@ -84,7 +84,7 @@
         '0,00306908 ETH',
         '0.1/0.5/1.7 %'
       ]"
-      :title-r="['Min received', `from ${whiteBlack} B&W`]"
+      :title-r="['Min received', `from ${whiteBlack } B&W`]"
       :title-l="[`${eth} ETH`]"
       :show="this.show"
     />
@@ -130,7 +130,7 @@ export default {
       return this.$store.getters['contracts/primary/BWtokensPerOneETC'];
     },
     whiteBlack() {
-      return (this.eth * this.BWtokensPerOneETC).toFixed(2);
+      return (this.eth * this.BWtokensPerOneETC)
     }
   },
   mounted() {

@@ -48,7 +48,7 @@ export default {
   },
   mutations: {
     setBalance(state, payload) {
-      state.balance = (payload / Math.pow(10, state.decimals)).toFixed(2)
+      state.balance = (payload / Math.pow(10, state.decimals))
     },
     setDecimals(state, payload) {
       state.decimals = payload

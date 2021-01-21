@@ -5,7 +5,7 @@
         {{ options.title }}
       </div>
       <div class="token__balance txt txt--light">
-        balance: {{ options.balance }}
+        balance: {{ options.balance | truncated}}
       </div>
     </div>
     <div class="token__content">
