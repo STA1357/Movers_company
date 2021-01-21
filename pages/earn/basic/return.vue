@@ -7,7 +7,7 @@
       ]"
     />
     <div class="card">
-      <Token 
+      <Token
         :options="{
           title: 'You give:',
           balance: white.balance,
@@ -17,9 +17,8 @@
         }"
         v-model="whiteBlack"
         @input="shotList"
-
       ></Token>
-      <Token 
+      <Token
         :options="{
           title: 'And',
           balance: black.balance,
@@ -29,7 +28,6 @@
         }"
         v-model="whiteBlack"
         @input="shotList"
-
       ></Token>
       <div class="p-2 ml-3">
         <img
@@ -39,7 +37,7 @@
           @click="$router.push('/earn/basic/take')"
         />
       </div>
-      <Token 
+      <Token
         :options="{
           title: 'You give:',
           balance: account.balance,
@@ -51,9 +49,7 @@
       ></Token>
       <div class="d-flex check-price justify-content-between">
         <span class="col-5">Aggregate price:</span>
-        <span class="col-7"
-          >{{ BWtokensPerOneETH }} B&W per 1 ETH</span
-        >
+        <span class="col-7">{{ BWtokensPerOneETH | truncated }} B&W per 1 ETH</span>
       </div>
 
       <Button
@@ -101,7 +97,6 @@
 </template>
 
 <script>
-
 import NavCards from "@/components/UIComponents/NavCards";
 import Button from "@/components/UIComponents/Button";
 import List from "@/components/UIComponents/List";
@@ -133,10 +128,10 @@ export default {
       collateralization: "contracts/collateralization/contract"
     }),
     BWtokensPerOneETH() {
-      return this.$store.getters['contracts/primary/BWtokensPerOneETH'];
+      return this.$store.getters["contracts/primary/BWtokensPerOneETH"];
     },
     eth() {
-      return (this.whiteBlack / this.BWtokensPerOneETH)
+      return this.whiteBlack / this.BWtokensPerOneETH;
     }
   },
   mounted() {
@@ -151,42 +146,48 @@ export default {
       }
     },
     async buyBackTokens() {
-            try {
-              this.isLoading = true
-              if (!this.whiteBlack ||
-                  this.whiteBlack < this.primary.minBuy ||
-                  this.whiteBlack > this.white.balance ||
-                  this.whiteBlack > this.black.balance) {
-                throw new Error('incorrect value')
-              }
-
-              let resp = await this.$store.dispatch('contracts/primary/buyBackTokens', this.whiteBlack);
-
-              await this.$store.dispatch("web3/getAccount");
-
-              if (this.$store.getters["web3/account"].address) {
-                await this.$store.dispatch("contracts/black/initContract");
-                await this.$store.dispatch("contracts/white/initContract");
-                await this.$store.dispatch("contracts/primary/initContract");
-                await this.$store.dispatch("contracts/collateralization/initContract");
-              }
-
-              this.$notify.success({
-                title: 'Success',
-                message: 'Successfull transaction',
-                maxWidth: 400,
-              })
-
-            } catch (error) {
-                this.$notify.error({
-                  title: 'Error',
-                  message: error.message,
-                  maxWidth: 400,
-                })
-            } finally {
-              this.isLoading = false
-            }
+      try {
+        this.isLoading = true;
+        if (
+          !this.whiteBlack ||
+          this.whiteBlack < this.primary.minBuy ||
+          this.whiteBlack > this.white.balance ||
+          this.whiteBlack > this.black.balance
+        ) {
+          throw new Error("incorrect value");
         }
+
+        let resp = await this.$store.dispatch(
+          "contracts/primary/buyBackTokens",
+          this.whiteBlack
+        );
+
+        await this.$store.dispatch("web3/getAccount");
+
+        if (this.$store.getters["web3/account"].address) {
+          await this.$store.dispatch("contracts/black/initContract");
+          await this.$store.dispatch("contracts/white/initContract");
+          await this.$store.dispatch("contracts/primary/initContract");
+          await this.$store.dispatch(
+            "contracts/collateralization/initContract"
+          );
+        }
+
+        this.$notify.success({
+          title: "Success",
+          message: "Successfull transaction",
+          maxWidth: 400
+        });
+      } catch (error) {
+        this.$notify.error({
+          title: "Error",
+          message: error.message,
+          maxWidth: 400
+        });
+      } finally {
+        this.isLoading = false;
+      }
+    }
   }
 };
 </script>

@@ -7,10 +7,10 @@
       ]"
     />
     <div class="card">
-      <Token 
+      <Token
         :options="{
           title: 'You give:',
-          balance: account.balance ,
+          balance: account.balance,
           isDisabled: false,
           symbol: 'ETH',
           icon: require('@/assets/images/tokens/eth.svg')
@@ -21,20 +21,20 @@
       <div class="p-2 ml-3" @click="$router.push('/earn/basic/return')">
         <img src="@/assets/images/to.svg" alt="" style="float: left" />
       </div>
-      <Token 
+      <Token
         :options="{
           title: 'You take:',
-          balance: white.balance ,
+          balance: white.balance,
           isDisabled: true,
           symbol: white.symbol,
           icon: require('@/assets/images/tokens/white.svg')
         }"
         v-model="whiteBlack"
       ></Token>
-      <Token 
+      <Token
         :options="{
           title: 'And',
-          balance: black.balance ,
+          balance: black.balance,
           isDisabled: true,
           symbol: black.symbol,
           icon: require('@/assets/images/tokens/black.svg')
@@ -44,7 +44,7 @@
       <div class="d-flex check-price justify-content-between">
         <span class="col-5">Aggregate price:</span>
         <span class="col-7"
-          >{{ BWtokensPerOneETH  | truncated}} B&W per 1 ETH</span
+          >{{ BWtokensPerOneETH | truncated }} B&W per 1 ETH</span
         >
       </div>
 
@@ -84,7 +84,7 @@
         '0,00306908 ETH',
         '0.1/0.5/1.7 %'
       ]"
-      :title-r="['Min received', `from ${whiteBlack } B&W`]"
+      :title-r="['Min received', `from ${whiteBlack} B&W`]"
       :title-l="[`${eth} ETH`]"
       :show="this.show"
     />
@@ -100,19 +100,18 @@ import Button from "@/components/UIComponents/Button";
 import List from "@/components/UIComponents/List";
 import NavCards from "@/components/UIComponents/NavCards";
 
-
 export default {
   layout: "earn",
   name: "basic",
   components: {
     Button,
     List,
-    NavCards,
+    NavCards
   },
   data() {
     return {
       show: false,
-      eth: '',
+      eth: "",
 
       isLoading: false
     };
@@ -127,10 +126,10 @@ export default {
     }),
 
     BWtokensPerOneETH() {
-      return this.$store.getters['contracts/primary/BWtokensPerOneETH'];
+      return this.$store.getters["contracts/primary/BWtokensPerOneETH"];
     },
     whiteBlack() {
-      return (this.eth * this.BWtokensPerOneETH)
+      return this.eth * this.BWtokensPerOneETH;
     }
   },
   mounted() {
@@ -138,11 +137,11 @@ export default {
   },
   methods: {
     shotList() {
-        if (this.eth.length !== 0) {
-            this.show = true;
-        } else {
-            this.show = false;
-        }
+      if (this.eth.length !== 0) {
+        this.show = true;
+      } else {
+        this.show = false;
+      }
     },
     openWalletModal() {
       this.$modal.show(
@@ -156,43 +155,49 @@ export default {
       );
     },
     async buyTokens() {
-        try {
-          this.isLoading = true
+      try {
+        this.isLoading = true;
 
-          if (!this.eth || this.whiteBlack < this.primary.minBuy || this.eth > this.account.balance) {
-            throw new Error('incorrect value')
-          }
-
-          let resp = await this.$store.dispatch('contracts/primary/buyTokens', this.eth);
-
-          await this.$store.dispatch("web3/getAccount");
-
-          if (this.$store.getters["web3/account"].address) {
-            await this.$store.dispatch("contracts/black/initContract");
-            await this.$store.dispatch("contracts/white/initContract");
-            await this.$store.dispatch("contracts/primary/initContract");
-            await this.$store.dispatch("contracts/collateralization/initContract");
-          }
-
-          this.$notify.success({
-            title: 'Success',
-            message: 'Successfull transaction',
-            maxWidth: 400,
-          })
-
-        } catch (error) {
-            this.$notify.error({
-              title: 'Error',
-              message: error.message,
-              maxWidth: 400,
-            })
-        } finally {
-          this.isLoading = false
+        if (
+          !this.eth ||
+          this.whiteBlack < this.primary.minBuy ||
+          this.eth > this.account.balance
+        ) {
+          throw new Error("incorrect value");
         }
+
+        let resp = await this.$store.dispatch(
+          "contracts/primary/buyTokens",
+          this.eth
+        );
+
+        await this.$store.dispatch("web3/getAccount");
+
+        if (this.$store.getters["web3/account"].address) {
+          await this.$store.dispatch("contracts/black/initContract");
+          await this.$store.dispatch("contracts/white/initContract");
+          await this.$store.dispatch("contracts/primary/initContract");
+          await this.$store.dispatch(
+            "contracts/collateralization/initContract"
+          );
+        }
+
+        this.$notify.success({
+          title: "Success",
+          message: "Successfull transaction",
+          maxWidth: 400
+        });
+      } catch (error) {
+        this.$notify.error({
+          title: "Error",
+          message: error.message,
+          maxWidth: 400
+        });
+      } finally {
+        this.isLoading = false;
+      }
     }
-  },
-
-
+  }
 };
 </script>
 

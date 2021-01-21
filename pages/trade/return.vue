@@ -7,63 +7,35 @@
       ]"
     />
     <div class="card">
-      <div class="block mb-2">
-        <t-block text="From:" :text2="account.balance" />
-        <div class="d-flex justify-content-between mt-2">
-          <span class="col-3 txt">
-            <input
-              v-model="measurementValueDisplay"
-              type="text"
-              class="inputs"
-              placeholder="0.0"
-              disabled
-            />
-          </span>
-          <span class="col-6 pr-0">
-            <span class="ml-2 txt">
-              <img src="@/assets/images/eth.svg" alt="" />
-              <span class="count">ETH</span>
-            </span>
-          </span>
-        </div>
-      </div>
-
+      <Token
+        :options="{
+          title: 'You give:',
+          balance: account.balance,
+          isDisabled: false,
+          symbol: 'ETH',
+          icon: require('@/assets/images/tokens/eth.svg')
+        }"
+        v-model="eth"
+        @input="shotList"
+      ></Token>
       <div class="p-2 ml-3" @click="$router.push('/trade/take')">
         <img src="@/assets/images/to.svg" alt="" style="float: left" />
       </div>
-      <div class="block mb-2">
-        <t-block text="To:" :text2="black.balance" />
-        <div class="d-flex justify-content-between mt-2">
-          <span class="col-3 txt">
-            <input
-              v-model="whiteBlack"
-              type="text"
-              class="inputs"
-              placeholder="0.0"
-              @input="shotList"
-              @keydown="onKeydown"
-            />
-          </span>
-          <span class="col-7 pr-0">
-            <Mark
-              :text="msg"
-              @click.native="
-                blackCoin = black.balance;
-                shotList();
-              "
-            />
-            <span class="ml-2 txt">
-              <img src="@/assets/images/black.svg" alt="" />
-              <span class="count">{{ black.symbol }}</span>
-            </span>
-          </span>
-        </div>
-      </div>
-
+      <Token
+        :options="{
+          title: 'You give:',
+          balance: black.balance,
+          isDisabled: false,
+          symbol: 'BLACK',
+          icon: require('@/assets/images/tokens/black.svg')
+        }"
+        v-model="blackCoin"
+        @input="shotList"
+      ></Token>
       <div class="d-flex check-price justify-content-between">
         <span class="col-5">Aggregate price:</span>
         <span class="col-7"
-          >{{ BWtokensPerOneETC.toFixed(2) }} B&W per 1 ETH</span
+          >{{ BWtokensPerOneETC | truncated }} B&W per 1 ETH</span
         >
       </div>
 
