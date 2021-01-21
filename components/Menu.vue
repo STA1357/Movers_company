@@ -23,7 +23,7 @@
           @click="openWalletModal()"
           >CONNECT WALLET</span
         >
-        <span class="col-5 info" v-else @click="isConnected = !isConnected">
+        <span class="col-5 info" v-else @click="openInfoModal()">
           <span class="balance p-2"> {{ account.balance }} ETH </span>
           <span class="wallet pl-2 pr-2">
             {{ account.address.substr(-42, 6) }}...{{
@@ -34,9 +34,6 @@
         </span>
         <span class="col-2 link">ABOUT</span>
       </span>
-      <div v-if="isConnected">
-        <menu-info v-if="account.address" />
-      </div>
     </div>
 
     <div class="topnav">
@@ -83,6 +80,17 @@ export default {
     openWalletModal() {
       this.$modal.show(
         WalletModal,
+
+        {
+          details: {}
+        },
+        {
+          width: 314
+        }
+      );
+    },openInfoModal() {
+      this.$modal.show(
+          MenuInfo,
         {
           details: {}
         },

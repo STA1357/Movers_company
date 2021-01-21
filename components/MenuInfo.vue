@@ -38,9 +38,6 @@ export default {
 .main {
   width: 314px;
   height: 210px;
-  position: absolute;
-  top: 100px;
-  left: 70%;
   background: $surface3;
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
