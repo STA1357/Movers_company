@@ -20,8 +20,13 @@ class PrimaryPool {
 
   async buyTokens(ethAmount) {
     let from = await this.web3Instance.eth.getCoinbase()
-    let value = (ethAmount*1e18).toString()
-    return this.contractInstance.methods.buy().send({from, value})
+    return this.contractInstance.methods.buy().send({from, value: ethAmount})
+  }
+
+  async buyBackTokens(whiteBlackAmount) {
+    let from  = await this.web3Instance.eth.getCoinbase()
+
+    return this.contractInstance.methods.buyBack(from, whiteBlackAmount).send({from})
   }
 }
 

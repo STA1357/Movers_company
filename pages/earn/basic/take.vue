@@ -2,8 +2,8 @@
   <div>
     <nav-cards
       :text="[
-        { title: 'TAKE LIQUIDITY', path: '/earn/basic/take' },
-        { title: 'RETURN LIQUIDITY', path: '/earn/basic/return' }
+        { title: 'TAKE B&W', path: '/earn/basic/take' },
+        { title: 'RETURN B&W', path: '/earn/basic/return' }
       ]"
     />
     <div class="card">
@@ -29,7 +29,7 @@
           symbol: white.symbol,
           icon: require('@/assets/images/tokens/white.svg')
         }"
-        v-model="measurementValueDisplay"
+        v-model="whiteBlack"
       ></Token>
       <Token 
         :options="{
@@ -39,7 +39,7 @@
           symbol: black.symbol,
           icon: require('@/assets/images/tokens/black.svg')
         }"
-        v-model="measurementValueDisplay"
+        v-model="whiteBlack"
       ></Token>
       <div class="d-flex check-price justify-content-between">
         <span class="col-5">Aggregate price:</span>
@@ -84,7 +84,7 @@
         '0,00306908 ETH',
         '0.1/0.5/1.7 %'
       ]"
-      :title-r="['Min received', `from ${measurementValueDisplay} B&W`]"
+      :title-r="['Min received', `from ${whiteBlack} B&W`]"
       :title-l="[`${eth} ETH`]"
       :show="this.show"
     />
@@ -97,29 +97,22 @@ import WalletModal from "@/components/modal/templates/WalletModal";
 
 // import TBlock from "@/components/UIComponents/TitleBlock";
 import Button from "@/components/UIComponents/Button";
-import Mark from "@/components/UIComponents/Mark";
 import List from "@/components/UIComponents/List";
 import NavCards from "@/components/UIComponents/NavCards";
 
-import Token from '@/components/tokens/template'
 
 export default {
   layout: "earn",
   name: "basic",
   components: {
     Button,
-    Mark,
-    // TBlock,
     List,
     NavCards,
-    Token
   },
   data() {
     return {
-      msg: "MAX",
       show: false,
       eth: '',
-      whiteBlack: "",
 
       isLoading: false
     };
@@ -136,14 +129,8 @@ export default {
     BWtokensPerOneETC() {
       return this.$store.getters['contracts/primary/BWtokensPerOneETC'];
     },
-    measurementValueDisplay: {
-      get() {
-        this.whiteBlack = (this.eth * this.BWtokensPerOneETC).toFixed(2);
-        return this.whiteBlack;
-      },
-      set(newValue) {
-        return this.eth;
-      }
+    whiteBlack() {
+      return (this.eth * this.BWtokensPerOneETC).toFixed(2);
     }
   },
   mounted() {
@@ -168,63 +155,15 @@ export default {
         }
       );
     },
-    onKeydown(evt) {
-        // evt = (evt) ? evt : window.event;
-        // var charCode = (evt.which) ? evt.which : evt.keyCode;
-        // if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
-        //     evt.preventDefault();;
-        // } else {
-        //     return true;
-        // }
-    },
     async buyTokens() {
         try {
           this.isLoading = true
 
-          if (!this.eth || this.measurementValueDisplay < this.primary.minBuy || this.eth > this.account.balance) {
+          if (!this.eth || this.whiteBlack < this.primary.minBuy || this.eth > this.account.balance) {
             throw new Error('incorrect value')
           }
-          console.log(this.measurementValueDisplay < this.primary.minBuy)
 
           let resp = await this.$store.dispatch('contracts/primary/buyTokens', this.eth);
-
-          await this.$store.dispatch("web3/getAccount");
-
-          if (this.$store.getters["web3/account"].address) {
-            await this.$store.dispatch("contracts/black/initContract");
-            await this.$store.dispatch("contracts/white/initContract");
-            await this.$store.dispatch("contracts/primary/initContract");
-            await this.$store.dispatch("contracts/collateralization/initContract");
-          }
-
-          this.$notify.success({
-            title: 'Success',
-            message: 'Successfull transaction',
-            maxWidth: 400,
-          })
-
-        } catch (error) {
-            this.$notify.error({
-              title: 'Error',
-              message: error.message,
-              maxWidth: 400,
-            })
-        } finally {
-          this.isLoading = false
-        }
-    },
-          async buyBackTokens() {
-        try {
-          this.isLoading = true
-
-          if (this.measurementValueDisplay ||
-              this.measurementValueDisplay < this.primary.minBuy ||
-              this.measurementValueDisplay > this.white.balance ||
-              this.measurementValueDisplay > this.black.balance) {
-            throw new Error('incorrect value')
-          }
-
-          let resp = await this.$store.dispatch('contracts/primary/buyBackTokens', this.measurementValueDisplay);
 
           await this.$store.dispatch("web3/getAccount");
 

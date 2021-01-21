@@ -29,6 +29,12 @@ class White {
   async totalSupply() {
     return this.contractInstance.methods.totalSupply().call()
   }
+
+  async approve(whiteBlackAmount) {
+    let from = await this.web3Instance.eth.getCoinbase()
+
+    return this.contractInstance.methods.approve(process.env.contractAddresses.collateralization, whiteBlackAmount).send({from})
+  }
 }
 
 export default new White()

@@ -1,6 +1,6 @@
-<template
-  ><div>
-    <nav-cards
+<template>
+  <div>
+    <!-- <nav-cards
       :text="[
         { title: 'ADD LIQUIDITY', path: '/earn/trade/return' },
         { title: 'REMOVE LIQUIDITY', path: '/earn/trade/take' }
@@ -129,73 +129,73 @@
       :title-r="['Min received', 'Share of Pool']"
       :title-l="['456.166 LPBW', '0.34%']"
       :show="this.show"
-    />
+    /> -->
   </div>
 </template>
 
 <script>
-import TBlock from "@/components/UIComponents/TitleBlock";
-import Button from "@/components/UIComponents/Button";
-import Mark from "@/components/UIComponents/Mark";
-import List from "@/components/UIComponents/List";
-import { mapGetters } from "vuex";
-import NavCards from "@/components/UIComponents/NavCards";
+// import TBlock from "@/components/UIComponents/TitleBlock";
+// import Button from "@/components/UIComponents/Button";
+// import Mark from "@/components/UIComponents/Mark";
+// import List from "@/components/UIComponents/List";
+// import { mapGetters } from "vuex";
+// import NavCards from "@/components/UIComponents/NavCards";
 
-export default {
-  layout: "earn",
-  name: "trade",
-  components: {
-    NavCards,
-    Button,
-    Mark,
-    TBlock,
-    List
-  },
-  data() {
-    return {
-      msg: "MAX",
-      show: false,
-      eth: "",
-      blackC: "",
-      whiteC: "",
-      whiteBlack: ""
-    };
-  },
-  computed: {
-    ...mapGetters({
-      account: "web3/account",
-      black: "contracts/black/contract",
-      white: "contracts/white/contract",
-      primary: "contracts/primary/contract",
-      collateralization: "contracts/collateralization/contract"
-    }),
+// export default {
+//   layout: "earn",
+//   name: "trade",
+//   components: {
+//     NavCards,
+//     Button,
+//     Mark,
+//     TBlock,
+//     List
+//   },
+//   data() {
+//     return {
+//       msg: "MAX",
+//       show: false,
+//       eth: "",
+//       blackC: "",
+//       whiteC: "",
+//       whiteBlack: ""
+//     };
+//   },
+//   computed: {
+//     ...mapGetters({
+//       account: "web3/account",
+//       black: "contracts/black/contract",
+//       white: "contracts/white/contract",
+//       primary: "contracts/primary/contract",
+//       collateralization: "contracts/collateralization/contract"
+//     }),
 
-    BWtokensPerOneETC() {
-      return 1e18 / this.primary.BWprice / Math.pow(10, this.black.decimals);
-    },
-    measurementValueDisplay: {
-      get() {
-        this.whiteBlack = (this.eth * this.BWtokensPerOneETC).toFixed(2);
-        return this.whiteBlack;
-      },
-      set(newValue) {
-        return this.eth;
-      }
-    }
-  },
-  mounted() {
-    this.$store.dispatch("web3/getAccount");
-  },
-  methods: {
-    shotList() {
-      if (this.eth.length !== 0 && this.blackC.length !== 0 && this.whiteC.length !== 0) {
-        this.show = true;
-      } else {
-        this.show = false;
-      }
-    }
-  }
-};
+//     BWtokensPerOneETC() {
+//       return 1e18 / this.primary.BWprice / Math.pow(10, this.black.decimals);
+//     },
+//     measurementValueDisplay: {
+//       get() {
+//         this.whiteBlack = (this.eth * this.BWtokensPerOneETC).toFixed(2);
+//         return this.whiteBlack;
+//       },
+//       set(newValue) {
+//         return this.eth;
+//       }
+//     }
+//   },
+//   mounted() {
+//     this.$store.dispatch("web3/getAccount");
+//   },
+//   methods: {
+//     shotList() {
+//       if (this.eth.length !== 0 && this.blackC.length !== 0 && this.whiteC.length !== 0) {
+//         this.show = true;
+//       } else {
+//         this.show = false;
+//       }
+//     }
+//   }
+// };
 </script>
 
 <style scoped></style>

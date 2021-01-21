@@ -25,7 +25,14 @@ export default {
     },
 
     async buyTokens(ctx, ethAmount) {
-      await Contract.buyTokens(ethAmount)
+      await Contract.buyTokens((ethAmount*1e18).toString())
+    },
+    async buyBackTokens({ dispatch, rootState, getters }, whiteBlackAmount) {
+      whiteBlackAmount = (whiteBlackAmount * Math.pow(10, rootState.contracts.black.decimals)).toString()
+
+      await dispatch('contracts/black/approve', whiteBlackAmount, {root:true})
+      await dispatch('contracts/white/approve', whiteBlackAmount, {root:true})
+      await Contract.buyBackTokens(whiteBlackAmount)
     }
   },
   mutations: {
@@ -47,7 +54,7 @@ export default {
       return state.decimals
     },
     BWtokensPerOneETC(state, getters, rootState) {
-      return (1e18 / state.BWprice / Math.pow(10, rootState.contracts.black.decimals)).toFixed(0) / 2;
+      return (1e18 / state.BWprice / Math.pow(10, rootState.contracts.black.decimals)) / 2;
     }
   }
 }

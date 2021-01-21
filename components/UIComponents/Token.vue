@@ -1,33 +1,4 @@
 <template>
-  <!-- <div class="block mb-2">
-      <t-block :text="options.title" :text2="options.balance" />
-      <div class="d-flex justify-content-between mt-2">
-        <span class="col-3 txt">
-          <input
-            type="text"
-            class="inputs"
-            placeholder="0.0"
-            :disabled="options.isDisabled"
-
-            :autocomplete="options.autocomplete"
-            :maxlength="options.maxlength"
-            :value="value"
-            @input="$emit('input', $event.target.value)"
-            @keydown.enter="$emit('keydown-enter')"
-            @blur="$emit('blur')"
-          />
-        </span>
-        <span class="col-7 pr-0">
-          <span v-if="isDisabled" class="mark pl-2" @click="$emit('input', options.balance)">
-            MAX
-          </span>
-          <span class="ml-3 txt">
-            <img :src="options.icon" alt="" />
-            <span class="count">{{ options.symbol }}</span>
-          </span>
-        </span>
-      </div>
-  </div> -->
   <div class="token">
     <div class="token__header">
       <div class="token__title txt txt--light">
@@ -99,6 +70,10 @@ export default {
           icon: {
             type: String,
             default: ''
+          },
+          maxlength: {
+            type: String,
+            default: "1"
           }
         }
       }
@@ -112,25 +87,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.mark {
-  width: 32px;
-  height: 15px;
-  background: $surface4;
-  border-radius: 4px;
-  padding: 2px 5px;
-  text-transform: uppercase;
-  @font-family: Montserrat;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 9px;
-  line-height: 11px;
-  /* identical to box height */
-  cursor: pointer;
-
-  position: relative;
-  top: -2px;
-  color: $brand;
-}
 
 .token {
   width: 100%;

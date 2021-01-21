@@ -2,67 +2,35 @@
   <div>
     <nav-cards
       :text="[
-        { title: 'TAKE LIQUIDITY', path: '/earn/basic/take' },
-        { title: 'RETURN LIQUIDITY', path: '/earn/basic/return' }
+        { title: 'TAKE B&W', path: '/earn/basic/take' },
+        { title: 'RETURN B&W', path: '/earn/basic/return' }
       ]"
     />
     <div class="card">
-      <div class="block mb-2">
-        <t-block text="You add:" :text2="white.balance" />
-        <div class="d-flex justify-content-between mt-2">
-          <span class="col-3 txt">
-            <input
-              v-model="whiteBlack"
-              type="text"
-              class="inputs"
-              @input="shotList"
-              placeholder="0.0"
-              @keydown="onKeydown"
-            />
-          </span>
-          <span class="col-7 pr-0">
-            <Mark
-              :text="msg"
-              @click.native="
-                whiteCoin = white.balance;
-                shotList();
-              "
-            />
-            <span class="ml-2 txt">
-              <img src="@/assets/images/white.svg" alt="" />
-              <span class="count">{{ white.symbol }}</span>
-            </span>
-          </span>
-        </div>
-      </div>
-      <div class="block mb-2">
-        <t-block text="Add" :text2="black.balance" />
-        <div class="d-flex justify-content-between mt-2">
-          <span class="col-3 txt">
-            <input
-              v-model="whiteBlack"
-              type="text"
-              class="inputs"
-              placeholder="0.0"
-              @input="shotList"
-              @keydown="onKeydown"
-            />
-          </span>
-          <span class="col-7 pr-0">
-            <Mark
-              :text="msg"
-              @click.native="
-                blackCoin = black.balance;
-                shotList();
-              "
-            />
-            <span class="ml-2 txt">
-              <img src="@/assets/images/black.svg" alt="" />
-              <span class="count">{{ black.symbol }}</span>
-            </span>
-          </span>
-        </div>
-      </div>
+      <Token 
+        :options="{
+          title: 'You give:',
+          balance: white.balance,
+          isDisabled: false,
+          symbol: white.symbol,
+          icon: require('@/assets/images/tokens/white.svg')
+        }"
+        v-model="whiteBlack"
+        @input="shotList"
+
+      ></Token>
+      <Token 
+        :options="{
+          title: 'And',
+          balance: black.balance,
+          isDisabled: false,
+          symbol: black.symbol,
+          icon: require('@/assets/images/tokens/black.svg')
+        }"
+        v-model="whiteBlack"
+        @input="shotList"
+
+      ></Token>
       <div class="p-2 ml-3">
         <img
           src="@/assets/images/to.svg"
@@ -71,26 +39,16 @@
           @click="$router.push('/earn/basic/take')"
         />
       </div>
-      <div class="block mb-2">
-        <t-block text="You give:" :text2="account.balance" />
-        <div class="d-flex justify-content-between mt-2">
-          <span class="col-3 txt">
-            <input
-              v-model="measurementValueDisplay"
-              type="text"
-              class="inputs"
-              placeholder="0.0"
-              disabled
-            />
-          </span>
-          <span class="col-6 pr-0">
-            <span class="ml-2 txt">
-              <img src="@/assets/images/eth.svg" alt="" />
-              <span class="count">ETH</span>
-            </span>
-          </span>
-        </div>
-      </div>
+      <Token 
+        :options="{
+          title: 'You give:',
+          balance: account.balance,
+          isDisabled: true,
+          symbol: 'ETH',
+          icon: require('@/assets/images/tokens/eth.svg')
+        }"
+        v-model="eth"
+      ></Token>
       <div class="d-flex check-price justify-content-between">
         <span class="col-5">Aggregate price:</span>
         <span class="col-7"
@@ -98,7 +56,19 @@
         >
       </div>
 
-      <Button text="ADD BLACK & WHITE" type="big" />
+      <Button
+        v-if="!account.address"
+        text="CONNECT WALLET"
+        type="big"
+        @click.native="openWalletModal"
+      />
+
+      <Button
+        v-else
+        :text="!isLoading ? 'RETURN BLACK & WHITE' : 'Processing...'"
+        type="big"
+        @click="!isLoading ? buyBackTokens() : ''"
+      />
     </div>
     <list
       :text-l="[
@@ -123,7 +93,7 @@
         '0,00306908 ETH',
         '0.1/0.5/1.7 %'
       ]"
-      :title-r="['Min received', `from ${measurementValueDisplay} ETH`]"
+      :title-r="['Min received', `from ${eth} ETH`]"
       :title-l="[`${whiteBlack} BLACK`, `${whiteBlack} WHITE`]"
       :show="this.show"
     />
@@ -131,30 +101,27 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+
 import NavCards from "@/components/UIComponents/NavCards";
-import TBlock from "@/components/UIComponents/TitleBlock";
 import Button from "@/components/UIComponents/Button";
-import Mark from "@/components/UIComponents/Mark";
 import List from "@/components/UIComponents/List";
+
+import { mapGetters } from "vuex";
+
 export default {
   layout: "earn",
   name: "returnBasic",
   components: {
     Button,
-    Mark,
-    TBlock,
     List,
     NavCards
   },
   data() {
     return {
-      msg: "MAX",
       show: false,
-      eth: "",
       whiteBlack: "",
-      whiteCoin: "",
-      blackCoin: ""
+
+      isLoading: false
     };
   },
   computed: {
@@ -165,19 +132,11 @@ export default {
       primary: "contracts/primary/contract",
       collateralization: "contracts/collateralization/contract"
     }),
-
     BWtokensPerOneETC() {
-      return 1e18 / this.primary.BWprice / Math.pow(10, this.black.decimals);
+      return this.$store.getters['contracts/primary/BWtokensPerOneETC'];
     },
-    measurementValueDisplay: {
-      get() {
-        // this.whiteBlack = parseInt(this.whiteCoin) + parseInt(this.blackCoin);
-        this.eth = (this.whiteBlack / this.BWtokensPerOneETC).toFixed(2);
-        return this.eth;
-      },
-      set(newValue) {
-        return this.whiteBlack;
-      }
+    eth() {
+      return (this.whiteBlack / this.BWtokensPerOneETC)
     }
   },
   mounted() {
@@ -191,16 +150,43 @@ export default {
         this.show = false;
       }
     },
-    onKeydown(evt) {
-      evt = (evt) ? evt : window.event;
-      var charCode = evt.which ? evt.which : evt.keyCode;
+    async buyBackTokens() {
+            try {
+              this.isLoading = true
+              if (!this.whiteBlack ||
+                  this.whiteBlack < this.primary.minBuy ||
+                  this.whiteBlack > this.white.balance ||
+                  this.whiteBlack > this.black.balance) {
+                throw new Error('incorrect value')
+              }
 
-        if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46 && charCode !== 9 && charCode !== 190 ){
-            evt.preventDefault();;
-        } else {
-            return true;
+              let resp = await this.$store.dispatch('contracts/primary/buyBackTokens', this.whiteBlack);
+
+              await this.$store.dispatch("web3/getAccount");
+
+              if (this.$store.getters["web3/account"].address) {
+                await this.$store.dispatch("contracts/black/initContract");
+                await this.$store.dispatch("contracts/white/initContract");
+                await this.$store.dispatch("contracts/primary/initContract");
+                await this.$store.dispatch("contracts/collateralization/initContract");
+              }
+
+              this.$notify.success({
+                title: 'Success',
+                message: 'Successfull transaction',
+                maxWidth: 400,
+              })
+
+            } catch (error) {
+                this.$notify.error({
+                  title: 'Error',
+                  message: error.message,
+                  maxWidth: 400,
+                })
+            } finally {
+              this.isLoading = false
+            }
         }
-    }
   }
 };
 </script>

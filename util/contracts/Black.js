@@ -30,9 +30,10 @@ class Black {
     return this.contractInstance.methods.totalSupply().call()
   }
 
-  async approve() {
-    console.log("123123123123123123")
-    // return this.contractInstance.methods.totalSupply().call()
+  async approve(whiteBlackAmount) {
+    let from = await this.web3Instance.eth.getCoinbase()
+
+    return this.contractInstance.methods.approve(process.env.contractAddresses.collateralization, whiteBlackAmount).send({from})
   }
 }
 

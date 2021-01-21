@@ -43,9 +43,8 @@ export default {
       commit('setTotalSupply', totalSupply)
     },
 
-    async approve({ commit }) {
-      await Contract.approve()
-      // commit('setTotalSupply', totalSupply)
+    async approve({ commit, state }, whiteBlackAmount) {
+      await Contract.approve(whiteBlackAmount)
     }
   },
   mutations: {
