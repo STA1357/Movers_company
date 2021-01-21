@@ -53,7 +53,7 @@ export default {
     BWprice(state) {
       return state.decimals
     },
-    BWtokensPerOneETC(state, getters, rootState) {
+    BWtokensPerOneETH(state, getters, rootState) {
       return (1e18 / state.BWprice / Math.pow(10, rootState.contracts.black.decimals)) / 2;
     }
   }

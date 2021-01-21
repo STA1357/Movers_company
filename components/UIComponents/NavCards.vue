@@ -2,11 +2,11 @@
   <div class="nav mb-3">
     <nuxt-link
       :to="info.path"
-      class="col links"
+      class="col links txt"
       v-for="(info, idx) in text"
       :key="idx"
-      >{{ info.title }}</nuxt-link
-    >
+      >{{ info.title }}
+    </nuxt-link>
   </div>
 </template>
 
@@ -27,40 +27,41 @@ export default {
   display: flex;
   justify-content: space-around;
   width: 314px;
-  height: 29px;
+  height: auto;
+  border: 0.5px solid $brand;
   margin: 0 auto;
-  a.nuxt-link-active {
-    background: $brand !important;
-    font-style: normal;
-    font-weight: bold !important;
-    font-size: 12px;
-    line-height: 15px;
-    /* identical to box height */
+  border-radius: 20px;
 
-    text-align: center;
-
-    color: $white !important;
-  }
   .links {
     background: $surface3;
     text-transform: uppercase;
-    font-style: normal;
     font-weight: 300;
     font-size: 12px;
     line-height: 15px;
-    /* identical to box height */
-
     text-align: center;
-    border: 0.5px solid $brand;
-
     color: $brand;
-    padding: 7px 12px;
+    padding: 7px 0px;
+
     &:last-child {
       border-radius: 0px 20px 20px 0px;
     }
     &:first-child {
       border-radius: 20px 0px 0px 20px;
     }
+
+    &:not(:last-child) {
+      border-right: 0.5px solid $brand;
+    }
   }
+
+  .nuxt-link-active {
+    background: $brand !important;
+    font-weight: 700 !important;
+    color: $white !important;
+
+    text-decoration: none;
+    cursor: default;
+  }
+
 }
 </style>

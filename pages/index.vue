@@ -7,7 +7,10 @@
 <script>
 export default {
   layout: "earn",
-  name: "Main"
+  name: "Main",
+  beforeCreate() {
+    this.$router.push('/earn/basic')
+  }
 };
 </script>
 

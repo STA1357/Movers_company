@@ -5,9 +5,9 @@
     <div class="hello">
       <nav-cards
         :text="[
-          { title: 'BASE POOL', path: '/earn/basic/return' },
-          { title: 'LIQUID POOL', path: '/earn/liquid/return' },
-          { title: 'TRADE POOL', path: '/earn/trade/return' }
+          { title: 'BASE POOL', path: '/earn/basic' },
+          { title: 'LIQUID POOL', path: '/earn/liquid' },
+          { title: 'TRADE POOL', path: '/earn/trade' }
         ]"
       />
     </div>

@@ -44,7 +44,7 @@
       <div class="d-flex check-price justify-content-between">
         <span class="col-5">Aggregate price:</span>
         <span class="col-7"
-          >{{ BWtokensPerOneETC  | truncated}} B&W per 1 ETH</span
+          >{{ BWtokensPerOneETH  | truncated}} B&W per 1 ETH</span
         >
       </div>
 
@@ -126,11 +126,11 @@ export default {
       collateralization: "contracts/collateralization/contract"
     }),
 
-    BWtokensPerOneETC() {
-      return this.$store.getters['contracts/primary/BWtokensPerOneETC'];
+    BWtokensPerOneETH() {
+      return this.$store.getters['contracts/primary/BWtokensPerOneETH'];
     },
     whiteBlack() {
-      return (this.eth * this.BWtokensPerOneETC)
+      return (this.eth * this.BWtokensPerOneETH)
     }
   },
   mounted() {
