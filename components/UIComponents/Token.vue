@@ -5,7 +5,7 @@
         {{ options.title }}
       </div>
       <div class="token__balance txt txt--light">
-        balance: {{ options.balance | truncated}}
+        balance: {{ options.balance | truncated }}
       </div>
     </div>
     <div class="token__content">
@@ -14,22 +14,31 @@
           type="text"
           class="token__input txt"
           placeholder="0.0"
+          ref="input"
           :disabled="options.isDisabled"
-
           :autocomplete="options.autocomplete"
           :maxlength="options.maxlength"
-          :value="value"
+          :value="
+            value
+              .toString()
+              .replace(/[^0-9.]/g, '')
+              .replace(/(\..*)\./g, '$1')
+          "
           @input="$emit('input', $event.target.value)"
           @keydown.enter="$emit('keydown-enter')"
           @blur="$emit('blur')"
         />
       </div>
-      <div v-if="!options.isDisabled" class="token__max txt txt--light" @click="$emit('input', options.balance)">
+      <div
+        v-if="!options.isDisabled"
+        class="token__max txt txt--light"
+        @click="$emit('input', options.balance)"
+      >
         MAX
       </div>
       <div class="token__info">
         <div class="token__icon-wrapper">
-          <img :src="options.icon" alt="" class="token__icon">
+          <img :src="options.icon" alt="" class="token__icon" />
         </div>
         <div class="token__symbol txt">
           {{ options.symbol }}
@@ -40,7 +49,6 @@
 </template>
 
 <script>
-
 export default {
   props: {
     options: {
@@ -49,11 +57,11 @@ export default {
         return {
           title: {
             type: String,
-            default: ''
+            default: ""
           },
           balance: {
             type: String,
-            default: ''
+            default: ""
           },
           isDisabled: {
             type: Boolean,
@@ -61,29 +69,29 @@ export default {
           },
           symbol: {
             type: String,
-            default: ''
+            default: ""
           },
           icon: {
             type: String,
-            default: ''
+            default: ""
           },
           maxlength: {
             type: String,
             default: "1"
           }
-        }
+        };
       }
     },
-    value: ''
+    value: ""
   },
-  computed: {
 
-  },
-}
+  methods: {
+
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-
 .token {
   width: 100%;
   background-color: $white;
@@ -95,7 +103,7 @@ export default {
   }
 }
 
-.token__header  {
+.token__header {
   display: flex;
   justify-content: space-between;
 

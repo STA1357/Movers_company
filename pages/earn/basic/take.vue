@@ -94,8 +94,6 @@
 <script>
 import { mapGetters } from "vuex";
 import WalletModal from "@/components/modal/templates/WalletModal";
-
-// import TBlock from "@/components/UIComponents/TitleBlock";
 import Button from "@/components/UIComponents/Button";
 import List from "@/components/UIComponents/List";
 import NavCards from "@/components/UIComponents/NavCards";
