@@ -1,28 +1,30 @@
 <template>
-  <div v-if="show" class="d-flex list-block row">
-    <div class="col-7">
-      <div v-for="(text, idx) in titleR" :key="idx" class="title mb-2">
-        {{ text }}
+  <transition name="list">
+    <div v-if="show" class="d-flex list-block row">
+      <div class="col-7">
+        <div v-for="(text, idx) in titleR" :key="idx" class="title mb-2">
+          {{ text }}
+        </div>
       </div>
-    </div>
-    <div class="col-5">
-      <div v-for="(text, idx) in titleL" :key="idx" class="title-cost mb-2">
-        {{ text }}
+      <div class="col-5">
+        <div v-for="(text, idx) in titleL" :key="idx" class="title-cost mb-2">
+          {{ text }}
+        </div>
       </div>
-    </div>
 
-    <div class="col-12 hr mb-3" />
-    <div class="col-7">
-      <div v-for="(text, idx) in textL" :key="idx" class="text mb-2">
-        {{ text }} <img src="@/assets/images/info.svg" alt="" />
+      <div class="col-12 hr mb-3" />
+      <div class="col-7">
+        <div v-for="(text, idx) in textL" :key="idx" class="text mb-2">
+          {{ text }} <img src="@/assets/images/info.svg" alt="" />
+        </div>
+      </div>
+      <div class="col-5">
+        <div v-for="(text, idx) in textR" :key="idx" class="cost mb-2">
+          {{ text }}
+        </div>
       </div>
     </div>
-    <div class="col-5">
-      <div v-for="(text, idx) in textR" :key="idx" class="cost mb-2">
-        {{ text }}
-      </div>
-    </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -66,12 +68,13 @@ export default {
   color: $text1;
 }
 .list-block {
+  z-index: -111;
   width: 296px;
   height: auto;
   padding: 26px 0;
   background: rgba(255, 255, 255, 0.68);
   border-radius: 15px;
-  margin: -20px auto 0;
+  margin: -15px auto 0;
   transition: opacity 0.5s;
 }
 .hr {
@@ -102,5 +105,12 @@ export default {
   text-align: right;
   margin-top: 9px;
   color: $black;
+}
+.list-enter-active, .list-leave-active {
+  transition: all 1s;
+}
+.list-enter, .list-leave-to /* .list-leave-active до версии 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(-100px);
 }
 </style>

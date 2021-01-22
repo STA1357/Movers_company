@@ -1,38 +1,24 @@
 <template>
   <div>
-    <!-- <nav-cards
+    <nav-cards
       :text="[
         { title: 'ADD LIQUIDITY', path: '/earn/liquid/take' },
         { title: 'REMOVE LIQUIDITY', path: '/earn/liquid/return' }
       ]"
     />
     <div class="card">
-      <div class="block mb-2">
-        <t-block text="You give:" :text2="account.balance" />
-        <div class="d-flex justify-content-between mt-2">
-          <span class="col-3 txt">
-            <input
-              v-model="eth"
-              type="text"
-              class="inputs"
-              placeholder="0.0"
-              @input="shotList"
-            />
-          </span>
-          <span class="col-6 pr-0">
-            <Mark
-              :text="msg"
-              @click.native="
-                eth = account.balance;
-                shotList();
-              "
-            />
-            <span class="ml-3 txt">
-              <span class="count">LPBW</span>
-            </span>
-          </span>
-        </div>
-      </div>
+      <Token
+        :options="{
+          title: 'You give:',
+          balance: account.balance,
+          isDisabled: false,
+          symbol: 'ETH',
+          icon: require('@/assets/images/tokens/eth.svg')
+        }"
+        v-model="eth"
+        @input="shotList"
+
+      ></Token>
       <div class="p-2 ml-3">
         <img
           src="@/assets/images/to.svg"
@@ -41,50 +27,31 @@
           @click="$router.push('/earn/liquid/return')"
         />
       </div>
-      <div class="block mb-2">
-        <t-block text="You give:" :text2="white.balance" />
-        <div class="d-flex justify-content-between mt-2">
-          <span class="col-3 txt">
-            <input
-              v-model="measurementValueDisplay"
-              type="text"
-              class="inputs"
-              placeholder="0.0"
-              disabled
-            />
-          </span>
-          <span class="col-6 pr-0">
-            <span class="ml-3 txt">
-              <img src="@/assets/images/white.svg" alt="" />
-              <span class="count">{{ white.symbol }}</span>
-            </span>
-          </span>
-        </div>
-      </div>
-      <div class="block mb-2">
-        <t-block text="You give:" :text2="black.balance" />
-        <div class="d-flex justify-content-between mt-2">
-          <span class="col-3 txt">
-            <input
-              v-model="measurementValueDisplay"
-              disabled
-              type="text"
-              class="inputs"
-              placeholder="0.0"
-            />
-          </span>
-          <span class="col-6 pr-0">
-            <span class="ml-3 txt">
-              <img src="@/assets/images/black.svg" alt="" />
-              <span class="count">{{ black.symbol }}</span>
-            </span>
-          </span>
-        </div>
-      </div>
+
+      <Token
+        :options="{
+          title: 'You add:',
+          balance: white.balance,
+          isDisabled: true,
+          symbol: white.symbol,
+          icon: require('@/assets/images/tokens/white.svg')
+        }"
+        v-model="whiteBlack"
+      ></Token>
+      <Token
+        :options="{
+          title: 'And',
+          balance: black.balance,
+          isDisabled: true,
+          symbol: black.symbol,
+          icon: require('@/assets/images/tokens/black.svg')
+        }"
+        v-model="whiteBlack"
+      ></Token>
       <div class="d-flex check-price justify-content-between">
         <span class="col-5">Aggregate price:</span>
         <span class="col-7"
-          >{{ BWtokensPerOneETC.toFixed(2) }} B&W per 1 LPBW</span
+          >{{ BWtokensPerOneETC | truncated }} B&W per 1 LPBW</span
         >
       </div>
       <Button text="RETURN BLACK & WHITE" type="big" />
@@ -115,72 +82,72 @@
       :title-r="['Min received', 'Share of Pool']"
       :title-l="['456.166 B&W', '0.31%']"
       :show="this.show"
-    /> -->
+    />
   </div>
 </template>
 
 <script>
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 
-// import TBlock from "@/components/UIComponents/TitleBlock";
-// import Button from "@/components/UIComponents/Button";
-// import Mark from "@/components/UIComponents/Mark";
-// import List from "@/components/UIComponents/List";
-// import NavCards from "@/components/UIComponents/NavCards";
+import TBlock from "@/components/UIComponents/TitleBlock";
+import Button from "@/components/UIComponents/Button";
+import Mark from "@/components/UIComponents/Mark";
+import List from "@/components/UIComponents/List";
+import NavCards from "@/components/UIComponents/NavCards";
 
-// export default {
-//   layout: "earn",
-//   name: "returnLiquid",
-//   components: {
-//     Button,
-//     Mark,
-//     TBlock,
-//     List,
-//     NavCards
-//   },
-//   data() {
-//     return {
-//       msg: "MAX",
-//       show: false,
-//       eth: "",
-//       whiteBlack: ""
-//     };
-//   },
-//   computed: {
-//     ...mapGetters({
-//       account: "web3/account",
-//       black: "contracts/black/contract",
-//       white: "contracts/white/contract",
-//       primary: "contracts/primary/contract",
-//       collateralization: "contracts/collateralization/contract"
-//     }),
+export default {
+  layout: "earn",
+  name: "returnLiquid",
+  components: {
+    Button,
+    Mark,
+    TBlock,
+    List,
+    NavCards
+  },
+  data() {
+    return {
+      msg: "MAX",
+      show: false,
+      eth: "",
+      whiteBlack: ""
+    };
+  },
+  computed: {
+    ...mapGetters({
+      account: "web3/account",
+      black: "contracts/black/contract",
+      white: "contracts/white/contract",
+      primary: "contracts/primary/contract",
+      collateralization: "contracts/collateralization/contract"
+    }),
 
-//     BWtokensPerOneETC() {
-//       return 1e18 / this.primary.BWprice / Math.pow(10, this.black.decimals);
-//     },
-//     measurementValueDisplay: {
-//       get() {
-//         this.whiteBlack = (this.eth * this.BWtokensPerOneETC).toFixed(2);
-//         return this.whiteBlack;
-//       },
-//       set(newValue) {
-//         return this.eth;
-//       }
-//     }
-//   },
-//   mounted() {
-//     this.$store.dispatch("web3/getAccount");
-//   },
-//   methods: {
-//     shotList() {
-//       if (this.eth.length !== 0) {
-//         this.show = true;
-//       } else {
-//         this.show = false;
-//       }
-//     }
-//   }
-// };
+    BWtokensPerOneETC() {
+      return 1e18 / this.primary.BWprice / Math.pow(10, this.black.decimals);
+    },
+    measurementValueDisplay: {
+      get() {
+        this.whiteBlack = (this.eth * this.BWtokensPerOneETC).toFixed(2);
+        return this.whiteBlack;
+      },
+      set(newValue) {
+        return this.eth;
+      }
+    }
+  },
+  mounted() {
+    this.$store.dispatch("web3/getAccount");
+  },
+  methods: {
+    shotList() {
+      if (this.eth.length !== 0) {
+        this.show = true;
+      } else {
+        this.show = false;
+      }
+    }
+  }
+};
 </script>
 
 <style scoped></style>

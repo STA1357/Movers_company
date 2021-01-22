@@ -35,7 +35,8 @@ export default {
   },
   async beforeCreate() {
     // this.$store.dispatch('web3/getAccount')
-    await this.$store.dispatch("web3/getAccount");
+
+      await this.$store.dispatch("web3/getAccount");
 
     if (this.$store.getters["web3/account"].address) {
       await this.$store.dispatch("contracts/black/initContract");

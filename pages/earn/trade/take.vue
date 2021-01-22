@@ -1,6 +1,6 @@
-<template>
-  <div>
-    <!-- <nav-cards
+<template
+  ><div>
+    <nav-cards
       :text="[
         { title: 'ADD LIQUIDITY', path: '/earn/trade/return' },
         { title: 'REMOVE LIQUIDITY', path: '/earn/trade/take' }
@@ -39,36 +39,21 @@
           0.34%
         </div>
       </div>
-      <div class="block mb-2">
-        <t-block text="You give:" :text2="account.balance" />
-        <div class="d-flex justify-content-between mt-2">
-          <span class="col-3 txt">
-            <input
-              v-model="eth"
-              type="text"
-              class="inputs"
-              placeholder="0.0"
-              @input="shotList"
-            />
-          </span>
-          <span class="col-6 pr-0">
-            <Mark
-              :text="msg"
-              @click.native="
-                eth = account.balance;
-                shotList();
-              "
-            />
-            <span class="ml-2 txt">
-              <span class="count">LPBW</span>
-            </span>
-          </span>
-        </div>
-      </div>
+      <Token
+        :options="{
+          title: 'You give:',
+          balance: account.balance,
+          isDisabled: false,
+          symbol: 'ETH',
+          icon: require('@/assets/images/tokens/eth.svg')
+        }"
+        v-model="eth"
+        @input="shotList"
+      ></Token>
       <div class="d-flex check-price justify-content-between">
         <span class="col-5">Aggregate price:</span>
         <span class="col-7"
-          >{{ BWtokensPerOneETC.toFixed(2) }} B&W per 1 ETH</span
+          >{{ BWtokensPerOneETC | truncated }} B&W per 1 ETH</span
         >
       </div>
 
@@ -100,94 +85,94 @@
       :title-r="['Min received']"
       :title-l="['800  WHITE', '912  BLACK', '0.76 ETH']"
       :show="this.show"
-    /> -->
+    />
   </div>
 </template>
 
 <script>
-// import TBlock from "@/components/UIComponents/TitleBlock";
-// import Button from "@/components/UIComponents/Button";
-// import Mark from "@/components/UIComponents/Mark";
-// import List from "@/components/UIComponents/List";
-// import { mapGetters } from "vuex";
-// import NavCards from "@/components/UIComponents/NavCards";
+import TBlock from "@/components/UIComponents/TitleBlock";
+import Button from "@/components/UIComponents/Button";
+import Mark from "@/components/UIComponents/Mark";
+import List from "@/components/UIComponents/List";
+import { mapGetters } from "vuex";
+import NavCards from "@/components/UIComponents/NavCards";
 
-// export default {
-//   layout: "earn",
-//   name: "trade",
-//   components: {
-//     NavCards,
-//     Button,
-//     Mark,
-//     TBlock,
-//     List
-//   },
-//   data() {
-//     return {
-//       msg: "MAX",
-//       show: false,
-//       eth: "",
-//       blackC: "",
-//       whiteC: "",
-//       whiteBlack: ""
-//     };
-//   },
-//   computed: {
-//     ...mapGetters({
-//       account: "web3/account",
-//       black: "contracts/black/contract",
-//       white: "contracts/white/contract",
-//       primary: "contracts/primary/contract",
-//       collateralization: "contracts/collateralization/contract"
-//     }),
+export default {
+  layout: "earn",
+  name: "trade",
+  components: {
+    NavCards,
+    Button,
+    Mark,
+    TBlock,
+    List
+  },
+  data() {
+    return {
+      msg: "MAX",
+      show: false,
+      eth: "",
+      blackC: "",
+      whiteC: "",
+      whiteBlack: ""
+    };
+  },
+  computed: {
+    ...mapGetters({
+      account: "web3/account",
+      black: "contracts/black/contract",
+      white: "contracts/white/contract",
+      primary: "contracts/primary/contract",
+      collateralization: "contracts/collateralization/contract"
+    }),
 
-//     BWtokensPerOneETC() {
-//       return 1e18 / this.primary.BWprice / Math.pow(10, this.black.decimals);
-//     },
-//     measurementValueDisplay: {
-//       get() {
-//         this.whiteBlack = (this.eth * this.BWtokensPerOneETC).toFixed(2);
-//         return this.whiteBlack;
-//       },
-//       set(newValue) {
-//         return this.eth;
-//       }
-//     }
-//   },
-//   mounted() {
-//     this.$store.dispatch("web3/getAccount");
-//   },
-//   methods: {
-//     shotList() {
-//       if (this.eth.length !== 0) {
-//         this.show = true;
-//       } else {
-//         this.show = false;
-//       }
-//     }
-//   }
-// };
+    BWtokensPerOneETC() {
+      return 1e18 / this.primary.BWprice / Math.pow(10, this.black.decimals);
+    },
+    measurementValueDisplay: {
+      get() {
+        this.whiteBlack = (this.eth * this.BWtokensPerOneETC).toFixed(2);
+        return this.whiteBlack;
+      },
+      set(newValue) {
+        return this.eth;
+      }
+    }
+  },
+  mounted() {
+    this.$store.dispatch("web3/getAccount");
+  },
+  methods: {
+    shotList() {
+      if (this.eth.length !== 0) {
+        this.show = true;
+      } else {
+        this.show = false;
+      }
+    }
+  }
+};
 </script>
 
 <style scoped lang="scss">
-// .desciption {
-//   font-family: Montserrat;
-//   font-style: normal;
-//   font-weight: 300;
-//   font-size: 10px;
-//   line-height: 12px;
-//   margin-bottom: 9px;
-//   color: $brand;
-//   text-align: left;
-// }
-// .price {
-//   font-family: Montserrat;
-//   font-style: normal;
-//   font-weight: 500;
-//   font-size: 10px;
-//   line-height: 12px;
-//   text-align: right;
-//   margin-bottom: 9px;
-//   color: $brand;
-// }
+.desciption {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 10px;
+  line-height: 12px;
+  margin-bottom: 9px;
+  color: $brand;
+  text-align: left;
+}
+.price {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 12px;
+  text-align: right;
+  margin-bottom: 9px;
+  color: $brand;
+}
 </style>

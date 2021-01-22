@@ -1,15 +1,16 @@
 <template>
   <div>
-    basic
+    trade
   </div>
 </template>
 
 <script>
 export default {
+  name: "index",
   beforeCreate() {
-    this.$router.push("/earn/basic/take");
+    this.$router.push("/trade/take");
   }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
