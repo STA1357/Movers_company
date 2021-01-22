@@ -15,7 +15,6 @@
           class="token__input txt"
           placeholder="0.0"
           :disabled="options.isDisabled"
-
           :autocomplete="options.autocomplete"
           :maxlength="options.maxlength"
           :value="value"
