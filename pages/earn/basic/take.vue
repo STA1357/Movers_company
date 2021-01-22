@@ -61,32 +61,17 @@
         @click="!isLoading ? buyTokens() : ''"
       />
     </div>
-    <list
-      :text-l="[
-        'WHITE Price',
-        'BLACK Price',
-        'ETH in Base Pool',
-        'WHITE in the market',
-        'BLACK in the market',
-        'WHITE in Base Pool',
-        'BLACK in Base Pool',
-        'Aggregate B&W price',
-        'Change B&W Price (1,7,30 days)'
+    <List
+      :title="[
+        {
+          text: 'Min received',
+          value: `${this.whiteBlack} BLACK`,
+        },
+        {
+          text: `from ${this.eth} ETH `,
+          value: `${!this.whiteBlack ? 0 : this.whiteBlack} WHITE`,
+        }
       ]"
-      :text-r="[
-        '0.00153454 ETH',
-        '0.00153454 ETH',
-        '1544 ETH',
-        '503082.355 WHITE',
-        '503082.355 BLACK',
-        '799496918 WHITE',
-        '799496918 BLACK',
-        '0,00306908 ETH',
-        '0.1/0.5/1.7 %'
-      ]"
-      :title-r="['Min received', `from ${whiteBlack} B&W`]"
-      :title-l="[`${eth} ETH`]"
-      :show="this.show"
     />
   </div>
 </template>
@@ -133,9 +118,9 @@ export default {
   methods: {
     shotList() {
       if (this.eth.length !== 0) {
-        this.show = true;
+        this.$emit('openList')
       } else {
-        this.show = false;
+        this.$emit('closeList')
       }
     },
     openWalletModal() {

@@ -82,6 +82,14 @@ export default {
     },
     contract(state) {
       return state
+    },
+    inBase(state, getters, rootState) {
+      return rootState.contracts.collateralization.storedTokensAmount.black 
+      / Math.pow(10, state.decimals)
+    },
+    inMarket(state, getters, rootState) {
+      return (state.totalSupply - rootState.contracts.collateralization.storedTokensAmount.black) 
+      / Math.pow(10, state.decimals)
     }
   }
 }
