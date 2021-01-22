@@ -63,6 +63,8 @@
             src="@/assets/images/update.svg"
             alt=""
             @click="isReverse = !isReverse"
+            style="margin-top: -3px"
+
           />
         </div>
       </div>
