@@ -27,11 +27,14 @@ export default {
     async buyTokens(ctx, ethAmount) {
       await Contract.buyTokens((ethAmount*1e18).toString())
     },
-    async buyBackTokens({ dispatch, rootState, getters }, whiteBlackAmount) {
+    async buyBackTokens({ dispatch, rootState }, whiteBlackAmount) {
       whiteBlackAmount = (whiteBlackAmount * Math.pow(10, rootState.contracts.black.decimals)).toString()
 
-      await dispatch('contracts/black/approve', whiteBlackAmount, {root:true})
-      await dispatch('contracts/white/approve', whiteBlackAmount, {root:true})
+      await Promise.all([
+        dispatch('contracts/black/approve', whiteBlackAmount, {root:true}),
+        dispatch('contracts/white/approve', whiteBlackAmount, {root:true})
+      ])
+
       await Contract.buyBackTokens(whiteBlackAmount)
     }
   },

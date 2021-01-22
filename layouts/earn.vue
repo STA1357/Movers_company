@@ -35,13 +35,7 @@ export default {
   },
   mounted() {
     if (!this.$store.getters["web3/account"].address) {
-      Promise.all([
-              this.$store.dispatch("web3/getAccount"),
-              this.$store.dispatch("contracts/black/initContract"),
-              this.$store.dispatch("contracts/white/initContract"),
-              this.$store.dispatch("contracts/primary/initContract"),
-              this.$store.dispatch("contracts/collateralization/initContract"),
-      ]).then(() => {
+      this.initAccountAndContracts().then(() => {
         this.loaded = true;
       })
     } else {

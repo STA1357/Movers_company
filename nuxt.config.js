@@ -38,6 +38,7 @@ export default {
   plugins: [
     '~plugins/vue-js-modal',
     '~plugins/filters',
+    '~plugins/mixins',
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

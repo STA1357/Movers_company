@@ -159,16 +159,7 @@ export default {
           this.whiteBlack
         );
 
-        await this.$store.dispatch("web3/getAccount");
-
-        if (this.$store.getters["web3/account"].address) {
-          await this.$store.dispatch("contracts/black/initContract");
-          await this.$store.dispatch("contracts/white/initContract");
-          await this.$store.dispatch("contracts/primary/initContract");
-          await this.$store.dispatch(
-            "contracts/collateralization/initContract"
-          );
-        }
+        await this.initAccountAndContracts()
 
         this.$notify.success({
           title: "Success",
