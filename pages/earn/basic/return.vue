@@ -47,9 +47,24 @@
         }"
         v-model="eth"
       ></Token>
-      <div class="d-flex check-price justify-content-between">
-        <span class="col-5">Aggregate price:</span>
-        <span class="col-7">{{ BWtokensPerOneETH | truncated }} B&W per 1 ETH</span>
+      <div class="d-flex check-price justify-content-between ">
+        <span class="col-5 p-0" style="text-align: left; margin-top: 3px"
+          >Aggregate price:</span
+        >
+        <div class="col p-0" style="text-align: left">
+          {{
+            isReverse
+              ? Math.trunc(BWtokensPerOneETH * 10000) / 10000 +
+                " " +
+                "B&W per 1 ETH"
+              : 1 / BWtokensPerOneETH + "ETH per 1 B&W"
+          }}
+          <img
+            src="@/assets/images/update.svg"
+            alt=""
+            @click="isReverse = !isReverse"
+          />
+        </div>
       </div>
 
       <Button
@@ -70,11 +85,11 @@
       :title="[
         {
           text: 'Min received',
-          value: `${this.eth} ETH`,
+          value: `${this.eth} ETH`
         },
         {
           text: `from ${!this.whiteBlack ? 0 : this.whiteBlack} B&W `,
-          value: '',
+          value: ''
         }
       ]"
     />
@@ -100,8 +115,8 @@ export default {
     return {
       show: false,
       whiteBlack: "",
-
-      isLoading: false
+      isLoading: false,
+      isReverse: true
     };
   },
   computed: {
@@ -122,9 +137,9 @@ export default {
   methods: {
     shotList() {
       if (this.eth.length !== 0) {
-        this.$emit('openList')
+        this.$emit("openList");
       } else {
-        this.$emit('closeList')
+        this.$emit("closeList");
       }
     },
     async buyBackTokens() {
@@ -144,7 +159,7 @@ export default {
           this.whiteBlack
         );
 
-        await this.initAccountAndContracts()
+        await this.initAccountAndContracts();
 
         this.$notify.success({
           title: "Success",

@@ -41,11 +41,24 @@
         }"
         v-model="whiteBlack"
       ></Token>
-      <div class="d-flex check-price justify-content-between">
-        <span class="col-5">Aggregate price:</span>
-        <span class="col-7"
-          >{{ BWtokensPerOneETH | truncated }} B&W per 1 ETH</span
+      <div class="d-flex check-price justify-content-between ">
+        <span class="col-5 p-0" style="text-align: left; margin-top: 3px"
+          >Aggregate price:</span
         >
+        <div class="col p-0" style="text-align: left">
+          {{
+            isReverse
+              ? Math.trunc(BWtokensPerOneETH * 10000) / 10000 +
+                " " +
+                "B&W per 1 ETH"
+              : 1 / BWtokensPerOneETH + "ETH per 1 B&W"
+          }}
+          <img
+            src="@/assets/images/update.svg"
+            alt=""
+            @click="isReverse = !isReverse"
+          />
+        </div>
       </div>
 
       <Button
@@ -65,11 +78,11 @@
       :title="[
         {
           text: 'Min received',
-          value: `${this.whiteBlack} BLACK`,
+          value: `${this.whiteBlack} BLACK`
         },
         {
           text: `from ${this.eth} ETH `,
-          value: `${!this.whiteBlack ? 0 : this.whiteBlack} WHITE`,
+          value: `${!this.whiteBlack ? 0 : this.whiteBlack} WHITE`
         }
       ]"
     />
@@ -95,7 +108,7 @@ export default {
     return {
       show: false,
       eth: "",
-
+      isReverse: true,
       isLoading: false
     };
   },
@@ -118,9 +131,9 @@ export default {
   methods: {
     shotList() {
       if (this.eth.length !== 0) {
-        this.$emit('openList')
+        this.$emit("openList");
       } else {
-        this.$emit('closeList')
+        this.$emit("closeList");
       }
     },
     openWalletModal() {
@@ -151,7 +164,7 @@ export default {
           this.eth
         );
 
-        await this.initAccountAndContracts()
+        await this.initAccountAndContracts();
 
         this.$notify.success({
           title: "Success",
