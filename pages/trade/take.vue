@@ -73,13 +73,13 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import NavCards from "@/components/UIComponents/NavCards";
-import TBlock from "@/components/UIComponents/TitleBlock";
 import Button from "@/components/UIComponents/Button";
-import Mark from "@/components/UIComponents/Mark";
 import List from "@/components/UIComponents/List";
 import MatchCard from "@/components/match/MatchCard";
+
+import { mapGetters } from "vuex";
+
 export default {
   layout: "default",
   name: "takeTrade",

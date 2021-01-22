@@ -90,12 +90,11 @@
 </template>
 
 <script>
-import TBlock from "@/components/UIComponents/TitleBlock";
 import Button from "@/components/UIComponents/Button";
-import Mark from "@/components/UIComponents/Mark";
 import List from "@/components/UIComponents/List";
-import { mapGetters } from "vuex";
 import NavCards from "@/components/UIComponents/NavCards";
+
+import { mapGetters } from "vuex";
 
 export default {
   layout: "earn",
@@ -103,8 +102,6 @@ export default {
   components: {
     NavCards,
     Button,
-    Mark,
-    TBlock,
     List
   },
   data() {

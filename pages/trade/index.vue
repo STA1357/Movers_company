@@ -8,7 +8,7 @@
 export default {
   name: "index",
   beforeCreate() {
-    this.$router.push("/trade/take");
+    this.$router.replace("/trade/take");
   }
 };
 </script>

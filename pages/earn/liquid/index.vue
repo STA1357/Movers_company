@@ -8,7 +8,7 @@
     export default {
         name: "index",
         beforeCreate() {
-            this.$router.push('/earn/liquid/take')
+            this.$router.replace('/earn/liquid/take')
         }
     }
 </script>

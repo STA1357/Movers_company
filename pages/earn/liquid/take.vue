@@ -87,13 +87,11 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
-import TBlock from "@/components/UIComponents/TitleBlock";
 import Button from "@/components/UIComponents/Button";
-import Mark from "@/components/UIComponents/Mark";
 import List from "@/components/UIComponents/List";
 import NavCards from "@/components/UIComponents/NavCards";
+
+import { mapGetters } from "vuex";
 
 export default {
   layout: "earn",
@@ -107,7 +105,6 @@ export default {
   },
   data() {
     return {
-      msg: "MAX",
       show: false,
       eth: "",
       whiteBlack: ""

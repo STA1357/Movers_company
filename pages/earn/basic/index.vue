@@ -7,7 +7,7 @@
 <script>
 export default {
   beforeCreate() {
-    this.$router.push("/earn/basic/take");
+    this.$router.replace("/earn/basic/take");
   }
 };
 </script>

@@ -87,30 +87,24 @@
 </template>
 
 <script>
-import TBlock from "@/components/UIComponents/TitleBlock";
 import Button from "@/components/UIComponents/Button";
-import Mark from "@/components/UIComponents/Mark";
-import { mapGetters } from "vuex";
 import NavCards from "@/components/UIComponents/NavCards";
-
 import List from "@/components/UIComponents/List";
+
+import { mapGetters } from "vuex";
+
 export default {
   layout: "earn",
   name: "liquid",
   components: {
     NavCards,
     Button,
-    Mark,
-    TBlock,
     List
   },
   data() {
     return {
-      msg: "MAX",
       show: false,
       eth: "",
-      blackC: "",
-      whiteC: "",
       whiteBlack: ""
     };
   },

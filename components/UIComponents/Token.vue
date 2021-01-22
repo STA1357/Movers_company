@@ -40,12 +40,8 @@
 </template>
 
 <script>
-import TBlock from "@/components/UIComponents/TitleBlock";
 
 export default {
-  components: {
-    TBlock,
-  },
   props: {
     options: {
       type: Object,

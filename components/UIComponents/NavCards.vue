@@ -1,5 +1,5 @@
 <template>
-  <div class="nav mb-3">
+  <div class="nav">
     <nuxt-link
       :to="info.path"
       class="col links txt"
@@ -31,6 +31,7 @@ export default {
   border: 1px solid $brand;
   margin: 0 auto;
   border-radius: 20px;
+  margin-bottom: 21px;
 
   .links {
     background: $surface3;
