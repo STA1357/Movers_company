@@ -104,7 +104,9 @@ export default {
     return {
       show: false,
       eth: "",
-      whiteBlack: ""
+      whiteBlack: "",
+        whiteC:'',
+        blackC:''
     };
   },
   computed: {
