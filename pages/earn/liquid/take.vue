@@ -98,8 +98,6 @@ export default {
   name: "returnLiquid",
   components: {
     Button,
-    Mark,
-    TBlock,
     List,
     NavCards
   },
@@ -131,9 +129,6 @@ export default {
         return this.eth;
       }
     }
-  },
-  mounted() {
-    this.$store.dispatch("web3/getAccount");
   },
   methods: {
     shotList() {

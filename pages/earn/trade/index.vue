@@ -1,14 +1,12 @@
 <template>
     <div>
-        trade
     </div>
 </template>
 
 <script>
     export default {
-        name: "index",
-        beforeCreate() {
-            this.$router.replace('/earn/trade/take')
+        middleware({ redirect }) {
+            return redirect("/earn/trade/take");
         }
     }
 </script>

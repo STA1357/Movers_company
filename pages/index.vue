@@ -5,13 +5,11 @@
 </template>
 
 <script>
-export default {
-  layout: "earn",
-  name: "Main",
-  beforeCreate() {
-    this.$router.replace('/earn/basic')
-  }
-};
+    export default {
+        middleware({ redirect }) {
+            return redirect("/earn/basic/take");
+        }
+    }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

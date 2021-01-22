@@ -116,9 +116,6 @@ export default {
       }
     }
   },
-  mounted() {
-    this.$store.dispatch("web3/getAccount");
-  },
   methods: {
     shotList() {
       if (this.whiteBlack.length !== 0) {

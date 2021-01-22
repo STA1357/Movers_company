@@ -86,19 +86,14 @@ export default {
   components: {
     Button,
     MatchCard,
-    Mark,
-    TBlock,
     List,
     NavCards
   },
   data() {
     return {
-      msg: "MAX",
       show: false,
       eth: "",
       whiteBlack: "",
-      whiteCoin: "",
-      blackCoin: ""
     };
   },
   computed: {
@@ -123,9 +118,6 @@ export default {
         return this.whiteBlack;
       }
     }
-  },
-  mounted() {
-    this.$store.dispatch("web3/getAccount");
   },
   methods: {
     shotList() {

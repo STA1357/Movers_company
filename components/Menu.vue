@@ -55,7 +55,6 @@ export default {
       return this.$store.getters["web3/account"];
     },
     shortenedAddress() {
-      console.log(this.account.address.substr(0, 6))
       return this.account.address.substr(0, 6) + '...' +  this.account.address.substr(-4, 4)
     }
   }

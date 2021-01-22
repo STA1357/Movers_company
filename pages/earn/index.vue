@@ -5,10 +5,9 @@
 
 
 <script>
-export default {
-  layout: "earn",
-  beforeCreate() {
-    this.$router.replace('/earn/basic')
-  }
-};
+    export default {
+        middleware({ redirect }) {
+            return redirect("/earn/basic/take");
+        }
+    }
 </script>

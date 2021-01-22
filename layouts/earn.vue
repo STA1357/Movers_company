@@ -12,8 +12,8 @@
       />
     </div>
 
-    <div v-if="loaded">
-      <Nuxt />
+    <div class="main" v-if="loaded">
+        <Nuxt />
     </div>
     <div v-else>
       Loading...
@@ -33,18 +33,20 @@ export default {
       loaded: false
     };
   },
-  async beforeCreate() {
-    // this.$store.dispatch('web3/getAccount')
-
-      await this.$store.dispatch("web3/getAccount");
-
-    if (this.$store.getters["web3/account"].address) {
-      await this.$store.dispatch("contracts/black/initContract");
-      await this.$store.dispatch("contracts/white/initContract");
-      await this.$store.dispatch("contracts/primary/initContract");
-      await this.$store.dispatch("contracts/collateralization/initContract");
+  mounted() {
+    if (!this.$store.getters["web3/account"].address) {
+      Promise.all([
+              this.$store.dispatch("web3/getAccount"),
+              this.$store.dispatch("contracts/black/initContract"),
+              this.$store.dispatch("contracts/white/initContract"),
+              this.$store.dispatch("contracts/primary/initContract"),
+              this.$store.dispatch("contracts/collateralization/initContract"),
+      ]).then(() => {
+        this.loaded = true;
+      })
+    } else {
+        this.loaded = true;
     }
-    this.loaded = true;
   }
 };
 </script>
@@ -59,4 +61,5 @@ export default {
 .hello {
   margin-top: 64px;
 }
+
 </style>

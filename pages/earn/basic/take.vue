@@ -132,9 +132,6 @@ export default {
       return this.eth * this.BWtokensPerOneETH;
     }
   },
-  mounted() {
-    this.$store.dispatch("web3/getAccount");
-  },
   methods: {
     shotList() {
       if (this.eth.length !== 0) {

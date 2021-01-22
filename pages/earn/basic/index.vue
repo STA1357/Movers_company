@@ -6,8 +6,8 @@
 
 <script>
 export default {
-  beforeCreate() {
-    this.$router.replace("/earn/basic/take");
+  middleware({ redirect }) {
+      return redirect("/earn/basic/take");
   }
 };
 </script>
