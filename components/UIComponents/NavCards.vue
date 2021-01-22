@@ -28,7 +28,7 @@ export default {
   justify-content: space-around;
   width: 314px;
   height: auto;
-  border: 0.5px solid $brand;
+  border: 1px solid $brand;
   margin: 0 auto;
   border-radius: 20px;
 
@@ -50,7 +50,7 @@ export default {
     }
 
     &:not(:last-child) {
-      border-right: 0.5px solid $brand;
+      border-right: 1px solid $brand;
     }
   }
 

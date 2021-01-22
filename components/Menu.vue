@@ -1,81 +1,41 @@
 <template>
-  <div class="w3-top">
-    <div class="d-flex menu justify-content-around">
-      <span class="col-2 logo">
-        <img src="@/assets/images/logo.svg" alt="" />
-      </span>
-      <span class="items col-5 d-flex sub">
-        <span class="col"><router-link to="/trade/return">TRADE</router-link></span>
-        <span class="col"><router-link to="/earn">EARN</router-link></span>
-        <span class="col">EVENTS</span>
-        <span class="col">LIVE</span>
-        <span class="col">VOTE</span>
-        <span class="col">CHARTS</span>
-        <span class="col">NFT</span>
-        <span class="col">&nbsp;</span>
-      </span>
-      <span class="items-btn col-5 d-flex ml-5 sub">
-        <span class="col-2 link">BWGT</span>
-        <span class="col-2 link">CREATE +</span>
-        <span
-          class="col-4 link "
-          v-if="!account.address"
-          @click="openWalletModal()"
-          >CONNECT WALLET</span
-        >
-        <span class="col-5 info" v-else @click="openInfoModal()">
-          <span class="balance p-2"> {{ account.balance }} ETH </span>
-          <span class="wallet pl-2 pr-2">
-            {{ account.address.substr(-42, 6) }}...{{
-              account.address.substr(-4, 4)
-            }}
-            <img src="@/assets/images/metamask_icon.svg" alt="" class="mb-1" />
-          </span>
-        </span>
-        <span class="col-2 link">ABOUT</span>
-      </span>
+  <div class="menu">
+    <div class="menu__info d-flex">
+      <div class="menu__logo-wrapper">
+        <img class="menu__logo" src="@/assets/images/logo.svg" alt="" />
+      </div>
+      <div class="menu__navigation">
+        <NuxtLink class="txt menu__navigation-item" to="/trade">TRADE</NuxtLink>
+        <NuxtLink class="txt menu__navigation-item" to="/earn">EARN</NuxtLink>
+        <NuxtLink class="txt menu__navigation-item menu__navigation-item--inactive" :event="''" to="#">EVENTS</NuxtLink>
+        <NuxtLink class="txt menu__navigation-item menu__navigation-item--inactive" :event="''" to="#">LIVE</NuxtLink>
+        <NuxtLink class="txt menu__navigation-item menu__navigation-item--inactive" :event="''" to="#">VOTE</NuxtLink>
+        <NuxtLink class="txt menu__navigation-item menu__navigation-item--inactive" :event="''" to="#">CHARTS</NuxtLink>
+        <NuxtLink class="txt menu__navigation-item menu__navigation-item--inactive" :event="''" to="#">NFT</NuxtLink>
+      </div>
     </div>
+    <div class="menu__actions d-flex">
+      <div class="txt menu__navigation-item menu__bwgt-button">BWGT</div>
+      <NuxtLink class="txt menu__navigation-item menu__navigation-item--inactive" :event="''" to="#">Create+</NuxtLink>
 
-    <div class="topnav">
-      <div class="logo mt-2 mb-2">
-        <img src="@/assets/images/logo.svg" alt="" />
+      <div v-if="!account.address" class="menu__button" @click="openWalletModal()">
+        CONNECT WALLET
       </div>
-      <div id="myLinks">
-        <span>TRADE</span>
-        <span>EARN</span>
-        <span>EVENTS</span>
-        <span>LIVE</span>
-        <span>VOTE</span>
-        <span>CHARTS</span>
-        <span>NFT</span>
-        <span>BWGT</span>
-        <span>CREATE +</span>
-        <span>{{ account.address ? "CONNECTED" : "CONNECT WALLET" }}</span>
-        <span>ABOUT</span>
+      <div v-else class="menu__button menu__account" :data-balance="`${account.balance} ETH`">
+        {{shortenedAddress}}
+        <div class="menu__account-image-wrapper">
+          <img class="menu__account-image" src="@/assets/images/metamask_icon.svg" alt="">
+        </div>
       </div>
-      <div class="icon" @click="myFunction()" id="burger">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
-      </div>
+      <NuxtLink class="txt menu__navigation-item menu__navigation-item--inactive" :event="''" to="#">About</NuxtLink>
     </div>
   </div>
 </template>
 
 <script>
-import MenuInfo from "./MenuInfo";
 import WalletModal from "@/components/modal/templates/WalletModal";
 
 export default {
-  name: "Menu",
-  data() {
-    return {
-      isConnected: false
-    };
-  },
-  components: {
-    MenuInfo
-  },
   methods: {
     openWalletModal() {
       this.$modal.show(
@@ -88,180 +48,121 @@ export default {
           width: 314
         }
       );
-    },openInfoModal() {
-      this.$modal.show(
-          MenuInfo,
-        {
-          details: {}
-        },
-        {
-          width: 314
-        }
-      );
-    },
-    myFunction() {
-      var x = document.getElementById("myLinks");
-      var icons = document.getElementById("burger");
-      icons.classList.toggle("change");
-      if (x.style.display === "block") {
-        x.style.display = "none";
-      } else {
-        x.style.display = "block";
-      }
     }
   },
   computed: {
     account() {
       return this.$store.getters["web3/account"];
+    },
+    shortenedAddress() {
+      console.log(this.account.address.substr(0, 6))
+      return this.account.address.substr(0, 6) + '...' +  this.account.address.substr(-4, 4)
     }
   }
-};
+}
 </script>
 
-<style scoped lang="scss">
-.bar1,
-.bar2,
-.bar3 {
-  width: 18px;
-  height: 1px;
-  background-color: #eee;
-  margin: 6px 0;
-  transition: 0.4s;
-}
-
-.change .bar1 {
-  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
-  transform: rotate(-45deg) translate(0px, 3px);
-}
-
-.change .bar2 {
-  opacity: 0;
-}
-
-.change .bar3 {
-  -webkit-transform: rotate(45deg) translate(-8px, -8px);
-  transform: rotate(45deg) translate(-7px, -10px);
-}
-.menu {
-  background: rgba(15, 47, 49, 0.95);
-  height: 64px;
-  padding: 16px 0;
-
-  .nuxt-link-active {
-    font-weight: 900 !important;
-  }
-}
-.items span,
-a {
-  font-family: Montserrat;
-  font-style: normal;
-  font-size: 14px;
-  line-height: 12px;
-  padding: 10px 12px;
-  font-weight: normal;
-  color: $white;
-  mix-blend-mode: normal;
-  opacity: 0.8;
-  text-decoration: none;
-}
-
-.items-btn span {
-  @font-family: Montserrat;
-  font-style: normal;
-  font-size: 14px;
-  line-height: 12px;
-  font-weight: normal;
-  color: $white;
-  mix-blend-mode: normal;
-  opacity: 0.8;
-  padding: 10px 2px;
-}
-.link:hover {
-  background: $white;
-  border-radius: 6px;
-  color: black;
-  font-weight: 600;
-  opacity: 1;
-}
-
-.topnav {
-  overflow: hidden;
-  background: rgba(15, 47, 49, 0.95);
-  position: relative;
-  display: none;
-}
-
-.topnav #myLinks {
-  display: none;
-  min-height: 100vh;
-}
-
-.link {
-  color: white;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-  display: block;
-}
-
-.link.icon {
-  display: block;
-  position: absolute;
-  right: 0;
-  top: 0;
-  color: white;
-  padding: 11.5px 16px;
-  text-decoration: none;
-  font-size: 17px;
-  display: block;
-}
-
-.link:hover {
-  background: $white;
-  border-radius: 6px;
-  color: black;
-  font-weight: 600;
-  opacity: 1;
-}
-
-@media screen and (max-width: 925px) {
-  .topnav {
-    display: block !important;
-  }
+<style lang="scss" scoped>
   .menu {
-    display: none !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 64px;
+    background-color: $brand;
+    padding: 0 28px;
   }
-}
-.balance {
-  background: rgba(255, 255, 255, 0.08);
-  border: 0.5px solid $white !important;
-  box-sizing: border-box;
-  border-radius: 6px 0px 0px 6px;
-  @font-family: Montserrat;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 10px;
-  line-height: 13px;
-  /* identical to box height, or 130% */
-  opacity: 1 !important;
+  .menu__logo {
+    margin-right: 64px;
+  }
+  .menu__navigation {
+    display: flex;
+    align-items: center;
+  }
+  .menu__navigation-item {
+    color: rgba($white, 0.8);
+    font-size: 14px;
+    line-height: 13px;
 
-  text-align: right;
-  margin-right: -2px;
-  color: $white;
-}
-.wallet {
-  border: 2px solid $white !important;
-  box-sizing: border-box;
-  border-radius: 6px;
-  @font-family: Montserrat;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 13px;
-  /* identical to box height, or 108% */
+    &:not(:last-child) {
+      margin-right: 24px;
+    }
 
-  text-align: right;
-  opacity: 1 !important;
-  color: $white !important;
-}
+    &--inactive {
+      cursor: default;
+      text-decoration: none;
+    }
+
+    &.nuxt-link-active {
+      font-weight: 900;
+    }
+  }
+  .menu__actions {
+    align-items: center;
+
+    & > :not(:last-child) {
+      margin-right: 24px;
+    }
+  }
+  .menu__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 30px;
+    border-radius: 6px;
+    border: 2px solid $white;
+    color: $white;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 18px;
+
+    &:hover {
+      background-color: $white;
+      color: $brand;
+    }
+  }
+  .menu__account {
+    justify-content: flex-end;
+    position: relative;
+    font-size: 12px;
+    margin-left: 74px;
+    width: auto;
+    padding: 0 10px;
+
+    &::before {
+      content: attr(data-balance);
+      position: absolute;
+      right: 100%;
+      width: 100px;
+      height: 24px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid $white;
+      box-sizing: border-box;
+      border-radius: 6px 0px 0px 6px;
+      padding: 0 7px;
+      color: $white !important;
+    }
+  }
+  .menu__bwgt-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $brand;
+    border-radius: 6px;
+    cursor: default;
+    font-weight: 600;
+    width: 80px;
+    height: 30px;
+    background-color: $white;
+  }
+  .menu__account-image-wrapper {
+    margin-left: 6px;
+  }
 </style>
