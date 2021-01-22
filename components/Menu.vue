@@ -21,19 +21,27 @@
       <div v-if="!account.address" class="menu__button" @click="openWalletModal()">
         CONNECT WALLET
       </div>
-      <div v-else class="menu__button menu__account" :data-balance="`${account.balance} ETH`">
-        {{shortenedAddress}}
-        <div class="menu__account-image-wrapper">
-          <img class="menu__account-image" src="@/assets/images/metamask_icon.svg" alt="">
+      <div v-else class="menu__account">
+        <div class="menu__account-balance">
+          {{account.balance | truncated}} ETH
         </div>
+        <div class="menu__account-address menu__button" @click="openInfoModal()">
+          {{shortenedAddress}}
+          <div class="menu__account-image-wrapper">
+            <img class="menu__account-image" src="@/assets/images/metamask_icon.svg" alt="">
+          </div>
+        </div>
+        <img src="@/assets/images/cogwheel.svg" alt=""  />
+
       </div>
-      <NuxtLink class="txt menu__navigation-item menu__navigation-item--inactive" :event="''" to="#">About</NuxtLink>
+      <NuxtLink class="txt menu__navigation-item menu__navigation-item--inactive" :event="''" to="#">ABOUT</NuxtLink>
     </div>
   </div>
 </template>
 
 <script>
 import WalletModal from "@/components/modal/templates/WalletModal";
+import MenuInfo from "@/components/modal/templates/MenuInfo";
 
 export default {
   methods: {
@@ -48,7 +56,18 @@ export default {
           width: 314
         }
       );
-    }
+    },
+    openInfoModal() {
+      this.$modal.show(
+          MenuInfo,
+        {
+          details: {}
+        },
+        {
+          width: 314
+        }
+      );
+    },
   },
   computed: {
     account() {
@@ -125,29 +144,32 @@ export default {
     }
   }
   .menu__account {
+    display: flex;
+    align-items: center;
+  }
+  .menu__account-address {
+    display: flex;
     justify-content: flex-end;
     position: relative;
     font-size: 12px;
-    margin-left: 74px;
     width: auto;
     padding: 0 10px;
-
-    &::before {
-      content: attr(data-balance);
-      position: absolute;
-      right: 100%;
-      width: 100px;
-      height: 24px;
+  }
+  .menu__account-balance {
       display: flex;
       justify-content: flex-end;
       align-items: center;
+      transform: translateX(2px);
+      width: auto;
+      height: 24px;
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid $white;
-      box-sizing: border-box;
       border-radius: 6px 0px 0px 6px;
       padding: 0 7px;
-      color: $white !important;
-    }
+      color: $white ;
+    font-size: 12px;
+      font-weight: 400;
+
   }
   .menu__bwgt-button {
     display: flex;

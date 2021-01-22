@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 const filters = {
   truncated (value) {    
-    return Math.trunc(value * 100) / 100;
+    return Math.trunc(value * 10000) / 10000;
   },
   date (value) {
     const date = new Date(value)
