@@ -1,0 +1,42 @@
+/** ADD YOUR AWESOME CODES HERE **/
+.img-responsive{
+    height: 272px;
+}
+.prices{
+    color: black;
+    font-size: 28px;
+}
+.prices p{
+    color: #0b0b0b;
+    font-size: 24px;
+    font-weight: 400;
+}
+.movers-prices p{
+    color: black;
+    font-size: 18px;
+    font-weight: 500;
+}
+.animal-text p{
+    color: black;
+    font-weight: 500;
+}
+.why-we{
+    margin-top: 150px;
+}
+.social{
+    padding: 50px 0;
+}
+
+.social p{
+    color: black;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.social i{
+    font-size: 32px;
+}
+
+.animal-text i{
+    font-size: 32px;
+}
