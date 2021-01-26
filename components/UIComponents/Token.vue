@@ -1,3 +1,4 @@
+Stan Tarasenko, [26.01.21 17:55]
 <template>
   <div class="token">
     <div class="token__header">
@@ -11,21 +12,16 @@
     <div class="token__content">
       <div class="token__input-wrapper">
         <input
-          type="text"
+          type="number"
           class="token__input txt"
           placeholder="0.0"
-          ref="input"
           :disabled="options.isDisabled"
           :autocomplete="options.autocomplete"
           :maxlength="options.maxlength"
-          :value="
-            value
-              .toString()
-              .replace(/[^0-9.]/g, '')
-              .replace(/(\..*)\./g, '$1')
-          "
+          :value="value | truncated"
           @input="$emit('input', $event.target.value)"
           @keydown.enter="$emit('keydown-enter')"
+          @keydown="myMethod()"
           @blur="$emit('blur')"
         />
       </div>
@@ -86,7 +82,13 @@ export default {
   },
 
   methods: {
-
+    myMethod(e) {
+      e = e ? e : window.event;
+      var invalidChars = ["-", "+", "e", "E",];
+      if (invalidChars.includes(e.key)) {
+        e.preventDefault();
+      }
+    }
   }
 };
 </script>
@@ -112,11 +114,13 @@ export default {
     color: $brand;
   }
 }
+
 .token__content {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .token__info {
   display: flex;
   align-items: center;
@@ -129,6 +133,7 @@ export default {
   @include flex-box(20px);
   margin-right: 7px;
 }
+
 .token__icon {
   width: 100%;
   height: 100%;
@@ -140,6 +145,7 @@ export default {
   flex-grow: 1;
   margin-right: 8px;
 }
+
 .token__input {
   width: 100%;
   border: 0px;
@@ -172,7 +178,14 @@ export default {
     background: rgba($surface4, 0.8);
   }
 }
+
 .token__symbol {
   font-size: 14px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 </style>

@@ -47,28 +47,7 @@
         }"
         v-model="eth"
       ></Token>
-      <div class="d-flex check-price justify-content-between ">
-        <span class="col-5 p-0" style="text-align: left; margin-top: 3px"
-          >Aggregate price:</span
-        >
-        <div class="col p-0" style="text-align: left">
-          {{
-            isReverse
-              ? Math.trunc(BWtokensPerOneETH * 10000) / 10000 +
-                " " +
-                "B&W per 1 ETH"
-              : 1 / BWtokensPerOneETH + "ETH per 1 B&W"
-          }}
-          <img
-            src="@/assets/images/update.svg"
-            alt=""
-            @click="isReverse = !isReverse"
-            style="margin-top: -3px"
-
-          />
-        </div>
-      </div>
-
+    <rate/>
       <Button
         v-if="!account.address"
         text="CONNECT WALLET"
@@ -78,7 +57,7 @@
 
       <Button
         v-else
-        :text="!isLoading ? 'RETURN BLACK & WHITE' : 'Processing...'"
+        text="RETURN BLACK & WHITE"
         type="big"
         @click="!isLoading ? buyBackTokens() : ''"
       />
@@ -102,7 +81,7 @@
 import NavCards from "@/components/UIComponents/NavCards";
 import Button from "@/components/UIComponents/Button";
 import List from "@/components/UIComponents/List";
-
+import Rate from "@/components/UIComponents/Rate"
 import { mapGetters } from "vuex";
 
 export default {
@@ -111,6 +90,7 @@ export default {
   components: {
     Button,
     List,
+      Rate,
     NavCards
   },
   data() {

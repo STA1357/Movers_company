@@ -30,7 +30,8 @@ export default {
     account() {
       return this.$store.getters["web3/account"];
     }
-  }
+  },
+
 };
 </script>
 

@@ -29,7 +29,7 @@
           symbol: 'BLACK',
           icon: require('@/assets/images/tokens/black.svg')
         }"
-        v-model="blackCoin"
+        v-model="whiteBlack"
         @input="shotList"
       ></Token>
       <div class="d-flex check-price justify-content-between">
