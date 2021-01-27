@@ -4,7 +4,7 @@
       <div class="menu__logo-wrapper">
         <img class="menu__logo" src="@/assets/images/logo.svg" alt="" />
       </div>
-      <component :is="windowWidth > 1100 ? 'div' : 'modal'" class="menu__navigation" name="menu">
+      <div class="menu__navigation" v-if="(windowWidth <= 1250) ? menuIsOpen : true">
 
         <NuxtLink class="txt menu__navigation-item" to="/trade">TRADE</NuxtLink>
         <NuxtLink class="txt menu__navigation-item" to="/earn">EARN</NuxtLink>
@@ -17,7 +17,7 @@
         <portal-target name="destination" multiple class="d-flex">
 
         </portal-target>
-      </component>
+      </div>
     </div>
     <div class="menu__actions d-flex">
       <portal to="destination" :disabled="windowWidth > 1250" :order="3">
@@ -43,8 +43,9 @@
         </div>
         <img src="@/assets/images/cogwheel.svg" alt=""  />
 
-        <div class="menu__burger" v-if="windowWidth <= 1100" @click="openMenu()">
-          <img src="@/assets/images/burger.svg" alt="">
+        <div class="menu__burger" v-if="windowWidth <= 1250" @click="menuIsOpen = !menuIsOpen">
+          <img v-if="!menuIsOpen" src="@/assets/images/burger.svg" alt="">
+          <img v-else src="@/assets/images/exit.svg" alt="">
         </div>
       </div>
       <portal to="destination" :disabled="windowWidth > 1250" :order="1">
@@ -59,6 +60,11 @@ import WalletModal from "@/components/modal/templates/WalletModal";
 import MenuInfo from "@/components/modal/templates/MenuInfo";
 
 export default {
+  data() {
+    return {
+      menuIsOpen: false
+    }
+  },
   methods: {
     openWalletModal() {
       this.$modal.show(
@@ -82,9 +88,6 @@ export default {
           width: 314
         }
       );
-    },
-    openMenu() {
-      this.$modal.show('menu');
     }
   },
   computed: {
@@ -218,19 +221,18 @@ export default {
   // }
 
   @media screen and (max-width: 1250px) {
-    .menu__actions, .vue-portal-target, .menu__navigation {
-      align-items: center;
-
-      & > :not(:last-child) {
-        margin-right: 12px;
-      }
-    }
     .menu__button {
       margin-right: 12px;
     }
-  }
+    .vue-portal-target {
+      flex-direction: column;
+      align-items: flex-end;
 
-  @media screen and (max-width: 1100px) {
+      & > :not(:last-child) {
+        margin-right: 0px;
+        margin-bottom: 20px;
+      }
+    }
     .menu {
       padding: 0 20px;
     }
@@ -248,14 +250,28 @@ export default {
     }
 
     .menu__navigation {
-      & > :last-child {
-        top: 0 !important; 
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      width: 260px;
+      height: calc(100vh - 64px);
+      right: 0;
+      top: 64px;
+      background-color: rgba($brand, 0.95);
+      padding: 20px 20px;
+      z-index: 100000;
+
+      & > :not(:last-child) {
+        margin-bottom: 20px;
+        margin-right: 0px;
+
       }
     }
-    .menu__navigation-item {
-      color: $brand;
-    }
+
   }
+  
+
   @media screen and (max-width: 500px) {
     .menu__account-balance {
       display: none;

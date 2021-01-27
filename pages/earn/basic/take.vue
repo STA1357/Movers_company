@@ -165,6 +165,8 @@ export default {
           this.eth
         );
 
+        this.isLoading = false;
+
         await this.initAccountAndContracts();
 
         this.$notify.success({
@@ -178,8 +180,6 @@ export default {
           message: error.message,
           maxWidth: 400
         });
-      } finally {
-        this.isLoading = false;
       }
     }
   }
