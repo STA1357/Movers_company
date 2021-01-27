@@ -4,7 +4,8 @@
       <div class="menu__logo-wrapper">
         <img class="menu__logo" src="@/assets/images/logo.svg" alt="" />
       </div>
-      <div class="menu__navigation">
+      <component :is="windowWidth > 1100 ? 'div' : 'modal'" class="menu__navigation" name="menu">
+
         <NuxtLink class="txt menu__navigation-item" to="/trade">TRADE</NuxtLink>
         <NuxtLink class="txt menu__navigation-item" to="/earn">EARN</NuxtLink>
         <NuxtLink class="txt menu__navigation-item menu__navigation-item--inactive" :event="''" to="#">EVENTS</NuxtLink>
@@ -12,11 +13,20 @@
         <NuxtLink class="txt menu__navigation-item menu__navigation-item--inactive" :event="''" to="#">VOTE</NuxtLink>
         <NuxtLink class="txt menu__navigation-item menu__navigation-item--inactive" :event="''" to="#">CHARTS</NuxtLink>
         <NuxtLink class="txt menu__navigation-item menu__navigation-item--inactive" :event="''" to="#">NFT</NuxtLink>
-      </div>
+        
+        <portal-target name="destination" multiple class="d-flex">
+
+        </portal-target>
+      </component>
     </div>
     <div class="menu__actions d-flex">
-      <div class="txt menu__navigation-item menu__bwgt-button">BWGT</div>
-      <NuxtLink class="txt menu__navigation-item menu__navigation-item--inactive" :event="''" to="#">Create+</NuxtLink>
+      <portal to="destination" :disabled="windowWidth > 1250" :order="3">
+        <div class="txt menu__navigation-item menu__bwgt-button">BWGT</div>
+      </portal>
+      <portal to="destination" :disabled="windowWidth > 1250" :order="2">
+        <NuxtLink class="txt menu__navigation-item menu__navigation-item--inactive" :event="''" to="#">Create+</NuxtLink>
+      </portal>
+
 
       <div v-if="!account.address" class="menu__button" @click="openWalletModal()">
         CONNECT WALLET
@@ -33,8 +43,13 @@
         </div>
         <img src="@/assets/images/cogwheel.svg" alt=""  />
 
+        <div class="menu__burger" v-if="windowWidth <= 1100" @click="openMenu()">
+          <img src="@/assets/images/burger.svg" alt="">
+        </div>
       </div>
-      <NuxtLink class="txt menu__navigation-item menu__navigation-item--inactive" :event="''" to="#">ABOUT</NuxtLink>
+      <portal to="destination" :disabled="windowWidth > 1250" :order="1">
+        <NuxtLink class="txt menu__navigation-item menu__navigation-item--inactive" :event="''" to="#">ABOUT</NuxtLink>
+      </portal>
     </div>
   </div>
 </template>
@@ -68,6 +83,9 @@ export default {
         }
       );
     },
+    openMenu() {
+      this.$modal.show('menu');
+    }
   },
   computed: {
     account() {
@@ -115,7 +133,7 @@ export default {
       font-weight: 900;
     }
   }
-  .menu__actions {
+  .menu__actions, .vue-portal-target {
     align-items: center;
 
     & > :not(:last-child) {
@@ -185,5 +203,62 @@ export default {
   }
   .menu__account-image-wrapper {
     margin-left: 6px;
+  }
+  .menu__burger {
+    @include flex-box(24px);
+    margin-left: 12px;
+  }
+
+  // @media screen and (max-width: 1300px) {
+  //   .menu__actions {
+  //     & > :not(:last-child) {
+  //       margin-right: 12x;
+  //     }
+  //   }
+  // }
+
+  @media screen and (max-width: 1250px) {
+    .menu__actions, .vue-portal-target, .menu__navigation {
+      align-items: center;
+
+      & > :not(:last-child) {
+        margin-right: 12px;
+      }
+    }
+    .menu__button {
+      margin-right: 12px;
+    }
+  }
+
+  @media screen and (max-width: 1100px) {
+    .menu {
+      padding: 0 20px;
+    }
+    .menu__logo {
+      margin-right: 0;
+    }
+    .menu__actions {
+      & > :not(:last-child) {
+        margin-right: 0px;
+        cursor: pointer;
+      }
+    }
+    .menu__button {
+      margin-right: 12px;
+    }
+
+    .menu__navigation {
+      & > :last-child {
+        top: 0 !important; 
+      }
+    }
+    .menu__navigation-item {
+      color: $brand;
+    }
+  }
+  @media screen and (max-width: 500px) {
+    .menu__account-balance {
+      display: none;
+    }
   }
 </style>

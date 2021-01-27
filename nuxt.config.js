@@ -39,6 +39,7 @@ export default {
     '~plugins/vue-js-modal',
     '~plugins/filters',
     '~plugins/mixins',
+    '~plugins/lodash',
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -56,6 +57,7 @@ export default {
     'nuxt-izitoast',
     '@nuxtjs/axios',
     "@nuxtjs/style-resources",
+    'portal-vue/nuxt'
 
   ],
 

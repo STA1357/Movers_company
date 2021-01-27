@@ -41,18 +41,36 @@
         }"
         v-model="whiteBlack"
       ></Token>
-      <rate/>
+      <div class="d-flex check-price justify-content-between ">
+        <span class="col-5 p-0" style="text-align: left; margin-top: 3px"
+          >Aggregate price:</span
+        >
+        <div class="col p-0" style="text-align: left">
+          {{
+            isReverse
+              ? Math.trunc(BWtokensPerOneETH * 10000) / 10000 +
+                " " +
+                "B&W per 1 ETH"
+              : 1 / BWtokensPerOneETH + "ETH per 1 B&W"
+          }}
+          <img
+            src="@/assets/images/update.svg"
+            alt=""
+            @click="isReverse = !isReverse"
+            style="margin-top: -3px"
+          />
+        </div>
+      </div>
 
       <Button
         v-if="!account.address"
         text="CONNECT WALLET"
         @click.native="openWalletModal"
-        type="big"
       />
 
       <Button
         v-else
-        text="TAKE BLACK & WHITE"
+        :text="!isLoading ? 'TAKE BLACK & WHITE' : 'Processing...'"
         type="big"
         @click="!isLoading ? buyTokens() : ''"
       />
@@ -78,7 +96,6 @@ import WalletModal from "@/components/modal/templates/WalletModal";
 import Button from "@/components/UIComponents/Button";
 import List from "@/components/UIComponents/List";
 import NavCards from "@/components/UIComponents/NavCards";
-import Rate from "@/components/UIComponents/Rate"
 
 export default {
   layout: "earn",
@@ -86,8 +103,7 @@ export default {
   components: {
     Button,
     List,
-    NavCards,
-      Rate
+    NavCards
   },
   data() {
     return {
@@ -150,12 +166,12 @@ export default {
         );
 
         await this.initAccountAndContracts();
-          this.$notify.success({
-              title: "Success",
-              message: "Successfull transaction",
-              maxWidth: 400
-          });
 
+        this.$notify.success({
+          title: "Success",
+          message: "Successfull transaction",
+          maxWidth: 400
+        });
       } catch (error) {
         this.$notify.error({
           title: "Error",
