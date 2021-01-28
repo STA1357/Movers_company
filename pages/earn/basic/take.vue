@@ -133,7 +133,7 @@ export default {
   },
   methods: {
     shotList() {
-      if (this.eth.length !== 0 !== 0 && this.account.address) {
+      if (this.eth.length && this.account.address) {
         this.$emit("openList");
       } else {
         this.$emit("closeList");

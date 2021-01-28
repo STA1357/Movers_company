@@ -95,7 +95,7 @@ export default {
           'WhiteInBase',
           'BlackInBase',
           'WhiteInMarket',
-          'BLackInMarket',
+          'BlackInMarket',
           'AggregateBW',
         ]
       }
