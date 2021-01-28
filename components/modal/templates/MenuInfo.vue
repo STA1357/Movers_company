@@ -15,8 +15,8 @@
         <div class="btn col-3 p-1 mt-1">Disconnect</div>
       </div>
       <div class="btn-group d-flex mt-2">
-        <div class="">Copy address</div>
-        <div class="">View on etherscan</div>
+        <div>Copy address</div>
+        <div><a :href='`https://etherscan.io/address/${account.address}`'>View on etherscan</a></div>
       </div>
     </div>
     <span class="footer mt-3 ml-3">Learn more about Metamask</span>
@@ -130,4 +130,10 @@ img {
   display: flex;
   color: $brand;
 }
+a {
+  text-decoration: none;
+  color: $brand !important;
+
+}
+
 </style>

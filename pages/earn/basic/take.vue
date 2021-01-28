@@ -126,7 +126,7 @@ export default {
       return this.$store.getters["contracts/primary/BWtokensPerOneETH"];
     },
     whiteBlack() {
-      return this.eth * this.BWtokensPerOneETH;
+      return this.eth * Math.trunc(this.BWtokensPerOneETH  * 10000) / 10000;
     }
   },
   methods: {

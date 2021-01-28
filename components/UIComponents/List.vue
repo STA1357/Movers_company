@@ -7,7 +7,7 @@
             {{ item.text }}
           </div>
           <div class="txt txt--semiBold list__value">
-            {{ item.value }} 
+            {{ item.value }}
           </div>
         </div>
       </div>
@@ -20,7 +20,7 @@
             {{ (collateralization.storedEthereumAmount / 1e18) | truncated6 }} ETH
           </div>
         </div>
-        
+
         <div v-if="info.indexOf('WhiteInMarket') > 0" class="list__item list__item--info">
           <div class="txt list__text">
             WHITE in the market
@@ -126,10 +126,10 @@ export default {
   },
   methods: {
     openList() {
-      this.isOpen = true 
+      this.isOpen = true
     },
     closeList() {
-      this.isOpen = false 
+      this.isOpen = false
     }
   },
   mounted() {
