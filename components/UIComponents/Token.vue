@@ -1,4 +1,3 @@
-Stan Tarasenko, [26.01.21 17:55]
 <template>
   <div class="token">
     <div class="token__header">
@@ -12,16 +11,16 @@ Stan Tarasenko, [26.01.21 17:55]
     <div class="token__content">
       <div class="token__input-wrapper">
         <input
-          type="number"
+          type="text"
           class="token__input txt"
           placeholder="0.0"
           :disabled="options.isDisabled"
           :autocomplete="options.autocomplete"
           :maxlength="options.maxlength"
-          v-modal.number="value | truncated"
-          @input="$emit('input', $event.target.value)"
+          :value="value"
+          inputmode="numeric"
+          @input="$emit('input', $event.target.value.replace(/\,/g, '.').replace(/[^\d\.]/g,''))"
           @keydown.enter="$emit('keydown-enter')"
-          @keydown="myMethod()"
           @blur="$emit('blur')"
         />
       </div>
@@ -79,16 +78,6 @@ export default {
       }
     },
     value: ""
-  },
-
-  methods: {
-    myMethod(e) {
-      e = e ? e : window.event;
-      var invalidChars = ["-", "+", "e", "E",];
-      if (invalidChars.includes(e.key)) {
-        e.preventDefault();
-      }
-    }
   }
 };
 </script>
