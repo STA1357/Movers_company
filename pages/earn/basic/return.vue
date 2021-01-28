@@ -66,10 +66,10 @@
       :title="[
         {
           text: 'Min received',
-          value: `${this.eth} ETH`
+          value: `${this.eth | truncated3} ETH`
         },
         {
-          text: `from ${!this.whiteBlack ? 0 : this.whiteBlack} B&W `,
+          text: `from ${!this.whiteBlack ? 0 : this.whiteBlack}  B&W `,
           value: ''
         }
       ]"
@@ -118,7 +118,7 @@ export default {
   },
   methods: {
     shotList() {
-      if (this.eth.length !== 0) {
+      if (this.eth.length !== 0 && this.account.address) {
         this.$emit("openList");
       } else {
         this.$emit("closeList");

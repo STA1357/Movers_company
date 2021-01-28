@@ -10,19 +10,27 @@
     </div>
     <div class="token__content">
       <div class="token__input-wrapper">
+
         <input
+          ref="input"
           type="text"
           class="token__input txt"
           placeholder="0.0"
           :disabled="options.isDisabled"
           :autocomplete="options.autocomplete"
-          :maxlength="options.maxlength"
           :value="value"
-          inputmode="numeric"
-          @input="$emit('input', $event.target.value.replace(/\,/g, '.').replace(/[^\d\.]/g,''))"
+          @input="validation($event.target.value)"
           @keydown.enter="$emit('keydown-enter')"
           @blur="$emit('blur')"
+          pattern="^[0-9]*[.,]?[0-9]*$"
+          inputmode="decimal"
+          autocorrect="off"
+          minlength="1"
+          maxlength="79"
+          spellcheck="false"
+          required 
         />
+
       </div>
       <div
         v-if="!options.isDisabled"
@@ -78,6 +86,13 @@ export default {
       }
     },
     value: ""
+  },
+  methods: {
+    validation(value) {
+      let newValue = value.replace(/\,/g, '.').replace(/[^\.+\d]/g, '')
+      this.$refs.input.value = newValue
+      this.$emit('input', newValue)
+    }
   }
 };
 </script>

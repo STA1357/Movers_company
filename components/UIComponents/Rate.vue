@@ -9,7 +9,7 @@
             ? Math.trunc(BWtokensPerOneETH * 10000) / 10000 +
             " " +
             "B&W per 1 ETH"
-            : 1 / BWtokensPerOneETH + "ETH per 1 B&W"
+            : (1 / BWtokensPerOneETH | truncated3) + "ETH per 1 B&W"
             }}
             <img
                     src="@/assets/images/update.svg"
