@@ -66,7 +66,7 @@
       :title="[
         {
           text: 'Min received',
-          value: `${this.eth | truncated3} ETH`
+          value: `${this.eth} ETH`
         },
         {
           text: `from ${!this.whiteBlack ? 0 : this.whiteBlack}  B&W `,

@@ -66,6 +66,8 @@
         v-if="!account.address"
         text="CONNECT WALLET"
         @click.native="openWalletModal"
+        type="big"
+
       />
 
       <Button
@@ -131,7 +133,7 @@ export default {
   },
   methods: {
     shotList() {
-      if (this.eth.length !== 0) {
+      if (this.eth.length !== 0 !== 0 && this.account.address) {
         this.$emit("openList");
       } else {
         this.$emit("closeList");
