@@ -18,7 +18,7 @@ Stan Tarasenko, [26.01.21 17:55]
           :disabled="options.isDisabled"
           :autocomplete="options.autocomplete"
           :maxlength="options.maxlength"
-          :value="value | truncated"
+          v-modal.number="value | truncated"
           @input="$emit('input', $event.target.value)"
           @keydown.enter="$emit('keydown-enter')"
           @keydown="myMethod()"
