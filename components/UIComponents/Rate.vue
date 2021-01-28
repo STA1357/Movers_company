@@ -6,10 +6,10 @@
         <div class="col p-0" style="text-align: left">
             {{
             isReverse
-            ? Math.trunc(BWtokensPerOneETH * 10000) / 10000 +
+            ? parseFloat(BWtokensPerOneETH).toFixed(4) +
             " " +
             "B&W per 1 ETH"
-            : (1 / BWtokensPerOneETH) + "ETH per 1 B&W"
+            : parseFloat(1/BWtokensPerOneETH).toFixed(4) + "ETH per 1 B&W"
             }}
             <img
                     src="@/assets/images/update.svg"

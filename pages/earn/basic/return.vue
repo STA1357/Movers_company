@@ -47,7 +47,7 @@
         }"
         v-model="eth"
       ></Token>
-    <rate/>
+      <rate />
       <Button
         v-if="!account.address"
         text="CONNECT WALLET"
@@ -66,7 +66,7 @@
       :title="[
         {
           text: 'Min received',
-          value: `${this.eth} ETH`
+          value: `${parseFloat(this.eth).toFixed(4)} ETH`
         },
         {
           text: `from ${!this.whiteBlack ? 0 : this.whiteBlack}  B&W `,
@@ -81,7 +81,7 @@
 import NavCards from "@/components/UIComponents/NavCards";
 import Button from "@/components/UIComponents/Button";
 import List from "@/components/UIComponents/List";
-import Rate from "@/components/UIComponents/Rate"
+import Rate from "@/components/UIComponents/Rate";
 import { mapGetters } from "vuex";
 
 export default {
@@ -90,7 +90,7 @@ export default {
   components: {
     Button,
     List,
-      Rate,
+    Rate,
     NavCards
   },
   data() {
