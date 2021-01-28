@@ -1,4 +1,3 @@
-Stan Tarasenko, [26.01.21 17:55]
 <template>
   <div class="token">
     <div class="token__header">
