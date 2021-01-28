@@ -11,12 +11,19 @@
               account.address.substr(-4, 4)
             }}</span
           >
+          <span id="hiddenSpan" ref="hiddenSpan" style="display: none">{{
+            account.address
+          }}</span>
         </div>
         <div class="btn col-3 p-1 mt-1">Disconnect</div>
       </div>
       <div class="btn-group d-flex mt-2">
-        <div>Copy address</div>
-        <div><a :href='`https://etherscan.io/address/${account.address}`'>View on etherscan</a></div>
+        <div class=" " id="copyButton" ref="copyButton" @click="copy_text">Copy address</div>
+        <div>
+          <a :href="`https://etherscan.io/address/${account.address}`"
+            >View on etherscan</a
+          >
+        </div>
       </div>
     </div>
     <span class="footer mt-3 ml-3">Learn more about Metamask</span>
@@ -31,7 +38,16 @@ export default {
       return this.$store.getters["web3/account"];
     }
   },
-
+  methods: {
+      copy_text() {
+          let textArea = document.createElement("textarea");
+          textArea.value = this.$refs.hiddenSpan.textContent;
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand("Copy");
+          textArea.remove();
+      }
+  }
 };
 </script>
 
@@ -133,7 +149,5 @@ img {
 a {
   text-decoration: none;
   color: $brand !important;
-
 }
-
 </style>
