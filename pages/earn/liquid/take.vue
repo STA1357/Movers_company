@@ -55,7 +55,7 @@
         v-else
         :text="!isLoading ? 'TAKE BLACK & WHITE' : 'Processing...'"
         type="big"
-        @click="!isLoading ? buyTokens() : ''"
+        @click="!isLoading ? buyLiquidity() : ''"
       />
     </div>
     <ListLiquid
@@ -124,6 +124,9 @@ export default {
           width: 314
         }
       );
+    },
+    async buyLiquidity () {
+      await this.$store.dispatch("contracts/secondaryPrimary/buyLiquidity", this.whiteBlack);
     }
   }
 };

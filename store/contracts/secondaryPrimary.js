@@ -17,6 +17,7 @@ export default {
 
       Promise.all([
         await dispatch('getBalance'),
+        await dispatch('getDecimals'),
         await dispatch('getBlackPrice'),
         await dispatch('getWhitePrice'),
       ])
@@ -41,6 +42,10 @@ export default {
       let price = await Contract.whitePrice()
       commit('setWhitePrice', price)
     },
+
+    async buyLiquidity({ rootState }, tokensAmount) {
+      await Contract.addLiquidity(tokensAmount *  Math.pow(10, rootState.contracts.black.decimals))
+    }
   },
   mutations: {
     setDecimals(state, payload) {

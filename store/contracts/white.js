@@ -46,7 +46,7 @@ export default {
       commit('setTotalSupply', totalSupply)
     },
     async approve({ commit, state }, whiteBlackAmount) {
-      await Contract.approve(whiteBlackAmount)
+      await Contract.approve(process.env.contractAddresses.collateralization, whiteBlackAmount)
     }
   },
   mutations: {

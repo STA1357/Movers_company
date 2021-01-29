@@ -23,7 +23,13 @@ class PrimaryPool {
   }
 
   async whitePrice() {
-    return this.contractInstance.methods._whitePrice ().call()
+    return this.contractInstance.methods._whitePrice().call()
+  }
+
+  async addLiquidity(tokensAmount) {
+    let from  = await this.web3Instance.eth.getCoinbase()
+
+    return this.contractInstance.methods.addLiquidity(tokensAmount).send({from})
   }
 }
 
