@@ -41,7 +41,7 @@
       </div>
       <div class="token__info">
         <div class="token__icon-wrapper">
-          <img :src="options.icon" alt="" class="token__icon" />
+          <img v-if="options.icon" :src="options.icon" alt="" class="token__icon" />
         </div>
         <div class="token__symbol txt">
           {{ options.symbol }}

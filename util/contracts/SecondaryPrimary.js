@@ -10,6 +10,8 @@ class PrimaryPool {
     this.contractInstance = this.web3Instance ? new this.web3Instance.eth.Contract(ABI, this.address) : null; 
   }
 
+  
+
 
 }
 

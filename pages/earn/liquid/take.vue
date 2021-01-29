@@ -2,100 +2,105 @@
   <div>
     <nav-cards
       :text="[
-        { title: 'ADD LIQUIDITY', path: '/earn/liquid/take' },
-        { title: 'REMOVE LIQUIDITY', path: '/earn/liquid/return' }
+        { title: 'TAKE B&W', path: '/earn/liquid/take' },
+        { title: 'RETURN B&W', path: '/earn/liquid/return' }
       ]"
     />
     <div class="card">
       <Token
         :options="{
-          title: 'You give:',
-          balance: account.balance,
+          title: 'You add:',
+          balance: black.balance,
           isDisabled: false,
-          symbol: 'ETH',
-          icon: require('@/assets/images/tokens/eth.svg')
+          symbol: black.symbol,
+          icon: require('@/assets/images/tokens/black.svg')
         }"
-        v-model="eth"
+        v-model="whiteBlack"
         @input="shotList"
-
       ></Token>
-      <div class="p-2 ml-3">
-        <img
-          src="@/assets/images/to.svg"
-          alt=""
-          style="float: left; cursor: pointer"
-          @click="$router.push('/earn/liquid/return')"
-        />
-      </div>
-
       <Token
         :options="{
-          title: 'You add:',
+          title: 'And',
           balance: white.balance,
-          isDisabled: true,
+          isDisabled: false,
           symbol: white.symbol,
           icon: require('@/assets/images/tokens/white.svg')
         }"
         v-model="whiteBlack"
       ></Token>
+      <div class="p-2 ml-3" @click="$router.push('/earn/basic/return')">
+        <img src="@/assets/images/to.svg" alt="" style="float: left" />
+      </div>
       <Token
         :options="{
-          title: 'And',
-          balance: black.balance,
+          title: 'You take',
+          balance: '1.00',
           isDisabled: true,
-          symbol: black.symbol,
-          icon: require('@/assets/images/tokens/black.svg')
+          symbol: 'LPBW',
+          icon: ''
         }"
         v-model="whiteBlack"
       ></Token>
-      <div class="d-flex check-price justify-content-between">
-        <span class="col-5">Aggregate price:</span>
-        <span class="col-7"
-          >{{ BWtokensPerOneETC | truncated }} B&W per 1 LPBW</span
+      <div class="d-flex check-price justify-content-between ">
+        <span class="col-5 p-0" style="text-align: left; margin-top: 3px"
+          >Aggregate price:</span
         >
+        <div class="col p-0" style="text-align: left">
+          {{
+            isReverse
+              ? Math.trunc(BWtokensPerOneETH * 10000) / 10000 +
+                " " +
+                "B&W per 1 ETH"
+              : 1 / BWtokensPerOneETH + "ETH per 1 B&W"
+          }}
+          <img
+            src="@/assets/images/update.svg"
+            alt=""
+            @click="isReverse = !isReverse"
+            style="margin-top: -3px"
+          />
+        </div>
       </div>
-      <Button text="RETURN BLACK & WHITE" type="big" />
+
+      <Button
+        v-if="!account.address"
+        text="CONNECT WALLET"
+        @click.native="openWalletModal"
+        type="big"
+
+      />
+
+      <Button
+        v-else
+        :text="!isLoading ? 'TAKE BLACK & WHITE' : 'Processing...'"
+        type="big"
+        @click="!isLoading ? buyTokens() : ''"
+      />
     </div>
-    <list
-      :text-l="[
-        'WHITE Price',
-        'BLACK Price',
-        'ETH in Base Pool',
-        'WHITE in the market',
-        'BLACK in the market',
-        'WHITE in Base Pool',
-        'BLACK in Base Pool',
-        'Aggregate B&W price',
-        'Change B&W Price (1,7,30 days)'
+    <List
+      :title="[
+        {
+          text: 'Min received',
+          value: `${this.whiteBlack} BLACK`
+        },
+        {
+          text: `from ${this.whiteBlack} ETH `,
+          value: `${!this.whiteBlack ? 0 : this.whiteBlack} WHITE`
+        }
       ]"
-      :text-r="[
-        '0.00153454 ETH',
-        '0.00153454 ETH',
-        '1544 ETH',
-        '503082.355 WHITE',
-        '503082.355 BLACK',
-        '799496918 WHITE',
-        '799496918 BLACK',
-        '0,00306908 ETH',
-        '0.1/0.5/1.7 %'
-      ]"
-      :title-r="['Min received', 'Share of Pool']"
-      :title-l="['456.166 B&W', '0.31%']"
-      :show="this.show"
     />
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import WalletModal from "@/components/modal/templates/WalletModal";
 import Button from "@/components/UIComponents/Button";
 import List from "@/components/UIComponents/List";
 import NavCards from "@/components/UIComponents/NavCards";
 
-import { mapGetters } from "vuex";
-
 export default {
   layout: "earn",
-  name: "returnLiquid",
   components: {
     Button,
     List,
@@ -104,8 +109,9 @@ export default {
   data() {
     return {
       show: false,
-      eth: "",
-      whiteBlack: ""
+      whiteBlack: "",
+      isReverse: true,
+      isLoading: false
     };
   },
   computed: {
@@ -117,26 +123,31 @@ export default {
       collateralization: "contracts/collateralization/contract"
     }),
 
-    BWtokensPerOneETC() {
-      return 1e18 / this.primary.BWprice / Math.pow(10, this.black.decimals);
+    BWtokensPerOneETH() {
+      return this.$store.getters["contracts/primary/BWtokensPerOneETH"];
     },
-    measurementValueDisplay: {
-      get() {
-        this.whiteBlack = (this.eth * this.BWtokensPerOneETC).toFixed(2);
-        return this.whiteBlack;
-      },
-      set(newValue) {
-        return this.eth;
-      }
+    lpbw() {
+      return this.whiteBlack / Math.trunc(this.BWtokensPerOneETH  * 10000) / 10000;
     }
   },
   methods: {
     shotList() {
-      if (this.eth.length !== 0) {
-        this.show = true;
+      if (this.whiteBlack.length && this.account.address) {
+        this.$emit("openList");
       } else {
-        this.show = false;
+        this.$emit("closeList");
       }
+    },
+    openWalletModal() {
+      this.$modal.show(
+        WalletModal,
+        {
+          details: {}
+        },
+        {
+          width: 314
+        }
+      );
     }
   }
 };
