@@ -33,8 +33,8 @@ export default {
       whiteBlackAmount = (whiteBlackAmount * Math.pow(10, rootState.contracts.black.decimals)).toString()
 
       await Promise.all([
-        dispatch('contracts/black/approve', whiteBlackAmount, {root:true}),
-        dispatch('contracts/white/approve', whiteBlackAmount, {root:true})
+        dispatch('contracts/black/approve', {delegate: process.env.contractAddresses.collateralization, whiteBlackAmount}, {root:true}),
+        dispatch('contracts/white/approve', {delegate: process.env.contractAddresses.collateralization, whiteBlackAmount}, {root:true})
       ])
 
       await Contract.buyBackTokens(whiteBlackAmount)
