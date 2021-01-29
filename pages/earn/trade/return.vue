@@ -55,39 +55,12 @@
 
       <Button text="ADD LIQUIDITY" type="big" />
     </div>
-    <list
-      :text-l="[
-        'WHITE Price',
-        'BLACK Price',
-        'ETH in Base Pool',
-        'WHITE in the market',
-        'BLACK in the market',
-        'WHITE in Base Pool',
-        'BLACK in Base Pool',
-        'Aggregate B&W price',
-        'Change B&W Price (1,7,30 days)'
-      ]"
-      :text-r="[
-        '0.00153454 ETH',
-        '0.00153454 ETH',
-        '1544 ETH',
-        '503082.355 WHITE',
-        '503082.355 BLACK',
-        '799496918 WHITE',
-        '799496918 BLACK',
-        '0,00306908 ETH',
-        '0.1/0.5/1.7 %'
-      ]"
-      :title-r="['Min received', 'Share of Pool']"
-      :title-l="['456.166 LPBW', '0.34%']"
-      :show="this.show"
-    />
+    
   </div>
 </template>
 
 <script>
 import Button from "@/components/UIComponents/Button";
-import List from "@/components/UIComponents/List";
 import NavCards from "@/components/UIComponents/NavCards";
 
 import { mapGetters } from "vuex";
@@ -98,7 +71,6 @@ export default {
   components: {
     NavCards,
     Button,
-    List
   },
   data() {
     return {

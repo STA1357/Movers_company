@@ -16,10 +16,12 @@ export default {
   actions: {
     async initContract({ dispatch }) {
         await dispatch('getDecimals') //should be upper then balance
-        await dispatch('getBalance')
-        await dispatch('getName')
-        await dispatch('getSymbol')
-        await dispatch('getTotalSupply')  
+        Promise.all([
+          await dispatch('getBalance'),
+          await dispatch('getName'),
+          await dispatch('getSymbol'),
+          await dispatch('getTotalSupply')
+        ])
     },
 
     async getBalance({ rootState, commit }) {
@@ -83,6 +85,8 @@ export default {
     contract(state) {
       return state
     },
+
+    /* base pool */
     inBase(state, getters, rootState) {
       return rootState.contracts.collateralization.storedTokensAmount.black 
       / Math.pow(10, state.decimals)
@@ -90,6 +94,12 @@ export default {
     inMarket(state, getters, rootState) {
       return (state.totalSupply - rootState.contracts.collateralization.storedTokensAmount.black) 
       / Math.pow(10, state.decimals)
-    }
+    },
+
+    /* secondary pool */
+    inSecondary(state, getters, rootState) {
+      return rootState.contracts.secondaryCollateralization.storedTokensAmount.black 
+      / Math.pow(10, state.decimals)
+    },
   }
 }

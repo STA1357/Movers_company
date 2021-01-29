@@ -62,7 +62,7 @@
         @click="!isLoading ? buyBackTokens() : ''"
       />
     </div>
-    <List
+    <ListBase
       :title="[
         {
           text: 'Min received',
@@ -80,7 +80,6 @@
 <script>
 import NavCards from "@/components/UIComponents/NavCards";
 import Button from "@/components/UIComponents/Button";
-import List from "@/components/UIComponents/List";
 import Rate from "@/components/UIComponents/Rate";
 import { mapGetters } from "vuex";
 
@@ -89,7 +88,6 @@ export default {
   name: "returnBasic",
   components: {
     Button,
-    List,
     Rate,
     NavCards
   },

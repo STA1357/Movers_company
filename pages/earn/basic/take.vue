@@ -77,7 +77,7 @@
         @click="!isLoading ? buyTokens() : ''"
       />
     </div>
-    <List
+    <ListBase
       :title="[
         {
           text: 'Min received',
@@ -96,7 +96,6 @@
 import { mapGetters } from "vuex";
 import WalletModal from "@/components/modal/templates/WalletModal";
 import Button from "@/components/UIComponents/Button";
-import List from "@/components/UIComponents/List";
 import NavCards from "@/components/UIComponents/NavCards";
 
 export default {
@@ -104,7 +103,6 @@ export default {
   name: "basic",
   components: {
     Button,
-    List,
     NavCards
   },
   data() {

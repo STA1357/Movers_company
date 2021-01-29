@@ -11,8 +11,10 @@ export default {
   },
   actions: {
     async initContract({ dispatch }) {
-      await dispatch('getStoredEthereumAmount')
-      await dispatch('getStoredTokensAmount')
+      Promise.all([
+        await dispatch('getStoredEthereumAmount'),
+        await dispatch('getStoredTokensAmount')
+      ])
     },
 
     async getStoredEthereumAmount({ commit }) {

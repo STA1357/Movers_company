@@ -10,9 +10,21 @@ class PrimaryPool {
     this.contractInstance = this.web3Instance ? new this.web3Instance.eth.Contract(ABI, this.address) : null; 
   }
 
+  async balanceOf(address) {
+    return this.contractInstance.methods.balanceOf(address).call()
+  }  
   
+  async decimals() {
+    return this.contractInstance.methods.decimals().call()
+  }
 
+  async blackPrice() {
+    return this.contractInstance.methods._blackPrice().call()
+  }
 
+  async whitePrice() {
+    return this.contractInstance.methods._whitePrice ().call()
+  }
 }
 
 export default new PrimaryPool()

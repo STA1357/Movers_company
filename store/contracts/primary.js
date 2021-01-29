@@ -11,8 +11,10 @@ export default {
   },
   actions: {
     async initContract({ dispatch }) {
-      await dispatch('getMinBlackAndWhiteBuy')
-      await dispatch('getBWprice')
+      Promise.all([
+        await dispatch('getMinBlackAndWhiteBuy'),
+        await dispatch('getBWprice')
+      ])
     },
 
     async getMinBlackAndWhiteBuy({ commit }) {

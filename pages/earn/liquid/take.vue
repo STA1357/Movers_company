@@ -2,8 +2,8 @@
   <div>
     <nav-cards
       :text="[
-        { title: 'TAKE B&W', path: '/earn/liquid/take' },
-        { title: 'RETURN B&W', path: '/earn/liquid/return' }
+        { title: 'ADD LIQUIDITY', path: '/earn/liquid/take' },
+        { title: 'REMOVE LIQUIDITY', path: '/earn/liquid/return' }
       ]"
     />
     <div class="card">
@@ -34,33 +34,14 @@
       <Token
         :options="{
           title: 'You take',
-          balance: '1.00',
+          balance: primary.balance,
           isDisabled: true,
           symbol: 'LPBW',
           icon: ''
         }"
-        v-model="whiteBlack"
+        v-model="lpbw"
       ></Token>
-      <div class="d-flex check-price justify-content-between ">
-        <span class="col-5 p-0" style="text-align: left; margin-top: 3px"
-          >Aggregate price:</span
-        >
-        <div class="col p-0" style="text-align: left">
-          {{
-            isReverse
-              ? Math.trunc(BWtokensPerOneETH * 10000) / 10000 +
-                " " +
-                "B&W per 1 ETH"
-              : 1 / BWtokensPerOneETH + "ETH per 1 B&W"
-          }}
-          <img
-            src="@/assets/images/update.svg"
-            alt=""
-            @click="isReverse = !isReverse"
-            style="margin-top: -3px"
-          />
-        </div>
-      </div>
+      <Rate></Rate>
 
       <Button
         v-if="!account.address"
@@ -77,15 +58,15 @@
         @click="!isLoading ? buyTokens() : ''"
       />
     </div>
-    <List
+    <ListLiquid
       :title="[
         {
           text: 'Min received',
-          value: `${this.whiteBlack} BLACK`
+          value: `${this.lpbw} LPBW`
         },
         {
-          text: `from ${this.whiteBlack} ETH `,
-          value: `${!this.whiteBlack ? 0 : this.whiteBlack} WHITE`
+          text: `Share of Pool `,
+          value: `0.34%`
         }
       ]"
     />
@@ -96,14 +77,12 @@
 import { mapGetters } from "vuex";
 import WalletModal from "@/components/modal/templates/WalletModal";
 import Button from "@/components/UIComponents/Button";
-import List from "@/components/UIComponents/List";
 import NavCards from "@/components/UIComponents/NavCards";
 
 export default {
   layout: "earn",
   components: {
     Button,
-    List,
     NavCards
   },
   data() {
@@ -119,15 +98,12 @@ export default {
       account: "web3/account",
       black: "contracts/black/contract",
       white: "contracts/white/contract",
-      primary: "contracts/primary/contract",
-      collateralization: "contracts/collateralization/contract"
+      primary: "contracts/secondaryPrimary/contract",
+      collateralization: "contracts/secondaryCollateralization/contract"
     }),
 
-    BWtokensPerOneETH() {
-      return this.$store.getters["contracts/primary/BWtokensPerOneETH"];
-    },
     lpbw() {
-      return this.whiteBlack / Math.trunc(this.BWtokensPerOneETH  * 10000) / 10000;
+      return this.whiteBlack / 1;
     }
   },
   methods: {

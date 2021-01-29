@@ -34,9 +34,9 @@ export default {
     };
   },
   mounted() {
-      this.loaded = true;
-      if (!this.$store.getters["web3/account"].address) {
+    if (!this.$store.getters["web3/account"].address) {
       this.initAccountAndContracts().then(() => {
+        this.loaded = true;
       })
     }
   }
