@@ -43,8 +43,15 @@ export default {
       commit('setWhitePrice', price)
     },
 
-    async buyLiquidity({ rootState }, tokensAmount) {
-      await Contract.addLiquidity(tokensAmount *  Math.pow(10, rootState.contracts.black.decimals))
+    async buyLiquidity({ dispatch, rootState }, tokensAmount) {
+      tokensAmount = (tokensAmount * Math.pow(10, rootState.contracts.black.decimals)).toString()
+      
+      await Promise.all([
+        dispatch('contracts/black/approve', {delegate: process.env.contractAddresses.secondaryCollateralization, tokensAmount}, {root:true}),
+        dispatch('contracts/white/approve', {delegate: process.env.contractAddresses.secondaryCollateralization, tokensAmount}, {root:true})
+      ])
+
+      await Contract.addLiquidity(tokensAmount)
     }
   },
   mutations: {

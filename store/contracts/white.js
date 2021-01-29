@@ -45,8 +45,8 @@ export default {
       let totalSupply = await Contract.totalSupply()
       commit('setTotalSupply', totalSupply)
     },
-    async approve({ commit, state }, { delegate, whiteBlackAmount }) {
-      await Contract.approve(delegate, whiteBlackAmount)
+    async approve({ commit, state }, { delegate, tokensAmount }) {
+      await Contract.approve(delegate, tokensAmount)
     }
   },
   mutations: {

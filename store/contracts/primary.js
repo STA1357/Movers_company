@@ -29,15 +29,15 @@ export default {
     async buyTokens(ctx, ethAmount) {
       await Contract.buyTokens((ethAmount*1e18).toString())
     },
-    async buyBackTokens({ dispatch, rootState }, whiteBlackAmount) {
-      whiteBlackAmount = (whiteBlackAmount * Math.pow(10, rootState.contracts.black.decimals)).toString()
+    async buyBackTokens({ dispatch, rootState }, tokensAmount) {
+      tokensAmount = (tokensAmount * Math.pow(10, rootState.contracts.black.decimals)).toString()
 
       await Promise.all([
-        dispatch('contracts/black/approve', {delegate: process.env.contractAddresses.collateralization, whiteBlackAmount}, {root:true}),
-        dispatch('contracts/white/approve', {delegate: process.env.contractAddresses.collateralization, whiteBlackAmount}, {root:true})
+        dispatch('contracts/black/approve', {delegate: process.env.contractAddresses.collateralization, tokensAmount}, {root:true}),
+        dispatch('contracts/white/approve', {delegate: process.env.contractAddresses.collateralization, tokensAmount}, {root:true})
       ])
 
-      await Contract.buyBackTokens(whiteBlackAmount)
+      await Contract.buyBackTokens(tokensAmount)
     }
   },
   mutations: {
